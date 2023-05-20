@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:furniture/screen/register/signup_controller.dart';
 import 'package:furniture/static/input_field1.dart';
 import 'package:furniture/static/large_button.dart';
+import 'package:furniture/values/Validator.dart';
+import 'package:get/get.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -22,7 +25,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SignUpController());
     return Scaffold(
+      resizeToAvoidBottomInset: false, 
       body: SafeArea(
         child: Stack(
           children: [
@@ -53,11 +58,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             topRight: Radius.circular(30),
                             topLeft: Radius.circular(30))),
                     child: SingleChildScrollView(
+                      reverse: true,
                       child: Padding(
                         padding: MediaQuery.of(context).viewInsets,
                         child: Column(children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 30, bottom: 20),
+                            padding: const EdgeInsets.only(top: 5, bottom: 60),
                             child: Text(
                               'Register',
                               style: TextStyle(
@@ -67,15 +73,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           InputField1(
                             hint: 'Username',
                             icon: 'assets/images/user.svg',
-                            // controller: authController.name,
+                            controller: controller.name,
+                            validate: controller.validateSignUpForm,
+                            validator: (field) =>
+                                Validators.emptyStringValidator(
+                                    field, '*username '),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 4, top: 4),
                             child: InputField1(
                               icon: 'assets/images/email.svg',
                               hint: 'Email Address',
-                              // controller: authController.email,
+                              controller: controller.email,
                               type: TextInputType.emailAddress,
+                              validate: controller.validateSignUpForm,
+                              validator: (field) =>
+                                  Validators.emailValidator(field),
                             ),
                           ),
                           Padding(
@@ -83,15 +96,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: InputField1(
                               hint: 'Phone Number',
                               icon: 'assets/images/phone.svg',
-                              // controller: authController.phone,
+                              controller: controller.phone,
                               type: TextInputType.number,
+                              validate: controller.validateSignUpForm,
+                              validator: (field) =>
+                                  Validators.emptyStringValidator(
+                                      field, '*phone'),
                             ),
                           ),
                           InputField1(
                             hint: 'Password',
                             icon: 'assets/images/lock.svg',
                             obscure: true,
-                            // controller: authController.password,
+                            controller: controller.password,
+                            validate: controller.validateSignUpForm,
+                            validator: (field) =>
+                                Validators.passwordValidator(field),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 4, bottom: 20),
@@ -99,7 +119,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               hint: 'Confirm Password',
                               icon: 'assets/images/lock.svg',
                               obscure: true,
-                              // controller: authController.confirmPassword,
+                              controller: controller.confirmPassword,
+                              validate: controller.validateSignUpForm,
+                              validator: (field) =>
+                                  Validators.confirmPasswordValidator(
+                                      controller.password.text, field),
                             ),
                           ),
                           LargeButton(
@@ -107,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             sreenRatio: 0.9,
                             onPressed: () {
                               setState(() {});
-                              // authController.register();
+                              controller.register();
                             },
                             textcolor: Colors.white,
                             buttonWidth: 0.95,

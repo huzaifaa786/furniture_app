@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class InputField1 extends StatelessWidget {
   const InputField1(
@@ -16,6 +17,7 @@ class InputField1 extends StatelessWidget {
       this.onChange,
       this.imageIcon,
       this.validator,
+      this.validate,
       this.autovalidateMode,
       // this.validate,
       this.icon,
@@ -26,6 +28,7 @@ class InputField1 extends StatelessWidget {
 
   final controller;
   final validator;
+  final validate;
   // final RxBool? validate;
   final obscure;
   final hint;
@@ -91,6 +94,10 @@ class InputField1 extends StatelessWidget {
                   controller: controller,
                   style: TextStyle(fontSize: fontSize),
                   obscureText: obscure,
+                  autovalidateMode: autovalidateMode ??
+                      (validate == true.obs
+                          ? AutovalidateMode.always
+                          : AutovalidateMode.onUserInteraction),
                   keyboardType: type,
                   validator: validator,
                   decoration: InputDecoration(
