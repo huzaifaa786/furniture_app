@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LoadingHelper.init();
-    Get.put(LoginController());
+  Get.put(LoginController());
 
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
       .then((value) {
