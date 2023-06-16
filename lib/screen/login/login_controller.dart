@@ -30,6 +30,7 @@ class LoginController extends GetxController {
         ));
       }
     }
+    LoadingHelper.dismiss();
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/helper/loading.dart';
+import 'package:furniture/screen/bottomNavBar/bottomNaviBar.dart';
 import 'package:furniture/screen/home/home_screen.dart';
 import 'package:furniture/screen/login/login_screen.dart';
 import 'package:get/get.dart';
@@ -27,7 +28,7 @@ class AuthService extends GetxController {
   _setInitialScreen(User? user) {
     user == null
         ? Get.offAll(() => const LoginScreen())
-        : Get.offAll(() => const HomeScreen());
+        : Get.offAll(() => const BottomNavScreen());
   }
 
   //FUNC

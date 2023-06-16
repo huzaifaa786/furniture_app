@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/model/company.dart';
+import 'package:furniture/screen/company_profile/profile.dart';
 import 'package:furniture/values/colors.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -80,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: MediaQuery.of(context).size.height * 0.64,
           child: ListView.builder(
             itemCount: companies.length,
@@ -120,13 +122,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      title: Text(company.name),
+                      title: Text(
+                        company.name,
+                        style: TextStyle(
+                            fontFamily: 'Poppins', fontWeight: FontWeight.w600),
+                      ),
                       subtitle: Row(
                         children: [
                           Icon(
                             Icons.star,
                             size: 16,
-                            color: Colors.yellow,
+                            color: ratingColor,
                           ),
                           SizedBox(width: 4),
                           Text(company.starRating.toString()),
@@ -137,6 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         size: 30,
                       ),
                       onTap: () {
+                        Get.to(() => CompanyProfileScreen(company: company));
                         // Handle the tap on the list item
                         // You can navigate to the detail screen or perform any other action
                       },

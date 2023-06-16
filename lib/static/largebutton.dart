@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, deprecated_member_use, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/values/colors.dart';
 
-
-class LargeButtons extends StatelessWidget {
-  const LargeButtons(
+class MIconButton extends StatelessWidget {
+  const MIconButton(
       {Key? key,
       @required this.title,
       @required this.onPressed,
@@ -14,7 +14,7 @@ class LargeButtons extends StatelessWidget {
       this.buttonWidth = 0.8,
       this.screenRatio = 0.9,
       this.rounded = false,
-      this.color })
+      this.color})
       : super(key: key);
 
   final title;
@@ -27,29 +27,32 @@ class LargeButtons extends StatelessWidget {
   final buttonWidth;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * screenRatio,
-        height: 60,
-        child: Container(
-          decoration: BoxDecoration(
-              color: greenish,
-              borderRadius: BorderRadius.all(Radius.circular(12))),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  color: textcolor,
-                  fontFamily: 'Poppins',
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * screenRatio,
+      height: 60,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          primary: color,
+          shadowColor: primaryColor,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset('assets/images/share.svg'),
+            Text(
+              title,
+              style: const TextStyle(
+                fontFamily: 'Poppins',
+                color: Color.fromARGB(255, 255, 255, 255),
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
         ),
       ),
     );
