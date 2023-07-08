@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/screen/home/home_screen.dart';
+import 'package:furniture/screen/order/orderscreen.dart';
 import 'package:furniture/screen/setting/setting.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -42,7 +43,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
     // ignore: no_leading_underscores_for_local_identifiers
     var _fragments = [
       const HomeScreen(),
-      const HomeScreen(),
+      const OrderScreen(),
       const SettingScreen(),
     ];
     return WillPopScope(

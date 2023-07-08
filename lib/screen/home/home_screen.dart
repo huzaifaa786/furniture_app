@@ -2,8 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:furniture/chatting/chattingscreen.dart';
+import 'package:furniture/chatting/mingoscreen.dart';
 import 'package:furniture/model/company.dart';
 import 'package:furniture/screen/company_profile/profile.dart';
+import 'package:furniture/screen/order/notification.dart';
+import 'package:furniture/screen/order/orderstatus.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
 
@@ -52,7 +56,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MingoScreen()),
+                            );
+                          },
                           icon: SvgPicture.asset(
                             'assets/images/notification.svg',
                           ),
