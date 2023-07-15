@@ -6,7 +6,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:furniture/chatting/chattingscreen.dart';
+import 'package:furniture/chatting/message_screen.dart';
+import 'package:furniture/helper/general.dart';
 import 'package:furniture/model/company.dart';
+import 'package:furniture/screen/company_profile/company_controller.dart';
 import 'package:furniture/static/headingText.dart';
 import 'package:furniture/static/largebutton.dart';
 import 'package:furniture/values/colors.dart';
@@ -22,14 +26,10 @@ class CompanyProfileScreen extends StatefulWidget {
 
 class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
   int _current = 0;
-  List<String> imgList = [
-    'https://cdn.shopify.com/s/files/1/0891/4784/articles/Top_12_Furniture_Store_in_Calgary_1024x1024.jpg?v=1663218020',
-    'https://cdn.shopify.com/s/files/1/0891/4784/articles/Top_12_Furniture_Store_in_Calgary_1024x1024.jpg?v=1663218020',
-    'https://cdn.shopify.com/s/files/1/0891/4784/articles/Top_12_Furniture_Store_in_Calgary_1024x1024.jpg?v=1663218020',
-  ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GetBuilder<CompanyController>(
+      builder: (companyController) =>  Scaffold(
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -57,7 +57,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                   });
                                 },
                               ),
-                              items: imgList.map((i) {
+                              items: companyController.imgList.map((i) {
                                 return Builder(
                                   builder: (BuildContext context) {
                                     return Container(
@@ -98,7 +98,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                             bottom: 24,
                             right: 115,
                             child: CarouselIndicator(
-                              count: imgList.length,
+                              count: 3,
                               index: _current,
                               activeColor: Colors.white,
                               color: Colors.white60,
@@ -115,12 +115,9 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                           ClipRRect(
                             borderRadius:
                                 BorderRadius.circular(10), // Image border
-                            child: Image.asset(
-                              'assets/images/loginback.png',
-                              height: 70,
-                              width: 70,
-                              fit: BoxFit.cover,
-                            ),
+                            child: 
+                            CachedNetworkImage(imageUrl: companyController.company.companyImage,fit: BoxFit.cover,  height: 70,
+                              width: 70,)
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 10.0),
@@ -138,7 +135,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                   ),
                                 ),
                                 RatingBar.builder(
-                                  initialRating: widget.company.starRating,
+                                  initialRating: 3,
                                   minRating: 0,
                                   direction: Axis.horizontal,
                                   allowHalfRating: true,
@@ -164,7 +161,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 18),
                       child: Text(
-                        'Lorem ipsum dolor sit amet consectetur. Dapibus velit tellus egestas felis integer facilisi pellentesque a. Molestie vitae potenti amet pharetra faucibus enim. Mattis nulla sapien lorem tortor etiam. Cras lacus odio tincidunt vel blandit sapien phasellus ipsum si.',
+                        companyController.company.englishBio,
                         style: TextStyle(
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w400,
@@ -187,7 +184,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8.0),
                             child: Text(
-                              'From ' + '9:00' + ' To ' + '05:00',
+                              'From ' + formattedTime(companyController.company.startTime)+ ' To ' + formattedTime(companyController.company.endTime),
                               style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w400,
@@ -204,11 +201,13 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
               ),
               Positioned(
                   bottom: 20,
-                  child: MIconButton(title: "Inquire", onPressed: () {}))
+                  child: MIconButton(title: "Inquire", onPressed: () {
+                        Get.to(() => MessageScreen());
+                  }))
             ],
           ),
         ),
-      ),
+      ),),
     );
   }
 }

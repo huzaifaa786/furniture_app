@@ -58,7 +58,9 @@ class _SettingScreenState extends State<SettingScreen> {
                   bottom: 20,
                   child: LargeButton(
                     title: "Log Out",
-                    onPressed: () {},
+                    onPressed: () {
+                      
+                    },
                   ))
             ],
           ),

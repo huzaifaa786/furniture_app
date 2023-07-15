@@ -1,10 +1,14 @@
 // ignore_for_file: deprecated_member_use, prefer_const_constructors
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:furniture/chatting/mingoscreen.dart';
+import 'package:furniture/chatting/message_screen.dart';
+import 'package:furniture/constants/constants.dart';
 import 'package:furniture/model/company.dart';
+import 'package:furniture/screen/company_profile/company_controller.dart';
 import 'package:furniture/screen/company_profile/profile.dart';
+import 'package:furniture/screen/home/home_controller.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +22,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GetBuilder<HomeController>(
+      builder: (companyController) => Scaffold(
         body: SafeArea(
             child: Column(
       children: [
@@ -57,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MingoScreen()),
+                                  builder: (context) => MessageScreen()),
                             );
                           },
                           icon: SvgPicture.asset(
@@ -79,9 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 10,
               ),
-              const Padding(
+               Padding(
                   padding: EdgeInsets.only(left: 15, top: 15),
-                  child: Text('William Jones',
+                  child: Text(homeController.loggedInUserName.value,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
@@ -89,12 +94,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.64,
+        Flexible(
           child: ListView.builder(
-            itemCount: companies.length,
+            itemCount: homeController.companies.length,
             itemBuilder: (context, index) {
-              final company = companies[index];
+              final company = homeController.companies[index];
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
                 child: ClipRRect(
@@ -122,10 +126,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: CircleAvatar(
                           radius: 10,
-                          backgroundColor: Colors.transparent,
+                          backgroundColor: Colors.white,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.asset('assets/images/splashLogo.png'),
+                            child: CachedNetworkImage(imageUrl: company.companyImage,fit: BoxFit.fitHeight,),
                           ),
                         ),
                       ),
@@ -142,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: ratingColor,
                           ),
                           SizedBox(width: 4),
-                          Text(company.starRating.toString()),
+                          Text('3'),
                         ],
                       ),
                       trailing: Icon(
@@ -150,6 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         size: 30,
                       ),
                       onTap: () {
+                        Get.put(CompanyController(company: company));
                         Get.to(() => CompanyProfileScreen(company: company));
                         // Handle the tap on the list item
                         // You can navigate to the detail screen or perform any other action
@@ -162,6 +167,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ],
-    )));
+    ))));
   }
 }

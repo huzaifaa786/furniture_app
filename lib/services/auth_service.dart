@@ -45,7 +45,7 @@ class AuthService extends GetxController {
             "id": userID,
             'token': token,
             "email": email.trim(),
-            "name": email.trim(),
+            "name": name.trim(),
             "phone": phone.trim(),
           });
         } catch (e) {

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture/firebase_options.dart';
 import 'package:furniture/helper/loading.dart';
+import 'package:furniture/screen/company_profile/company_controller.dart';
+import 'package:furniture/screen/home/home_controller.dart';
 import 'package:furniture/screen/login/login_controller.dart';
 import 'package:furniture/screen/login/login_screen.dart';
 import 'package:furniture/screen/register/signup_controller.dart';
@@ -21,6 +23,7 @@ void main() async {
     Get.put(AuthService());
     Get.put(SignUpController());
     Get.put(LoginController());
+    Get.put(HomeController());
   });
   runApp(const MyApp());
 }

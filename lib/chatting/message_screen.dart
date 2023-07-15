@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/values/colors.dart';
 
-class MingoScreen extends StatefulWidget {
-  const MingoScreen({super.key});
+class MessageScreen extends StatefulWidget {
+  const MessageScreen({super.key});
 
   @override
-  State<MingoScreen> createState() => _MyWidgetState();
+  State<MessageScreen> createState() => _MessageScreenState();
 }
 
-class _MyWidgetState extends State<MingoScreen> {
+class _MessageScreenState extends State<MessageScreen> {
   @override
   void initState() {
     super.initState();

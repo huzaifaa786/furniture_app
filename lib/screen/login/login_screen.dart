@@ -2,11 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:furniture/constants/constants.dart';
+import 'package:furniture/screen/home/home_controller.dart';
+import 'package:furniture/screen/login/login_controller.dart';
 import 'package:furniture/screen/register/sign_up.dart';
 import 'package:furniture/static/input_field1.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/values/Validator.dart';
 import 'package:furniture/values/colors.dart';
+import 'package:get/get.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -27,7 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GetBuilder<LoginController>(
+      builder: (companyController) => Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -375,6 +379,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
         ),
+      ),
       ),
     );
   }
