@@ -21,27 +21,32 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   Future<List<String>> fetchUsersWithMyID() async {
     List<String> userList = [];
 
     try {
-      QuerySnapshot messagesSnapshot =
-          await FirebaseFirestore.instance.collection('messages').get();
+            QuerySnapshot messagesSnapshot =
+          await firestore.collection('messages')
+          // .where('userId', isEqualTo: 'B4kLpQh1IvdQYm0275l8VOUQfj62') // Replace 'subcollection_name' with the actual name of the subcollection
+      .get();
+print('messagesSnapshot.docs');
+print(messagesSnapshot.docs);
+      // for (var messageDoc in messagesSnapshot.docs) {
+      //   // Split the doc field using the '-' separator
+      //   List<String> usersIDs = (messageDoc['doc']).split('-');
+      //   // Add the other user's ID to the list if it's different from your ID
+      //   print('usersIDs');
+      //   print(usersIDs);
 
-      for (var messageDoc in messagesSnapshot.docs) {
-        // Split the doc field using the '-' separator
-        List<String> usersIDs = (messageDoc['doc']).split('-');
-        // Add the other user's ID to the list if it's different from your ID
-        print('usersIDs');
-        print(usersIDs);
+      //   String otherUserID =
+      //       usersIDs[0] == auth.currentUser!.uid ? usersIDs[1] : usersIDs[0];
 
-        String otherUserID =
-            usersIDs[0] == auth.currentUser!.uid ? usersIDs[1] : usersIDs[0];
-
-        if (!userList.contains(otherUserID)) {
-          userList.add(otherUserID);
-        }
-      }
+      //   if (!userList.contains(otherUserID)) {
+      //     userList.add(otherUserID);
+      //   }
+      // }
       print('userList[0]');
       print(userList);
     } catch (e) {
