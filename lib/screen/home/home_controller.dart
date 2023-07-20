@@ -37,7 +37,9 @@ class HomeController extends GetxController {
       List<Company> fetchedCompanies = querySnapshot.docs.map((doc) {
         return Company(
           id: doc.id,
-          companyImage: doc['companyImage'],
+          companyImage: doc['companyImage1'],
+          companyImage1: doc['companyImage2'],
+          companyImage2: doc['companyImage3'],
           startTime: (doc['startTime'] as Timestamp).toDate(),
           endTime: (doc['endTime'] as Timestamp).toDate(),
           englishBio: doc['englishBio'],

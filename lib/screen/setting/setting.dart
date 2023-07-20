@@ -50,7 +50,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       text: 'Report Issue',
                       ontap: () {},
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),
@@ -58,9 +58,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   bottom: 20,
                   child: LargeButton(
                     title: "Log Out",
-                    onPressed: () {
-                      
-                    },
+                    onPressed: () {},
                   ))
             ],
           ),

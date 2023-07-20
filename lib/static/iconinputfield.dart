@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 
 class IconInputFields extends StatelessWidget {
-  IconInputFields(
+  const IconInputFields(
       {Key? key,
       this.controller,
       this.hint,

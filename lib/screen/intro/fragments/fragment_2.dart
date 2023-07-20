@@ -15,29 +15,29 @@ class _FragmentTwoState extends State<FragmentTwo> {
       backgroundColor: white,
       body: SafeArea(
           child: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
                   // padding: EdgeInsets.only(top: 4),
                   width: MediaQuery.of(context).size.width,
                   child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image(
-                image: AssetImage(
+                image: const AssetImage(
                   'assets/images/splash2.png',
                 ),
                 height: MediaQuery.of(context).size.height * 0.35,
               ),
               Container(
-                padding: EdgeInsets.only(top: 12, right: 25, left: 25,bottom : 10),
-                child: Text(
+                padding: const EdgeInsets.only(top: 12, right: 25, left: 25,bottom : 10),
+                child: const Text(
                   'Experienced and trained professionals',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 12, right: 25, left:25,bottom : 8),
-                child: Text(
+                padding: const EdgeInsets.only(top: 12, right: 25, left:25,bottom : 8),
+                child: const Text(
                   'Lorem ipsum dolor sit amet consectetur. Amet arcu nisl urna tortor scelerisque commodo.',
                   // 'كليك ووش هي منصة توفر تجربة غسيل سيارات مريحة أثناء قضاء وقتك في المركزالتجاري المفضل لديك',
                   textAlign: TextAlign.center,

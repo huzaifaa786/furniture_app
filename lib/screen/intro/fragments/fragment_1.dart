@@ -18,7 +18,7 @@ class _FragmentOneState extends State<FragmentOne> {
       backgroundColor: white,
       body: SafeArea(
           child: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
                   // padding: EdgeInsets.only(top: 20),
                   width: MediaQuery.of(context).size.width,
                   child: Column(

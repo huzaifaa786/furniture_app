@@ -17,7 +17,7 @@ class _MyWidgetState extends State<NotificationScreen> {
     return Scaffold(
       body: SafeArea(
           child: Container(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -33,7 +33,7 @@ class _MyWidgetState extends State<NotificationScreen> {
               elevation: 10,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,8 +41,8 @@ class _MyWidgetState extends State<NotificationScreen> {
                       Container(
                         height: 50,
                         width: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(5.0),
                               bottomRight: Radius.circular(5.0),
                               topLeft: Radius.circular(5.0),
@@ -58,7 +58,7 @@ class _MyWidgetState extends State<NotificationScreen> {
                           ),
                         ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(right: 25),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +101,7 @@ class _MyWidgetState extends State<NotificationScreen> {
                 SvgPicture.asset(
                   'assets/images/bell.svg',
                 ),
-                Row(
+                const Row(
                   children: [
                     Expanded(
                       child: Padding(

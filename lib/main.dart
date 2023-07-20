@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:furniture/chat/controller.dart';
 import 'package:furniture/firebase_options.dart';
 import 'package:furniture/helper/loading.dart';
-import 'package:furniture/screen/company_profile/company_controller.dart';
 import 'package:furniture/screen/home/home_controller.dart';
 import 'package:furniture/screen/login/login_controller.dart';
 import 'package:furniture/screen/login/login_screen.dart';
@@ -12,10 +14,12 @@ import 'package:furniture/services/auth_service.dart';
 import 'package:furniture/values/styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LoadingHelper.init();
+  await Firebase.initializeApp();
   Get.put(LoginController());
 
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
@@ -40,17 +44,26 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
-      builder: EasyLoading.init(),
-      theme: Styles.lightTheme,
-      title: "furniture",
-      initialRoute: 'login',
-      routes: {
-        'splash': (_) => const SplashScreen(),
-        'login': (_) => const LoginScreen(),
-      },
+    return MultiProvider(
+      providers: [
+        Provider<ChatProvider>(
+          create: (_) => ChatProvider(
+            // firebaseStorage: firebaseStorage,
+          ),
+        ),
+      ],
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        navigatorKey: navigatorKey,
+        builder: EasyLoading.init(),
+        theme: Styles.lightTheme,
+        title: "furniture",
+        initialRoute: 'login',
+        routes: {
+          'splash': (_) => const SplashScreen(),
+          'login': (_) => const LoginScreen(),
+        },
+      ),
     );
   }
 }

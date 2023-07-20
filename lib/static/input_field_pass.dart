@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InputFieldPassword extends StatelessWidget {
@@ -62,10 +61,10 @@ class InputFieldPassword extends StatelessWidget {
             },
           ),
           hintText: hint,
-          hintStyle: TextStyle(color: Colors.grey),
+          hintStyle: const TextStyle(color: Colors.grey),
           contentPadding: const EdgeInsets.only(left: 3.0)),
       keyboardType: type,
-      cursorColor: Color.fromARGB(255, 0, 0, 0),
+      cursorColor: const Color.fromARGB(255, 0, 0, 0),
       obscureText: obscure,
       maxLines: 1,
       validator: validator,

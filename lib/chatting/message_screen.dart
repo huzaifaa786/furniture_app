@@ -15,11 +15,12 @@ class _MessageScreenState extends State<MessageScreen> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Container(
+        title: SizedBox(
           width: MediaQuery.of(context).size.width * 0.7,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -29,7 +30,7 @@ class _MessageScreenState extends State<MessageScreen> {
                 height: 45.0,
                 width: 45.0,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
+                  image: const DecorationImage(
                     image: AssetImage('assets/images/loginback.png'),
                     fit: BoxFit.cover,
                   ),
@@ -37,7 +38,7 @@ class _MessageScreenState extends State<MessageScreen> {
                   border: Border.all(color: mainColor, width: 2.0),
                 ),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(right: 100),
                 child: Text(
                   'Mingo',
@@ -53,11 +54,11 @@ class _MessageScreenState extends State<MessageScreen> {
         leading: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Container(
-            padding: EdgeInsets.all(6),
+            padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(45),
                 border: Border.all(color: Colors.grey)),
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios_new,
               size: 18,
               color: Colors.black,
@@ -70,21 +71,21 @@ class _MessageScreenState extends State<MessageScreen> {
             child: Container(
               height: 40,
               width: 40,
-              alignment: Alignment(-0.7, -0.8),
-              child: Center(
-                  child: Icon(
-                Icons.more_vert,
-                size: 20,
-                color: Colors.black,
-              )),
+              alignment: const Alignment(-0.7, -0.8),
               decoration: BoxDecoration(
                   color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(10.0),
                       bottomRight: Radius.circular(10.0),
                       topLeft: Radius.circular(10.0),
                       bottomLeft: Radius.circular(10.0)),
                   border: Border.all(color: Colors.grey.shade300, width: 2.0)),
+              child: const Center(
+                  child: Icon(
+                Icons.more_vert,
+                size: 20,
+                color: Colors.black,
+              )),
             ),
           ),
         ],
@@ -93,7 +94,7 @@ class _MessageScreenState extends State<MessageScreen> {
       body: SafeArea(
           child: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(left: 15, right: 15, top: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15, top: 15),
           child: Column(
             children: [
               Row(
@@ -104,7 +105,7 @@ class _MessageScreenState extends State<MessageScreen> {
                       thickness: 1,
                     ),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: 5, right: 5),
                     child: Text('Today'),
                   ),
@@ -123,9 +124,9 @@ class _MessageScreenState extends State<MessageScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(top: 10),
+                          padding: const EdgeInsets.only(top: 10),
                           child: Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: mainColor,
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10.0),
@@ -133,12 +134,12 @@ class _MessageScreenState extends State<MessageScreen> {
                                   topLeft: Radius.circular(10.0),
                                   bottomLeft: Radius.circular(10.0)),
                             ),
-                            padding: EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(20),
                             //color: mainColor,
                             constraints: const BoxConstraints(
                               maxWidth: 200,
                             ),
-                            child: Text(
+                            child: const Text(
                               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
                               style: TextStyle(
                                   fontSize: 14,
@@ -153,33 +154,33 @@ class _MessageScreenState extends State<MessageScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(top: 10),
+                          padding: const EdgeInsets.only(top: 10),
                           child: Container(
                               decoration: BoxDecoration(
                                 // color: mainColor.withOpacity(0.1),
                                 color: Colors.grey.shade300,
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   topRight: Radius.circular(10.0),
                                   bottomRight: Radius.circular(10.0),
                                   topLeft: Radius.circular(10.0),
                                   //  bottomLeft: Radius.circular(10.0)
                                 ),
                               ),
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               constraints: const BoxConstraints(
                                 maxWidth: 200,
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Please Send your location",
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.only(top: 5, bottom: 5),
                                     child: Text(
                                       "From :",
@@ -189,7 +190,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                       ),
                                     ),
                                   ),
-                                  Text(
+                                  const Text(
                                     "TO :",
                                     style: TextStyle(
                                       fontSize: 14,
@@ -204,13 +205,13 @@ class _MessageScreenState extends State<MessageScreen> {
                                           showDataAlert();
                                         },
                                         child: Container(
-                                          padding: EdgeInsets.all(6),
+                                          padding: const EdgeInsets.all(6),
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(45),
                                               border: Border.all(
                                                   color: Colors.grey)),
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.arrow_forward_ios,
                                             size: 15,
                                           ),
@@ -218,7 +219,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                       ),
                                     ],
                                   ),
-                                  Text(
+                                  const Text(
                                     '3:10 PM',
                                     style: TextStyle(
                                       fontSize: 12,
@@ -234,33 +235,33 @@ class _MessageScreenState extends State<MessageScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
+                          padding: const EdgeInsets.only(top: 10, bottom: 10),
                           child: Container(
                               decoration: BoxDecoration(
                                 // color: mainColor.withOpacity(0.1),
                                 color: Colors.grey.shade300,
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   topRight: Radius.circular(10.0),
                                   bottomRight: Radius.circular(10.0),
                                   topLeft: Radius.circular(10.0),
                                   //  bottomLeft: Radius.circular(10.0)
                                 ),
                               ),
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               constraints: const BoxConstraints(
                                 maxWidth: 250,
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Please take photos and videos from your luggage bill",
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
-                                  Padding(
+                                  const Padding(
                                     padding:
                                         EdgeInsets.only(top: 10, bottom: 10),
                                     child: Text(
@@ -271,14 +272,14 @@ class _MessageScreenState extends State<MessageScreen> {
                                       ),
                                     ),
                                   ),
-                                  Text(
+                                  const Text(
                                     '1 Table',
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.only(top: 5, bottom: 5),
                                     child: Text(
                                       '3 Chairs',
@@ -288,7 +289,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.only(top: 5, bottom: 5),
                                     child: Row(children: [
                                       Text("Date of Send:",
@@ -300,7 +301,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                       )
                                     ]),
                                   ),
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.only(top: 5, bottom: 5),
                                     child: Row(children: [
                                       Text("Time:",
@@ -312,7 +313,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                       )
                                     ]),
                                   ),
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.only(top: 5, bottom: 5),
                                     child: Row(children: [
                                       Text("Amount:",
@@ -325,7 +326,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                     ]),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
+                                    padding: const EdgeInsets.only(top: 5, bottom: 5),
                                     width: MediaQuery.of(context).size.width *
                                         0.35,
                                     child: Row(
@@ -333,18 +334,18 @@ class _MessageScreenState extends State<MessageScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          padding: EdgeInsets.all(8),
+                                          padding: const EdgeInsets.all(8),
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(45),
                                               border: Border.all(
                                                   color: Colors.grey)),
                                         ),
-                                        Container(
+                                        SizedBox(
                                             height: 20,
                                             child: Image.asset(
                                                 'assets/images/apple.png')),
-                                        Text(
+                                        const Text(
                                           'Apply Pay',
                                           style: TextStyle(
                                               fontSize: 14,
@@ -354,7 +355,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.only(top: 5, bottom: 5),
+                                    padding: const EdgeInsets.only(top: 5, bottom: 5),
                                     width: MediaQuery.of(context).size.width *
                                         0.40,
                                     child: Row(
@@ -362,7 +363,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          padding: EdgeInsets.all(8),
+                                          padding: const EdgeInsets.all(8),
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(45),
@@ -371,17 +372,17 @@ class _MessageScreenState extends State<MessageScreen> {
                                         ),
                                         Row(
                                           children: [
-                                            Container(
+                                            SizedBox(
                                                 height: 15,
                                                 child: Image.asset(
                                                     'assets/images/google.png')),
-                                            Text(
+                                            const Text(
                                               'Pay',
                                               style: TextStyle(fontSize: 12),
                                             ),
                                           ],
                                         ),
-                                        Text(
+                                        const Text(
                                           'Google Pay',
                                           style: TextStyle(
                                               fontSize: 14,
@@ -392,7 +393,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                   ),
                                   Container(
                                     padding:
-                                        EdgeInsets.only(top: 5, bottom: 15),
+                                        const EdgeInsets.only(top: 5, bottom: 15),
                                     width: MediaQuery.of(context).size.width *
                                         0.45,
                                     child: Row(
@@ -400,18 +401,18 @@ class _MessageScreenState extends State<MessageScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          padding: EdgeInsets.all(8),
+                                          padding: const EdgeInsets.all(8),
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(45),
                                               border: Border.all(
                                                   color: Colors.grey)),
                                         ),
-                                        Container(
+                                        SizedBox(
                                             height: 20,
                                             child: Image.asset(
                                                 'assets/images/visa.png')),
-                                        Text(
+                                        const Text(
                                           'Credit/Debit Card',
                                           style: TextStyle(
                                               fontSize: 14,
@@ -433,19 +434,19 @@ class _MessageScreenState extends State<MessageScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
-                  scrollPadding: EdgeInsets.only(bottom: 30),
+                  scrollPadding: const EdgeInsets.only(bottom: 30),
                   obscureText: false,
                   decoration: InputDecoration(
-                    suffixIcon: Icon(
+                    suffixIcon: const Icon(
                       Icons.add_circle_outline,
                       color: Colors.grey,
                     ),
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey[300]!),
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                        borderRadius: const BorderRadius.all(Radius.circular(20))),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey[300]!),
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
                     ),
                     hintText: 'Your message',
                   ),
@@ -463,17 +464,17 @@ class _MessageScreenState extends State<MessageScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(
                   20.0,
                 ),
               ),
             ),
-            contentPadding: EdgeInsets.only(
+            contentPadding: const EdgeInsets.only(
               top: 10.0,
             ),
-            content: Container(
+            content: SizedBox(
               height: 250,
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(8.0),
@@ -485,7 +486,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
-                        scrollPadding: EdgeInsets.only(bottom: 30),
+                        scrollPadding: const EdgeInsets.only(bottom: 30),
                         obscureText: false,
                         decoration: InputDecoration(
                           prefixIcon: Padding(
@@ -501,10 +502,10 @@ class _MessageScreenState extends State<MessageScreen> {
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.grey[300]!),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                                  const BorderRadius.all(Radius.circular(10))),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey[300]!),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius: const BorderRadius.all(Radius.circular(10)),
                           ),
                           hintText: 'FROM',
                         ),
@@ -513,7 +514,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
-                        scrollPadding: EdgeInsets.only(bottom: 30),
+                        scrollPadding: const EdgeInsets.only(bottom: 30),
                         obscureText: false,
                         decoration: InputDecoration(
                           prefixIcon: Padding(
@@ -528,10 +529,10 @@ class _MessageScreenState extends State<MessageScreen> {
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.grey[300]!),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                                  const BorderRadius.all(Radius.circular(10))),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey[300]!),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius: const BorderRadius.all(Radius.circular(10)),
                           ),
                           hintText: 'TO',
                         ),

@@ -14,7 +14,7 @@ class _MyWidgetState extends State<ChattingScreen> {
     return Scaffold(
       body: SafeArea(
           child: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             TopBar(
@@ -22,8 +22,8 @@ class _MyWidgetState extends State<ChattingScreen> {
               ontap: () {},
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 8),
-              padding: EdgeInsets.all(20),
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
                   color: Colors.white,
@@ -32,20 +32,20 @@ class _MyWidgetState extends State<ChattingScreen> {
                       color: Colors.grey.shade200,
                       blurRadius: 5.0, // Soften the shaodw
                       spreadRadius: 2.0,
-                      offset: Offset(0.0, 0.0),
+                      offset: const Offset(0.0, 0.0),
                     )
                   ]),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 50,
                     width: 50,
                     child: Image.asset(
                       'assets/images/loginback.png',
                     ),
                   ),
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
@@ -61,7 +61,7 @@ class _MyWidgetState extends State<ChattingScreen> {
                               fontSize: 11, fontWeight: FontWeight.w600))
                     ],
                   ),
-                  Icon(
+                  const Icon(
                     Icons.arrow_circle_right_outlined,
                     size: 30,
                   ),
@@ -69,8 +69,8 @@ class _MyWidgetState extends State<ChattingScreen> {
               ),
             ),
              Container(
-              margin: EdgeInsets.only(bottom: 8),
-              padding: EdgeInsets.all(20),
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
               color: Colors.white,
@@ -79,20 +79,20 @@ class _MyWidgetState extends State<ChattingScreen> {
                   color: Colors.grey.shade200,
                   blurRadius: 5.0, // Soften the shaodw
                   spreadRadius: 2.0,
-                  offset: Offset(0.0, 0.0),
+                  offset: const Offset(0.0, 0.0),
                 )
               ]),
               child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
+              SizedBox(
                 height: 50,
                 width: 50,
                 child: Image.asset(
                   'assets/images/loginback.png',
                 ),
               ),
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
@@ -108,7 +108,7 @@ class _MyWidgetState extends State<ChattingScreen> {
                           fontSize: 11, fontWeight: FontWeight.w600))
                 ],
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_circle_right_outlined,
                 size: 30,
               ),
@@ -116,8 +116,8 @@ class _MyWidgetState extends State<ChattingScreen> {
               ),
             ),
              Container(
-              margin: EdgeInsets.only(bottom: 8),
-              padding: EdgeInsets.all(20),
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
               color: Colors.white,
@@ -126,20 +126,20 @@ class _MyWidgetState extends State<ChattingScreen> {
                   color: Colors.grey.shade200,
                   blurRadius: 5.0, // Soften the shaodw
                   spreadRadius: 2.0,
-                  offset: Offset(0.0, 0.0),
+                  offset: const Offset(0.0, 0.0),
                 )
               ]),
               child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
+              SizedBox(
                 height: 50,
                 width: 50,
                 child: Image.asset(
                   'assets/images/loginback.png',
                 ),
               ),
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
@@ -155,7 +155,7 @@ class _MyWidgetState extends State<ChattingScreen> {
                           fontSize: 11, fontWeight: FontWeight.w600))
                 ],
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_circle_right_outlined,
                 size: 30,
               ),
@@ -163,8 +163,8 @@ class _MyWidgetState extends State<ChattingScreen> {
               ),
             ),
              Container(
-              margin: EdgeInsets.only(bottom: 8),
-              padding: EdgeInsets.all(20),
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
               color: Colors.white,
@@ -173,20 +173,20 @@ class _MyWidgetState extends State<ChattingScreen> {
                   color: Colors.grey.shade200,
                   blurRadius: 5.0, // Soften the shaodw
                   spreadRadius: 2.0,
-                  offset: Offset(0.0, 0.0),
+                  offset: const Offset(0.0, 0.0),
                 )
               ]),
               child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
+              SizedBox(
                 height: 50,
                 width: 50,
                 child: Image.asset(
                   'assets/images/loginback.png',
                 ),
               ),
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
@@ -202,7 +202,7 @@ class _MyWidgetState extends State<ChattingScreen> {
                           fontSize: 11, fontWeight: FontWeight.w600))
                 ],
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_circle_right_outlined,
                 size: 30,
               ),

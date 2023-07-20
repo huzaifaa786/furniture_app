@@ -19,7 +19,7 @@ class _OrderScreenState extends State<OrderScreen> {
           Container(
             height: 70,
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: mainColor,
               borderRadius: BorderRadius.only(
                   // topLeft: Radius.circular(20),
@@ -27,7 +27,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20)),
             ),
-            child: Center(
+            child: const Center(
                 child: Text(
               'Orders',
               style: TextStyle(
@@ -38,13 +38,13 @@ class _OrderScreenState extends State<OrderScreen> {
             )),
           ),
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey[300]!),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey[300]!),
                 ),
@@ -56,7 +56,7 @@ class _OrderScreenState extends State<OrderScreen> {
           Flexible(
             child: Container(
               height: MediaQuery.of(context).size.height*0.85,
-              padding: EdgeInsets.only(left: 15,right: 15),
+              padding: const EdgeInsets.only(left: 15,right: 15),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -68,7 +68,7 @@ class _OrderScreenState extends State<OrderScreen> {
                       elevation: 10,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,8 +76,8 @@ class _OrderScreenState extends State<OrderScreen> {
                               Container(
                                 height: 50,
                                 width: 50,
-                                decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.only(
+                                decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(5.0),
                                       bottomRight: Radius.circular(5.0),
                                       topLeft: Radius.circular(5.0),
@@ -93,7 +93,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                   ),
                                 ),
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(top: 10, right: 90),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,11 +120,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: 10, right: 10),
+                                padding: const EdgeInsets.only(top: 10, right: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Padding(
+                                    const Padding(
                                       padding: EdgeInsets.only(bottom: 10),
                                       child: Text(
                                         '500 AED',
@@ -135,19 +135,19 @@ class _OrderScreenState extends State<OrderScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(right: 10),
+                                      padding: const EdgeInsets.only(right: 10),
                                       child: Container(
                                         height: 25,
                                         width: 60,
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.only(
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.only(
                                               bottomLeft: Radius.circular(5.0),
                                               bottomRight: Radius.circular(5.0),
                                               topLeft: Radius.circular(5.0),
                                               topRight: Radius.circular(5.0),
                                             ),
                                             color: Colors.black),
-                                        child: Center(
+                                        child: const Center(
                                           child: Text(
                                             'Track',
                                             maxLines: null,
@@ -175,7 +175,7 @@ class _OrderScreenState extends State<OrderScreen> {
                       elevation: 10,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -183,8 +183,8 @@ class _OrderScreenState extends State<OrderScreen> {
                               Container(
                                 height: 50,
                                 width: 50,
-                                decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.only(
+                                decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(5.0),
                                       bottomRight: Radius.circular(5.0),
                                       topLeft: Radius.circular(5.0),
@@ -200,7 +200,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                   ),
                                 ),
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(top: 10, right: 90),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,11 +227,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: 10, right: 10),
+                                padding: const EdgeInsets.only(top: 10, right: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Padding(
+                                    const Padding(
                                       padding: EdgeInsets.only(bottom: 10),
                                       child: Text(
                                         '200 AED',
@@ -242,19 +242,19 @@ class _OrderScreenState extends State<OrderScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(right: 10),
+                                      padding: const EdgeInsets.only(right: 10),
                                       child: Container(
                                         height: 25,
                                         width: 60,
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.only(
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.only(
                                               bottomLeft: Radius.circular(5.0),
                                               bottomRight: Radius.circular(5.0),
                                               topLeft: Radius.circular(5.0),
                                               topRight: Radius.circular(5.0),
                                             ),
                                             color: Colors.black),
-                                        child: Center(
+                                        child: const Center(
                                           child: Text(
                                             'Track',
                                             maxLines: null,
@@ -282,7 +282,7 @@ class _OrderScreenState extends State<OrderScreen> {
                       elevation: 10,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -290,8 +290,8 @@ class _OrderScreenState extends State<OrderScreen> {
                               Container(
                                 height: 50,
                                 width: 50,
-                                decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.only(
+                                decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(5.0),
                                       bottomRight: Radius.circular(5.0),
                                       topLeft: Radius.circular(5.0),
@@ -307,7 +307,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                   ),
                                 ),
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(top: 10, right: 90),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,11 +334,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: 10, right: 10),
+                                padding: const EdgeInsets.only(top: 10, right: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Padding(
+                                    const Padding(
                                       padding: EdgeInsets.only(bottom: 10),
                                       child: Text(
                                         '500 AED',
@@ -349,19 +349,19 @@ class _OrderScreenState extends State<OrderScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(right: 10),
+                                      padding: const EdgeInsets.only(right: 10),
                                       child: Container(
                                         height: 25,
                                         width: 60,
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.only(
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.only(
                                               bottomLeft: Radius.circular(5.0),
                                               bottomRight: Radius.circular(5.0),
                                               topLeft: Radius.circular(5.0),
                                               topRight: Radius.circular(5.0),
                                             ),
                                             color: Colors.black),
-                                        child: Center(
+                                        child: const Center(
                                           child: Text(
                                             'Track',
                                             maxLines: null,
@@ -389,7 +389,7 @@ class _OrderScreenState extends State<OrderScreen> {
                       elevation: 10,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -397,8 +397,8 @@ class _OrderScreenState extends State<OrderScreen> {
                               Container(
                                 height: 50,
                                 width: 50,
-                                decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.only(
+                                decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(5.0),
                                       bottomRight: Radius.circular(5.0),
                                       topLeft: Radius.circular(5.0),
@@ -414,7 +414,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                   ),
                                 ),
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(top: 10, right: 90),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -441,11 +441,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: 10, right: 10),
+                                padding: const EdgeInsets.only(top: 10, right: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Padding(
+                                    const Padding(
                                       padding: EdgeInsets.only(bottom: 10),
                                       child: Text(
                                         '300 AED',
@@ -456,19 +456,19 @@ class _OrderScreenState extends State<OrderScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(right: 10),
+                                      padding: const EdgeInsets.only(right: 10),
                                       child: Container(
                                         height: 25,
                                         width: 60,
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.only(
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.only(
                                               bottomLeft: Radius.circular(5.0),
                                               bottomRight: Radius.circular(5.0),
                                               topLeft: Radius.circular(5.0),
                                               topRight: Radius.circular(5.0),
                                             ),
                                             color: Colors.black),
-                                        child: Center(
+                                        child: const Center(
                                           child: Text(
                                             'Track',
                                             maxLines: null,
@@ -496,7 +496,7 @@ class _OrderScreenState extends State<OrderScreen> {
                       elevation: 10,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -504,8 +504,8 @@ class _OrderScreenState extends State<OrderScreen> {
                               Container(
                                 height: 50,
                                 width: 50,
-                                decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.only(
+                                decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(5.0),
                                       bottomRight: Radius.circular(5.0),
                                       topLeft: Radius.circular(5.0),
@@ -521,7 +521,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                   ),
                                 ),
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(top: 10, right: 90),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -548,11 +548,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: 10, right: 10),
+                                padding: const EdgeInsets.only(top: 10, right: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Padding(
+                                    const Padding(
                                       padding: EdgeInsets.only(bottom: 10),
                                       child: Text(
                                         '100 AED',
@@ -563,19 +563,19 @@ class _OrderScreenState extends State<OrderScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(right: 10),
+                                      padding: const EdgeInsets.only(right: 10),
                                       child: Container(
                                         height: 25,
                                         width: 60,
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.only(
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.only(
                                               bottomLeft: Radius.circular(5.0),
                                               bottomRight: Radius.circular(5.0),
                                               topLeft: Radius.circular(5.0),
                                               topRight: Radius.circular(5.0),
                                             ),
                                             color: Colors.black),
-                                        child: Center(
+                                        child: const Center(
                                           child: Text(
                                             'Track',
                                             maxLines: null,

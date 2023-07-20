@@ -8,7 +8,7 @@ class HeadingText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
+      style: const TextStyle(
           fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 20),
     );
   }

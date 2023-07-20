@@ -28,12 +28,9 @@ class SettingTile extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: mainColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(45)),
-                  child: FittedBox(
-                    child: SvgPicture.asset(
-                      image,
-                      height: 16,
-                    ),
-                    fit: BoxFit.scaleDown,
+                  child: SvgPicture.asset(
+                    image,
+                    height: 16,
                   ),
                 ),
 

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:furniture/constants/constants.dart';
-import 'package:furniture/screen/home/home_controller.dart';
 import 'package:furniture/screen/login/login_controller.dart';
 import 'package:furniture/screen/register/sign_up.dart';
 import 'package:furniture/static/input_field1.dart';
@@ -229,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
-                                          children: [
+                                          children: const [
                                             Expanded(
                                               child: Divider(
                                                 color: Colors.grey,

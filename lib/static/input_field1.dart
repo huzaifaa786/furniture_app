@@ -46,11 +46,11 @@ class InputField1 extends StatelessWidget {
   final readOnly;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 70,
       width: MediaQuery.of(context).size.width,
       child: Card(
-        color: Color.fromRGBO(255, 255, 255, 1),
+        color: const Color.fromRGBO(255, 255, 255, 1),
         shape: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(
@@ -58,7 +58,7 @@ class InputField1 extends StatelessWidget {
             )),
         child: Row(
           children: [
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Container(
@@ -72,7 +72,7 @@ class InputField1 extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: SvgPicture.asset(
@@ -83,10 +83,10 @@ class InputField1 extends StatelessWidget {
                     )),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
-            Container(
+            SizedBox(
                 width: MediaQuery.of(context).size.width * 0.72,
                 child: TextFormField(
                   readOnly: readOnly,
@@ -101,9 +101,9 @@ class InputField1 extends StatelessWidget {
                   keyboardType: type,
                   validator: validator,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(left: 4),
+                    contentPadding: const EdgeInsets.only(left: 4),
                     hintText: hint,
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontSize: 15,
                         fontWeight: FontWeight.w400),

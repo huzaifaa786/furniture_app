@@ -17,7 +17,7 @@ class _FragmentThreeState extends State<FragmentThree> {
         backgroundColor: white,
         body: SafeArea(
             child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             // padding: EdgeInsets.only(top: 20),
             width: MediaQuery.of(context).size.width,
             child: Column(

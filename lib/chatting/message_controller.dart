@@ -42,7 +42,7 @@ class MessageController extends GetxController {
       ],
     );
     if (result != null) {
-      file = await File(result.files.single.path!);
+      file = File(result.files.single.path!);
       sendMassage();
     } else {
       // User canceled the picker

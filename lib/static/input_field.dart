@@ -58,7 +58,7 @@ class InputField extends StatelessWidget {
       //         : AutovalidateMode.onUserInteraction),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.grey),
+        hintStyle: const TextStyle(color: Colors.grey),
         fillColor: color,
         suffixIcon: IconButton(
           onPressed: onpressed,
