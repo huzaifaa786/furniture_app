@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture/chat/controller.dart';
+import 'package:furniture/constants/constants.dart';
 import 'package:furniture/firebase_options.dart';
 import 'package:furniture/helper/loading.dart';
 import 'package:furniture/screen/home/home_controller.dart';
@@ -11,6 +13,7 @@ import 'package:furniture/screen/login/login_screen.dart';
 import 'package:furniture/screen/register/signup_controller.dart';
 import 'package:furniture/screen/splash_screen/splash_screen.dart';
 import 'package:furniture/services/auth_service.dart';
+import 'package:furniture/services/notification_service.dart';
 import 'package:furniture/values/styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
@@ -25,6 +28,7 @@ void main() async {
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
       .then((value) {
     Get.put(AuthService());
+    // Get.put(NotificationService());
     Get.put(SignUpController());
     Get.put(LoginController());
     Get.put(HomeController());
@@ -42,14 +46,30 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // @override
+  // void initState() async {
+  //   final userDoc = await FirebaseFirestore.instance
+  //       .collection("users")
+  //       .doc(auth.currentUser!.uid)
+  //       .get();
+  //   final userData = userDoc.data()! as Map<String, dynamic>;
+  //   // var user = User.fromJson(userData);
+  //   print(userData['token']);
+  //   notificationService.sendNotification(
+  //       userData['token'],
+  //       "Master Access Card Scanned",
+  //       "This microchip id scanned # ");
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         Provider<ChatProvider>(
           create: (_) => ChatProvider(
-            // firebaseStorage: firebaseStorage,
-          ),
+              // firebaseStorage: firebaseStorage,
+              ),
         ),
       ],
       child: GetMaterialApp(

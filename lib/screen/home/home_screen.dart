@@ -1,10 +1,10 @@
 // ignore_for_file: deprecated_member_use, prefer_const_constructors
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:furniture/chat/chat_page.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:furniture/chat/chat_view.dart';
 import 'package:furniture/chatting/message_screen.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/company_profile/company_controller.dart';
@@ -21,40 +21,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<List<String>> fetchUsersWithMyID() async {
-    List<String> userList = [];
-
-    try {
-      QuerySnapshot messagesSnapshot =
-          await FirebaseFirestore.instance.collection('messages').get();
-
-      for (var messageDoc in messagesSnapshot.docs) {
-        // Split the doc field using the '-' separator
-        List<String> usersIDs = (messageDoc['doc']).split('-');
-        // Add the other user's ID to the list if it's different from your ID
-        print('usersIDs');
-        print(usersIDs);
-
-        String otherUserID =
-            usersIDs[0] == auth.currentUser!.uid ? usersIDs[1] : usersIDs[0];
-
-        if (!userList.contains(otherUserID)) {
-          userList.add(otherUserID);
-        }
-      }
-      print('userList[0]');
-      print(userList);
-    } catch (e) {
-      print('Error fetching users: $e');
-    }
-
-    return userList;
+  chatCount() {
+    homeController.count();
+    setState(() {});
   }
 
   @override
   void initState() {
+    chatCount();
     super.initState();
-    fetchUsersWithMyID();
   }
 
   @override
@@ -89,25 +64,36 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Row(
                               children: [
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ChatPage(
-                                          arguments: ChatPageArguments(
-                                            peerId:
-                                                'B4kLpQh1IvdQYm0275l8VOUQfj62',
-                                            peerAvatar:
-                                                'https://dcblog.b-cdn.net/wp-content/uploads/2021/02/Full-form-of-URL-1.jpg',
-                                            peerNickname: '',
-                                          ),
-                                        ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: badges.Badge(
+                                    showBadge: homeController.chatlength == 0 ?false :true,
+                                    badgeContent: Text(
+                                      homeController.chatlength.toString(),
+                                      style: TextStyle(color: white),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Get.to(() => ChatLsitScreen())!
+                                            .then((value) {
+                                          homeController.count();
+                                        });
+                                        // Get.to(
+                                        //           () => ChatPage(
+                                        //             arguments: ChatPageArguments(
+                                        //               peerId:
+                                        //                   'npknKB9TElNsoprsbcEo',
+                                        //               peerAvatar:
+                                        //                   'https://dcblog.b-cdn.net/wp-content/uploads/2021/02/Full-form-of-URL-1.jpg',
+                                        //               peerNickname: '',
+                                        //             ),
+                                        //           ),
+                                        //         );
+                                      },
+                                      child: SvgPicture.asset(
+                                        'assets/images/message.svg',
                                       ),
-                                    );
-                                  },
-                                  icon: SvgPicture.asset(
-                                    'assets/images/message.svg',
+                                    ),
                                   ),
                                 ),
                                 IconButton(
@@ -215,7 +201,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 Get.put(CompanyController(company: company));
                                 Get.to(() =>
-                                    CompanyProfileScreen(company: company));
+                                        CompanyProfileScreen(company: company))!
+                                    .then((value) {
+                                  homeController.count();
+                                });
                                 // Handle the tap on the list item
                                 // You can navigate to the detail screen or perform any other action
                               },

@@ -5,6 +5,7 @@ import 'package:furniture/screen/home/home_controller.dart';
 import 'package:furniture/screen/login/login_controller.dart';
 import 'package:furniture/screen/register/signup_controller.dart';
 import 'package:furniture/services/auth_service.dart';
+import 'package:furniture/services/notification_service.dart';
 
 SignUpController signUpController = SignUpController.instance;
 LoginController loginController = LoginController.instance;
@@ -13,3 +14,4 @@ CompanyController companyController = CompanyController.instance;
 AuthService authService = AuthService.instance;
 FirebaseAuth auth = FirebaseAuth.instance;
 FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+// NotificationService notificationService = NotificationService.instance;

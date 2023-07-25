@@ -1,17 +1,20 @@
-// ignore_for_file: prefer_final_fields, sort_child_properties_last, prefer_const_constructors, avoid_unnecessary_containers, prefer_is_empty
+// ignore_for_file: prefer_final_fields, sort_child_properties_last, prefer_const_constructors, avoid_unnecessary_containers, prefer_is_empty, prefer_interpolation_to_compose_strings
 
 import 'dart:async';
 import 'dart:io';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/chat/constants.dart';
 import 'package:furniture/chat/full_photo_page.dart';
 import 'package:furniture/constants/constants.dart';
+import 'package:furniture/helper/loading.dart';
 import 'package:furniture/model/models.dart';
 import 'package:furniture/chat/controller.dart';
 import 'package:furniture/screen/login/login_screen.dart';
+import 'package:furniture/static/large_button.dart';
+import 'package:furniture/values/Validator.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -83,27 +86,19 @@ class ChatPageState extends State<ChatPage> {
       currentUserId = auth.currentUser!.uid;
     } else {
       Get.offAll(() => const LoginScreen());
-      // Navigator.of(context).pushAndRemoveUntil(
-      //   MaterialPageRoute(builder: (context) => LoginScreen()),
-      //   (Route<dynamic> route) => false,
-      // );
     }
     String peerId = widget.arguments.peerId;
     if (currentUserId.compareTo(peerId) > 0) {
       groupChatId = '$currentUserId-$peerId';
-      print('groupChatId');
-      print(groupChatId);
     } else {
       groupChatId = '$peerId-$currentUserId';
-      print('groupChatId');
-      print(groupChatId);
     }
-
-    chatProvider.updateDataFirestore(
-      FirestoreConstants.pathUserCollection,
-      currentUserId,
-      {FirestoreConstants.chattingWith: peerId},
-    );
+    FirebaseFirestore.instance
+        .collection(FirestoreConstants.pathMessageCollection)
+        .doc(groupChatId)
+        .update({
+      'userSeen': true,
+    });
   }
 
   Future getImage() async {
@@ -182,99 +177,230 @@ class ChatPageState extends State<ChatPage> {
                 ? Container(
                     child: Text(
                       messageChat.content,
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.white),
                     ),
                     padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                     width: 200,
                     decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: mainColor,
                         borderRadius: BorderRadius.circular(8)),
                     margin: EdgeInsets.only(
                         bottom: isLastMessageRight(index) ? 20 : 10, right: 10),
                   )
-                :
-                //  messageChat.type == TypeMessage.image
-                //     // Image
-                //     ?
-                Container(
-                    child: OutlinedButton(
-                      child: Material(
-                        child: Image.network(
-                          messageChat.content,
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Container(
-                              decoration: BoxDecoration(
-                                color: Colors.grey[300],
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
+                : messageChat.type == TypeMessage.image
+                    // Image
+                    ? Container(
+                        child: OutlinedButton(
+                          child: Material(
+                            child: Image.network(
+                              messageChat.content,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(8),
+                                    ),
+                                  ),
+                                  width: 200,
+                                  height: 200,
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: mainColor,
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  ),
+                                );
+                              },
+                              errorBuilder: (context, object, stackTrace) {
+                                return Material(
+                                  child: Image.asset(
+                                    'images/img_not_available.jpeg',
+                                    width: 200,
+                                    height: 200,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
+                                  clipBehavior: Clip.hardEdge,
+                                );
+                              },
                               width: 200,
                               height: 200,
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  color: mainColor,
-                                  value: loadingProgress.expectedTotalBytes !=
-                                          null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                      : null,
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            clipBehavior: Clip.hardEdge,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FullPhotoPage(
+                                  url: messageChat.content,
                                 ),
                               ),
                             );
                           },
-                          errorBuilder: (context, object, stackTrace) {
-                            return Material(
-                              child: Image.asset(
-                                'images/img_not_available.jpeg',
-                                width: 200,
-                                height: 200,
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(8),
-                              ),
-                              clipBehavior: Clip.hardEdge,
-                            );
-                          },
-                          width: 200,
-                          height: 200,
-                          fit: BoxFit.cover,
+                          style: ButtonStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(
+                                  EdgeInsets.all(0))),
                         ),
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        clipBehavior: Clip.hardEdge,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FullPhotoPage(
-                              url: messageChat.content,
+                        margin: EdgeInsets.only(
+                            bottom: isLastMessageRight(index) ? 20 : 10,
+                            right: 10),
+                      )
+                    // Location
+                    : messageChat.type == TypeMessage.location
+                        ? Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'From: ${RegExp(r"LOCATIONFrom:(.*?)/").firstMatch(messageChat.content)?.group(1) ?? ''}',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                  'To: ${RegExp(r"/LOCATIONTo:(.*?)$").firstMatch(messageChat.content)?.group(1) ?? ''}',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
                             ),
+                            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                            width: 200,
+                            decoration: BoxDecoration(
+                                color: mainColor,
+                                borderRadius: BorderRadius.circular(8)),
+                            margin: EdgeInsets.only(
+                                bottom: isLastMessageRight(index) ? 20 : 10,
+                                right: 10),
+                          )
+                        // Bill
+                        : Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Description:',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontFamily: 'Mazzard',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                Text(
+                                  messageChat.content
+                                      .split("~~")[0]
+                                      .split(":")[1]
+                                      .trim(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontFamily: 'Mazzard',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Date Of Send: ',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Mazzard',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    Text(
+                                      messageChat.content
+                                          .split("~~")[2]
+                                          .split(":")[1]
+                                          .trim(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Mazzard',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Time: ',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Mazzard',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    Text(
+                                      messageChat.content
+                                          .split("~~")[3]
+                                          .split(":")[1]
+                                          .trim(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Mazzard',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Amount: ',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Mazzard',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    Text(
+                                      messageChat.content
+                                              .split("~~")[1]
+                                              .split(":")[1]
+                                              .trim() +
+                                          ' AED',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Mazzard',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                            width: 200,
+                            decoration: BoxDecoration(
+                                color: mainColor,
+                                borderRadius: BorderRadius.circular(8)),
+                            margin: EdgeInsets.only(
+                                bottom: isLastMessageRight(index) ? 20 : 10,
+                                right: 10),
                           ),
-                        );
-                      },
-                      style: ButtonStyle(
-                          padding: MaterialStateProperty.all<EdgeInsets>(
-                              EdgeInsets.all(0))),
-                    ),
-                    margin: EdgeInsets.only(
-                        bottom: isLastMessageRight(index) ? 20 : 10, right: 10),
-                  )
-            // Sticker
-            // : Container(
-            //     child: Image.asset(
-            //       'images/${messageChat.content}.gif',
-            //       width: 100,
-            //       height: 100,
-            //       fit: BoxFit.cover,
-            //     ),
-            //     margin: EdgeInsets.only(
-            //         bottom: isLastMessageRight(index) ? 20 : 10,
-            //         right: 10),
-            //   ),
           ],
           mainAxisAlignment: MainAxisAlignment.end,
         );
@@ -284,6 +410,7 @@ class ChatPageState extends State<ChatPage> {
           child: Column(
             children: <Widget>[
               Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   isLastMessageLeft(index)
                       ? Material(
@@ -324,98 +451,260 @@ class ChatPageState extends State<ChatPage> {
                       ? Container(
                           child: Text(
                             messageChat.content,
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                           ),
                           padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                           width: 200,
                           decoration: BoxDecoration(
-                              color: mainColor,
+                              color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(8)),
                           margin: EdgeInsets.only(left: 10),
                         )
-                      :
-                      // messageChat.type == TypeMessage.image
-                      //     ?
-                      Container(
-                          child: TextButton(
-                            child: Material(
-                              child: Image.network(
-                                messageChat.content,
-                                loadingBuilder: (BuildContext context,
-                                    Widget child,
-                                    ImageChunkEvent? loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[300],
+                      : messageChat.type == TypeMessage.image
+                          ? Container(
+                              child: TextButton(
+                                child: Material(
+                                  child: Image.network(
+                                    messageChat.content,
+                                    loadingBuilder: (BuildContext context,
+                                        Widget child,
+                                        ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(8),
+                                          ),
+                                        ),
+                                        width: 200,
+                                        height: 200,
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            color: mainColor,
+                                            value: loadingProgress
+                                                        .expectedTotalBytes !=
+                                                    null
+                                                ? loadingProgress
+                                                        .cumulativeBytesLoaded /
+                                                    loadingProgress
+                                                        .expectedTotalBytes!
+                                                : null,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    errorBuilder:
+                                        (context, object, stackTrace) =>
+                                            Material(
+                                      child: Image.asset(
+                                        'images/img_not_available.jpeg',
+                                        width: 200,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(8),
                                       ),
+                                      clipBehavior: Clip.hardEdge,
                                     ),
-                                    width: 200,
-                                    height: 200,
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        color: mainColor,
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                errorBuilder: (context, object, stackTrace) =>
-                                    Material(
-                                  child: Image.asset(
-                                    'images/img_not_available.jpeg',
                                     width: 200,
                                     height: 200,
                                     fit: BoxFit.cover,
                                   ),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(8),
-                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8)),
                                   clipBehavior: Clip.hardEdge,
                                 ),
-                                width: 200,
-                                height: 200,
-                                fit: BoxFit.cover,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => FullPhotoPage(
+                                          url: messageChat.content),
+                                    ),
+                                  );
+                                },
+                                style: ButtonStyle(
+                                    padding:
+                                        MaterialStateProperty.all<EdgeInsets>(
+                                            EdgeInsets.all(0))),
                               ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                              clipBehavior: Clip.hardEdge,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      FullPhotoPage(url: messageChat.content),
+                              margin: EdgeInsets.only(left: 10),
+                            )
+                          : messageChat.type == TypeMessage.location
+                              ? Container(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'From: ${RegExp(r"LOCATIONFrom:(.*?)/").firstMatch(messageChat.content)?.group(1) ?? ''}',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      Text(
+                                        'To: ${RegExp(r"/LOCATIONTo:(.*?)$").firstMatch(messageChat.content)?.group(1) ?? ''}',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                  padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(8)),
+                                  margin: EdgeInsets.only(left: 10),
+                                )
+                              : Container(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          'Description:',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontFamily: 'Mazzard',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        messageChat.content
+                                            .split("~~")[0]
+                                            .split(":")[1]
+                                            .trim(),
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontFamily: 'Mazzard',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            bottom: 6.0, top: 8.0),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              'Date Of Send: ',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontFamily: 'Mazzard',
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Text(
+                                              messageChat.content
+                                                  .split("~~")[2]
+                                                  .split(":")[1]
+                                                  .trim(),
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontFamily: 'Mazzard',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 6.0),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              'Time: ',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontFamily: 'Mazzard',
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Text(
+                                              messageChat.content
+                                                  .split("~~")[3]
+                                                  .split(":")[1]
+                                                  .trim(),
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontFamily: 'Mazzard',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              'Amount: ',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontFamily: 'Mazzard',
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Text(
+                                              messageChat.content
+                                                      .split("~~")[1]
+                                                      .split(":")[1]
+                                                      .trim() +
+                                                  ' AED',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontFamily: 'Mazzard',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 12.0, bottom: 8),
+                                        child: LargeButton(
+                                          title: 'Checkout',
+                                          onPressed: () async {
+                                            String description = messageChat.content.split("~~")[0].split(":")[1].trim();
+                                            int amount = int.parse(messageChat.content.split("~~")[1].split(":")[1].trim());
+                                            String date= messageChat.content.split("~~")[2].split(":")[1].trim();
+                                            String time =messageChat.content.split("~~")[3].split(":")[1].trim();
+                                            String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+                                            bool i = await chatProvider.orderPlacement(description,amount,date,time, currentUserId, widget.arguments.peerId,orderId);
+                                            if(i == true){
+                                              String content = 'Order has been created with Order Id # ' + orderId;
+                                              print(content);
+                                              onSendMessage(content, TypeMessage.text);
+                                            }
+                                          },
+                                          buttonHeight: 45.0,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                                  width: 230,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(8)),
+                                  margin: EdgeInsets.only(left: 10),
                                 ),
-                              );
-                            },
-                            style: ButtonStyle(
-                                padding: MaterialStateProperty.all<EdgeInsets>(
-                                    EdgeInsets.all(0))),
-                          ),
-                          margin: EdgeInsets.only(left: 10),
-                        )
-                  // : Container(
-                  //     child: Image.asset(
-                  //       'images/${messageChat.content}.gif',
-                  //       width: 100,
-                  //       height: 100,
-                  //       fit: BoxFit.cover,
-                  //     ),
-                  //     margin: EdgeInsets.only(
-                  //         bottom: isLastMessageRight(index) ? 20 : 10,
-                  //         right: 10),
-                  //   ),
                 ],
               ),
 
@@ -473,14 +762,8 @@ class ChatPageState extends State<ChatPage> {
         isShowSticker = false;
       });
     } else {
-      chatProvider.updateDataFirestore(
-        FirestoreConstants.pathUserCollection,
-        currentUserId,
-        {FirestoreConstants.chattingWith: null},
-      );
       Navigator.pop(context);
     }
-
     return Future.value(false);
   }
 
@@ -490,7 +773,7 @@ class ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         title: Text(
           widget.arguments.peerNickname,
-          style: TextStyle(color: mainColor),
+          style: TextStyle(color: white),
         ),
         centerTitle: true,
       ),
@@ -515,6 +798,127 @@ class ChatPageState extends State<ChatPage> {
         ),
       ),
     );
+  }
+
+  TextEditingController tocontroller = TextEditingController();
+  TextEditingController fromController = TextEditingController();
+
+  showDataAlert() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(
+                  20.0,
+                ),
+              ),
+            ),
+            contentPadding: const EdgeInsets.only(
+              top: 10.0,
+            ),
+            content: SizedBox(
+              height: 250,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: fromController,
+                        scrollPadding: const EdgeInsets.only(bottom: 30),
+                        obscureText: false,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: mainColor),
+                                    borderRadius: BorderRadius.circular(45)),
+                                padding: const EdgeInsets.all(4.0),
+                                child: SvgPicture.asset(
+                                    'assets/images/chatLocation.svg')),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey[300]!),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10))),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey[300]!),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                          ),
+                          hintText: 'FROM',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: tocontroller,
+                        scrollPadding: const EdgeInsets.only(bottom: 30),
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: mainColor),
+                                    borderRadius: BorderRadius.circular(45)),
+                                padding: const EdgeInsets.all(4.0),
+                                child: SvgPicture.asset(
+                                    'assets/images/chatLocation.svg')),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey[300]!),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10))),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey[300]!),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                          ),
+                          hintText: 'TO',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: LargeButton(
+                        title: 'Send',
+                        onPressed: () {
+                          final bool isFormValid =
+                              Validators.emptyStringValidator(
+                                          fromController.text, '') ==
+                                      null &&
+                                  Validators.emptyStringValidator(
+                                          tocontroller.text, '') ==
+                                      null;
+                          if (isFormValid) {
+                            String location = 'LOCATIONFrom:' +
+                                fromController.text +
+                                '/LOCATIONTo:' +
+                                tocontroller.text;
+                            onSendMessage(location, TypeMessage.location);
+                            fromController.clear();
+                            tocontroller.clear();
+                            Navigator.pop(context);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   // Widget buildSticker() {
@@ -644,7 +1048,7 @@ class ChatPageState extends State<ChatPage> {
           // Button send image
           Material(
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 1),
+              // margin: EdgeInsets.symmetric(horizontal: 1),
               child: IconButton(
                 icon: Icon(Icons.image),
                 onPressed: getImage,
@@ -653,17 +1057,19 @@ class ChatPageState extends State<ChatPage> {
             ),
             color: Colors.white,
           ),
-          // Material(
-          //   child: Container(
-          //     margin: EdgeInsets.symmetric(horizontal: 1),
-          //     child: IconButton(
-          //       icon: Icon(Icons.face),
-          //       onPressed: getSticker,
-          //       color: mainColor,
-          //     ),
-          //   ),
-          //   color: Colors.white,
-          // ),
+          Material(
+            child: Container(
+              // margin: EdgeInsets.symmetric(horizontal: 1),
+              child: IconButton(
+                icon: Icon(Icons.location_on),
+                onPressed: () {
+                  showDataAlert();
+                },
+                color: mainColor,
+              ),
+            ),
+            color: Colors.white,
+          ),
 
           // Edit text
           Flexible(

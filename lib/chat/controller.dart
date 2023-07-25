@@ -1,28 +1,29 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:furniture/chat/constants.dart';
+import 'package:furniture/helper/loading.dart';
 import 'package:furniture/model/message_chat.dart';
+import 'package:get/get.dart';
 
 class ChatProvider {
-
-  // String? getPref(String key) {
-  //   return prefs.getString(key);
-  // }
-
   UploadTask uploadFile(File image, String fileName) {
     Reference reference = FirebaseStorage.instance.ref().child(fileName);
     UploadTask uploadTask = reference.putFile(image);
     return uploadTask;
   }
 
-  Future<void> updateDataFirestore(String collectionPath, String docPath, Map<String, dynamic> dataNeedUpdate) {
-    return FirebaseFirestore.instance.collection(collectionPath).doc(docPath).update(dataNeedUpdate);
+  Future<void> updateDataFirestore(String collectionPath, String docPath,
+      Map<String, dynamic> dataNeedUpdate) {
+    return FirebaseFirestore.instance
+        .collection(collectionPath)
+        .doc(docPath)
+        .update(dataNeedUpdate);
   }
 
   Stream<QuerySnapshot> getChatStream(String groupChatId, int limit) {
-    return FirebaseFirestore.instance.collection(FirestoreConstants.pathMessageCollection)
+    return FirebaseFirestore.instance
+        .collection(FirestoreConstants.pathMessageCollection)
         .doc(groupChatId)
         .collection(groupChatId)
         .orderBy(FirestoreConstants.timestamp, descending: true)
@@ -30,7 +31,18 @@ class ChatProvider {
         .snapshots();
   }
 
-  void sendMessage(String content, int type, String groupChatId, String currentUserId, String peerId) {
+  void sendMessage(String content, int type, String groupChatId,
+      String currentUserId, String peerId) async {
+    await FirebaseFirestore.instance
+        .collection(FirestoreConstants.pathMessageCollection)
+        .doc(groupChatId)
+        .set({
+      'userId': currentUserId,
+      'companyId': peerId,
+      'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
+      'userSeen': true,
+      'companySeen': false,
+    });
     DocumentReference documentReference = FirebaseFirestore.instance
         .collection(FirestoreConstants.pathMessageCollection)
         .doc(groupChatId)
@@ -52,9 +64,32 @@ class ChatProvider {
       );
     });
   }
+
+  orderPlacement(String description, int amount, String date, String time,
+      String currentUserId, String peerId, String id) async {
+    try {
+      LoadingHelper.show();
+      print('object');
+      await FirebaseFirestore.instance.collection('orders').doc(id).set({
+        'orderId': id,
+        'userId': currentUserId,
+        'companyId': peerId,
+        'date': date,
+        'time': time,
+        'amount': amount,
+        'description': description
+      });
+      LoadingHelper.dismiss();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }
 
 class TypeMessage {
   static const text = 0;
   static const image = 1;
+  static const location = 2;
+  static const bill = 3;
 }

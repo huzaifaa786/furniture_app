@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/home/home_screen.dart';
 import 'package:furniture/screen/order/orderscreen.dart';
 import 'package:furniture/screen/setting/setting.dart';
@@ -30,6 +31,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
   switchFragment(int index) {
     setState(() {
       _navigationMenuIndex = index;
+      _navigationMenuIndex == 0 ? homeController.chatlength : null;
     });
   }
 

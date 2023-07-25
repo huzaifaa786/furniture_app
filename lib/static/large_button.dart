@@ -14,6 +14,7 @@ class LargeButton extends StatelessWidget {
       this.icon,
       this.buttonWidth = 0.8,
       this.sreenRatio = 0.9,
+      this.buttonHeight = 60.0,
       this.color = mainColor})
       : super(key: key);
 
@@ -24,12 +25,13 @@ class LargeButton extends StatelessWidget {
   final text;
   final textcolor;
   final icon;
+  final buttonHeight;
   final buttonWidth;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * sreenRatio,
-      height: 60,
+      height: buttonHeight,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(

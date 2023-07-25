@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:furniture/chat/chat_page.dart';
 import 'package:furniture/chatting/message_screen.dart';
 import 'package:furniture/helper/general.dart';
 import 'package:furniture/model/company.dart';
@@ -28,185 +29,206 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CompanyController>(
-      builder: (companyController) =>  Scaffold(
-      body: SafeArea(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.only(right: 15, left: 15),
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: Stack(
-                        children: [
-                          SizedBox(
-                            height: 200,
-                            child: CarouselSlider(
-                              options: CarouselOptions(
-                                autoPlay: true,
-                                viewportFraction: 1,
-                                enlargeCenterPage: false,
-                                onPageChanged: (index, reason) {
-                                  setState(() {
-                                    _current = index;
-                                  });
-                                },
+      builder: (companyController) => Scaffold(
+        body: SafeArea(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            padding: const EdgeInsets.only(right: 15, left: 15),
+            child: Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Stack(
+                          children: [
+                            SizedBox(
+                              height: 200,
+                              child: CarouselSlider(
+                                options: CarouselOptions(
+                                  autoPlay: true,
+                                  viewportFraction: 1,
+                                  enlargeCenterPage: false,
+                                  onPageChanged: (index, reason) {
+                                    setState(() {
+                                      _current = index;
+                                    });
+                                  },
+                                ),
+                                items: companyController.imgList.map((i) {
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[200],
+                                        ),
+                                        child: CachedNetworkImage(
+                                          imageUrl: i,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }).toList(),
                               ),
-                              items: companyController.imgList.map((i) {
-                                return Builder(
-                                  builder: (BuildContext context) {
-                                    return Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                      ),
-                                      child: CachedNetworkImage(
-                                        imageUrl: i,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    );
+                            ),
+                            Positioned(
+                                top: 10,
+                                left: 10,
+                                child: InkWell(
+                                  onTap: () {
+                                    Get.back();
                                   },
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                          Positioned(
-                              top: 10,
-                              left: 10,
-                              child: InkWell(
-                                onTap: () {
-                                  Get.back();
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                      color: white,
-                                      borderRadius: BorderRadius.circular(45),
-                                      border: Border.all(color: Colors.grey)),
-                                  child: Icon(
-                                    Icons.arrow_back_ios_new,
-                                    size: 18,
+                                  child: Container(
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                        color: white,
+                                        borderRadius: BorderRadius.circular(45),
+                                        border: Border.all(color: Colors.grey)),
+                                    child: Icon(
+                                      Icons.arrow_back_ios_new,
+                                      size: 18,
+                                    ),
                                   ),
-                                ),
-                              )),
-                          Positioned(
-                            bottom: 24,
-                            right: 115,
-                            child: CarouselIndicator(
-                              count: 3,
-                              index: _current,
-                              activeColor: Colors.white,
-                              color: Colors.white60,
-                              width: 40,
-                            ),
-                          )
-                        ],
+                                )),
+                            Positioned(
+                              bottom: 24,
+                              right: 115,
+                              child: CarouselIndicator(
+                                count: 3,
+                                index: _current,
+                                activeColor: Colors.white,
+                                color: Colors.white60,
+                                width: 40,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 25.0, bottom: 20),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius:
-                                BorderRadius.circular(10), // Image border
-                            child: 
-                            CachedNetworkImage(imageUrl: companyController.company.companyImage,fit: BoxFit.cover,  height: 70,
-                              width: 70,)
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                  child: Text(
-                                    widget.company.name,
-                                    style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 25.0, bottom: 20),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(10), // Image border
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      companyController.company.companyImage,
+                                  fit: BoxFit.cover,
+                                  height: 70,
+                                  width: 70,
+                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 4.0),
+                                    child: Text(
+                                      widget.company.name,
+                                      style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15),
+                                    ),
                                   ),
-                                ),
-                                RatingBar.builder(
-                                  initialRating: 3,
-                                  minRating: 0,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemSize: 18,
-                                  ignoreGestures: true,
-                                  // itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                                  itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: ratingColor,
+                                  RatingBar.builder(
+                                    initialRating: 3,
+                                    minRating: 0,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemSize: 18,
+                                    ignoreGestures: true,
+                                    // itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: ratingColor,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      // print(rating);
+                                    },
                                   ),
-                                  onRatingUpdate: (rating) {
-                                    // print(rating);
-                                  },
-                                ),
-                              ],
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      HeadingText(text: 'Bio'),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 18),
+                        child: Text(
+                          companyController.company.englishBio,
+                          style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15,
+                              color: Colors.black54),
+                        ),
+                      ),
+                      HeadingText(text: 'Working Hours'),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12.0, bottom: 18),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: mainColor),
+                                  borderRadius: BorderRadius.circular(45)),
+                              child:
+                                  SvgPicture.asset('assets/images/hours.svg'),
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                    HeadingText(text: 'Bio'),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 18),
-                      child: Text(
-                        companyController.company.englishBio,
-                        style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15,
-                            color: Colors.black54),
-                      ),
-                    ),
-                    HeadingText(text: 'Working Hours'),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 12.0, bottom: 18),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: mainColor),
-                                borderRadius: BorderRadius.circular(45)),
-                            child: SvgPicture.asset('assets/images/hours.svg'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(
-                              'From ' + formattedTime(companyController.company.startTime)+ ' To ' + formattedTime(companyController.company.endTime),
-                              style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 15,
-                                  color: Colors.black54),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                'From ' +
+                                    formattedTime(
+                                        companyController.company.startTime) +
+                                    ' To ' +
+                                    formattedTime(
+                                        companyController.company.endTime),
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 15,
+                                    color: Colors.black54),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 40)
-                  ],
+                      SizedBox(height: 40)
+                    ],
+                  ),
                 ),
-              ),
-              Positioned(
+                Positioned(
                   bottom: 20,
-                  child: MIconButton(title: "Inquire", onPressed: () {
-                        Get.to(() => MessageScreen());
-                  }))
-            ],
+                  child: MIconButton(
+                      title: "Inquire",
+                      onPressed: () {
+                        Get.to(() => ChatPage(
+                            arguments: ChatPageArguments(
+                              peerId: widget.company.id,
+                              peerAvatar: widget.company.companyImage,
+                              peerNickname: widget.company.name,
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ],
+            ),
           ),
         ),
-      ),),
+      ),
     );
   }
 }
