@@ -4,7 +4,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:furniture/chat/constants.dart';
 import 'package:furniture/helper/loading.dart';
 import 'package:furniture/model/message_chat.dart';
-import 'package:get/get.dart';
 
 class ChatProvider {
   UploadTask uploadFile(File image, String fileName) {
@@ -69,7 +68,6 @@ class ChatProvider {
       String currentUserId, String peerId, String id) async {
     try {
       LoadingHelper.show();
-      print('object');
       await FirebaseFirestore.instance.collection('orders').doc(id).set({
         'orderId': id,
         'userId': currentUserId,
@@ -77,7 +75,26 @@ class ChatProvider {
         'date': date,
         'time': time,
         'amount': amount,
-        'description': description
+        'status': 0,
+        'description': description,
+      });
+      LoadingHelper.dismiss();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  notificationCreated(String content, String currentUserId, String peerId,
+      String id, String orderId) async {
+    try {
+      LoadingHelper.show();
+      await FirebaseFirestore.instance.collection('notifications').doc(id).set({
+        'id': id,
+        'userId': currentUserId,
+        'companyId': peerId,
+        'content': content,
+        'orderId': orderId
       });
       LoadingHelper.dismiss();
       return true;

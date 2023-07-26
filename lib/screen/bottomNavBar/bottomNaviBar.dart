@@ -45,7 +45,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
     // ignore: no_leading_underscores_for_local_identifiers
     var _fragments = [
       const HomeScreen(),
-      const OrderScreen(),
+      OrderScreen(),
       const SettingScreen(),
     ];
     return WillPopScope(

@@ -10,6 +10,7 @@ import 'package:furniture/helper/loading.dart';
 import 'package:furniture/screen/home/home_controller.dart';
 import 'package:furniture/screen/login/login_controller.dart';
 import 'package:furniture/screen/login/login_screen.dart';
+import 'package:furniture/screen/order/order_controller.dart';
 import 'package:furniture/screen/register/signup_controller.dart';
 import 'package:furniture/screen/splash_screen/splash_screen.dart';
 import 'package:furniture/services/auth_service.dart';
@@ -32,6 +33,8 @@ void main() async {
     Get.put(SignUpController());
     Get.put(LoginController());
     Get.put(HomeController());
+    Get.put(OrderController());
+
   });
   runApp(const MyApp());
 }

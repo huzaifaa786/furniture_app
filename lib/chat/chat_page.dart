@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, sort_child_properties_last, prefer_const_constructors, avoid_unnecessary_containers, prefer_is_empty, prefer_interpolation_to_compose_strings
+// ignore_for_file: prefer_final_fields, sort_child_properties_last, prefer_const_constructors, avoid_unnecessary_containers, prefer_is_empty, prefer_interpolation_to_compose_strings, avoid_print
 
 import 'dart:async';
 import 'dart:io';
@@ -689,8 +689,11 @@ class ChatPageState extends State<ChatPage> {
                                             bool i = await chatProvider.orderPlacement(description,amount,date,time, currentUserId, widget.arguments.peerId,orderId);
                                             if(i == true){
                                               String content = 'Order has been created with Order Id # ' + orderId;
-                                              print(content);
                                               onSendMessage(content, TypeMessage.text);
+                                              String noti = 'Your order has been confirmed.';
+                                              String notiId = DateTime.now().millisecondsSinceEpoch.toString();
+                                              print(noti + notiId);
+                                              chatProvider.notificationCreated(noti, currentUserId, widget.arguments.peerId,notiId,orderId);
                                             }
                                           },
                                           buttonHeight: 45.0,

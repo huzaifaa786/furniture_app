@@ -67,7 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 8.0),
                                   child: badges.Badge(
-                                    showBadge: homeController.chatlength == 0 ?false :true,
+                                    showBadge: homeController.chatlength == 0
+                                        ? false
+                                        : true,
                                     badgeContent: Text(
                                       homeController.chatlength.toString(),
                                       style: TextStyle(color: white),
@@ -78,17 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .then((value) {
                                           homeController.count();
                                         });
-                                        // Get.to(
-                                        //           () => ChatPage(
-                                        //             arguments: ChatPageArguments(
-                                        //               peerId:
-                                        //                   'npknKB9TElNsoprsbcEo',
-                                        //               peerAvatar:
-                                        //                   'https://dcblog.b-cdn.net/wp-content/uploads/2021/02/Full-form-of-URL-1.jpg',
-                                        //               peerNickname: '',
-                                        //             ),
-                                        //           ),
-                                        //         );
                                       },
                                       child: SvgPicture.asset(
                                         'assets/images/message.svg',
@@ -97,14 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              MessageScreen()),
-                                    );
-                                  },
+                                  onPressed: () {},
                                   icon: SvgPicture.asset(
                                     'assets/images/notification.svg',
                                   ),
