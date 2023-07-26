@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class OrderModel {
+class NotificationModel {
   String? id;
   String? userId;
   String? companyId;
   String? orderId;
   String? content;
 
-  OrderModel({
+  NotificationModel({
     this.id,
     this.userId,
     this.companyId,
@@ -15,7 +15,7 @@ class OrderModel {
     this.content,
   });
 
-  OrderModel.fromSnapshot(DocumentSnapshot snapshot) {
+  NotificationModel.fromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
 
     userId = data['userId'] ?? '';

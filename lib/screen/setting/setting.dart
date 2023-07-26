@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:furniture/screen/setting/translation/translate.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/static/settingtile.dart';
 import 'package:furniture/static/topbar.dart';
+import 'package:get/get.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -43,7 +45,9 @@ class _SettingScreenState extends State<SettingScreen> {
                     SettingTile(
                       image: 'assets/images/language.svg',
                       text: 'Language',
-                      ontap: () {},
+                      ontap: () {
+                        Get.to(()=> TranslateScreen());
+                      },
                     ),
                     SettingTile(
                       image: 'assets/images/report.svg',

@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:furniture/chat/chat_view.dart';
-import 'package:furniture/chatting/message_screen.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/company_profile/company_controller.dart';
 import 'package:furniture/screen/company_profile/profile.dart';
 import 'package:furniture/screen/home/home_controller.dart';
+import 'package:furniture/screen/notifications/notification_screen.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
 
@@ -88,9 +88,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
-                                  icon: SvgPicture.asset(
-                                    'assets/images/notification.svg',
+                                  onPressed: () {
+                                    Get.to(() => NotificationScreen())!
+                                        .then((value) {
+                                      homeController.count();
+                                    });
+                                  },
+                                  icon: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: SvgPicture.asset(
+                                      'assets/images/bell.svg',
+                                      color: white,
+                                      height: 28,
+                                      width: 28,
+                                    ),
                                   ),
                                 ),
                               ],

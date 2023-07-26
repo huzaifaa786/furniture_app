@@ -38,7 +38,9 @@ void initState(){
             children: [
               TopBar(
                 text: 'Status',
-                ontap: () {},
+                ontap: () {
+                  Get.back();
+                },
               ),
               Padding(
                 padding: EdgeInsets.only(top: 50.0),

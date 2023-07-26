@@ -30,8 +30,6 @@ class _OrderScreenState extends State<OrderScreen> {
               decoration: BoxDecoration(
                 color: mainColor,
                 borderRadius: BorderRadius.only(
-                    // topLeft: Radius.circular(20),
-                    // topRight: Radius.circular(20),
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20)),
               ),
