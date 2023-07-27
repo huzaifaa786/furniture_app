@@ -71,8 +71,10 @@ class _MyWidgetState extends State<NotificationScreen> {
                         itemBuilder: (context, index) {
                           NotificationModel item = items[index];
                           int milliseconds = int.parse(item.id!);
-                          DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(milliseconds);
-                          String formattedDate = DateFormat('HH:mm yyyy-MM-dd').format(dateTime);
+                          DateTime dateTime =
+                              DateTime.fromMillisecondsSinceEpoch(milliseconds);
+                          String formattedDate =
+                              DateFormat('HH:mm yyyy-MM-dd').format(dateTime);
                           return Card(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
@@ -171,8 +173,6 @@ class _MyWidgetState extends State<NotificationScreen> {
                 ),
               ),
             ),
-
-            // LargeButton(title: 'Order Now', onPressed: () {}),
           ],
         ),
       )),
