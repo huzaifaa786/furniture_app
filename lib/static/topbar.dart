@@ -32,7 +32,8 @@ class TopBar extends StatelessWidget {
             style: TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 21,
-                fontWeight: FontWeight.w600),
+                color: Colors.black.withOpacity(0.7699999809265137),
+                fontWeight: FontWeight.w500),
           ),
           Text(
             '..........',

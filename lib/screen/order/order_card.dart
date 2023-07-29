@@ -5,7 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/values/colors.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({super.key,this.ontap,this.amount,this.id,this.description});
+  const OrderCard(
+      {super.key, this.ontap, this.amount, this.id, this.description});
   final description;
   final ontap;
   final id;
@@ -58,10 +59,12 @@ class OrderCard extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.w600),
                         ),
-                        Padding(
+                        Container(
                           padding: EdgeInsets.only(top: 5),
+                          width: MediaQuery.of(context).size.width * 0.4,
                           child: Text(
                             description!,
+                            maxLines: null,
                             style: TextStyle(
                                 fontSize: 12, fontWeight: FontWeight.w400),
                           ),

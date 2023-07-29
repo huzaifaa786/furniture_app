@@ -1,7 +1,16 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:furniture/constants/constants.dart';
+import 'package:furniture/screen/setting/change_password/change_password_screen.dart';
+import 'package:furniture/screen/setting/report_bug_model.dart';
+import 'package:furniture/screen/setting/translation/translate.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/static/settingtile.dart';
 import 'package:furniture/static/topbar.dart';
+import 'package:furniture/values/colors.dart';
+import 'package:get/get.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -38,17 +47,25 @@ class _SettingScreenState extends State<SettingScreen> {
                     SettingTile(
                       image: 'assets/images/password.svg',
                       text: 'Change password',
-                      ontap: () {},
+                      ontap: () {
+                        settingController.clearPasswordVariable();
+                        Get.to(() => ChangePasswordscreen());
+                      },
                     ),
                     SettingTile(
                       image: 'assets/images/language.svg',
                       text: 'Language',
-                      ontap: () {},
+                      ontap: () {
+                        Get.to(() => TranslateScreen());
+                      },
                     ),
                     SettingTile(
                       image: 'assets/images/report.svg',
                       text: 'Report Issue',
-                      ontap: () {},
+                      ontap: () {
+                        settingController.clearbugVariables();
+                        onBugTAp(context);
+                      },
                     ),
                     const SizedBox(height: 40),
                   ],
@@ -65,5 +82,12 @@ class _SettingScreenState extends State<SettingScreen> {
         ),
       ),
     );
+  }
+
+  onBugTAp(context) {
+    Alert(context: context, content: BugReportModal(), buttons: [
+      DialogButton(
+          height: 0, color: white, onPressed: () async {}, child: Text(''))
+    ]).show();
   }
 }

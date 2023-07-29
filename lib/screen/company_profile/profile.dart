@@ -7,7 +7,6 @@ import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/chat/chat_page.dart';
-import 'package:furniture/chatting/message_screen.dart';
 import 'package:furniture/helper/general.dart';
 import 'package:furniture/model/company.dart';
 import 'package:furniture/screen/company_profile/company_controller.dart';
