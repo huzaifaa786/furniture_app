@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:furniture/chat/chat_view.dart';
-import 'package:furniture/chatting/message_screen.dart';
+
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/company_profile/company_controller.dart';
 import 'package:furniture/screen/company_profile/profile.dart';
