@@ -3,6 +3,7 @@ import 'package:furniture/constants/constants.dart';
 import 'package:furniture/model/company.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class HomeController extends GetxController {
   static HomeController get instance => Get.find();
