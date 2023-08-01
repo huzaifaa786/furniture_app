@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:furniture/chat/controller.dart';
+import 'package:furniture/screen/chat/controller.dart';
 import 'package:furniture/firebase_options.dart';
 import 'package:furniture/helper/loading.dart';
 import 'package:furniture/screen/home/home_controller.dart';
@@ -33,6 +33,7 @@ void main() async {
     Get.put(OrderController());
     Get.put(NotificationController());
     Get.put(SettingController());
+    
   });
   runApp(const MyApp());
 }

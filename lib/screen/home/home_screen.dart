@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:furniture/chat/chat_view.dart';
+import 'package:furniture/screen/chat/chat_view.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/company_profile/company_controller.dart';
 import 'package:furniture/screen/company_profile/profile.dart';
@@ -29,6 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     chatCount();
+    homeController.fetchLoggedInUserName();
+    homeController.fetchCompanies();
     super.initState();
   }
 
@@ -194,14 +196,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 size: 30,
                               ),
                               onTap: () {
-                                Get.put(CompanyController(company: company));
+                                Get.put(CompanyController());
+                                companyController.clear();
+                                companyController.updateImgList(company);
                                 Get.to(() =>
                                         CompanyProfileScreen(company: company))!
                                     .then((value) {
                                   homeController.count();
                                 });
-                                // Handle the tap on the list item
-                                // You can navigate to the detail screen or perform any other action
                               },
                             ),
                           ),

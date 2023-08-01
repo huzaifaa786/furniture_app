@@ -2,7 +2,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/helper/loading.dart';
 import 'package:furniture/screen/bottomNavBar/bottomNaviBar.dart';
-import 'package:furniture/screen/home/home_screen.dart';
 import 'package:furniture/screen/login/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -54,10 +53,7 @@ class AuthService extends GetxController {
           // You can also show an error message to the user or perform other actions as needed.
         }
         LoadingHelper.dismiss();
-        Get.offAll(() => const HomeScreen());
-      } else {
-        Get.to(() => const LoginScreen());
-      }
+      } else {}
     } on FirebaseAuthException catch (e) {
       return e.message;
     } catch (_) {
@@ -66,7 +62,7 @@ class AuthService extends GetxController {
     return null;
   }
 
-  _addUserToFirestore(String userID) async {}
+  // _addUserToFirestore(String userID) async {}
 
   Future<String?> loginWithEmailAndPassword(
       String email, String password) async {

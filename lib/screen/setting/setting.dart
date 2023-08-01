@@ -5,6 +5,7 @@ import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/setting/change_password/change_password_screen.dart';
 import 'package:furniture/screen/setting/report_bug_model.dart';
 import 'package:furniture/screen/setting/translation/translate.dart';
+import 'package:furniture/screen/setting/userProfile/edit_profile.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/static/settingtile.dart';
 import 'package:furniture/static/topbar.dart';
@@ -41,7 +42,9 @@ class _SettingScreenState extends State<SettingScreen> {
                       child: SettingTile(
                         image: 'assets/images/editProfile.svg',
                         text: 'Edit Profile',
-                        ontap: () {},
+                        ontap: () {
+                          Get.to(() => EditProfile());
+                        },
                       ),
                     ),
                     SettingTile(
@@ -75,7 +78,9 @@ class _SettingScreenState extends State<SettingScreen> {
                   bottom: 20,
                   child: LargeButton(
                     title: "Log Out",
-                    onPressed: () {},
+                    onPressed: () {
+                      settingController.signOut();
+                    },
                   ))
             ],
           ),

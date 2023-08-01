@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:furniture/chat/constants.dart';
+import 'package:furniture/screen/chat/constants.dart';
 import 'package:furniture/helper/loading.dart';
 import 'package:furniture/model/message_chat.dart';
 

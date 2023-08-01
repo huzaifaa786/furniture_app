@@ -17,7 +17,6 @@ class SignUpController extends GetxController {
 
   //Call this Function from Design & it will do the rest
 
-  
   void register() {
     LoadingHelper.show();
     final bool isFormValid =
@@ -27,13 +26,14 @@ class SignUpController extends GetxController {
             Validators.emptyStringValidator(password.text, '') == null &&
             Validators.emptyStringValidator(confirmPassword.text, '') == null;
     if (isFormValid) {
-      String? error = AuthService.instance
-          .createUserWithEmailAndPassword(name.text,email.text,phone.text, password.text) as String?;
+      String? error = AuthService.instance.createUserWithEmailAndPassword(
+          name.text, email.text, phone.text, password.text) as String?;
       LoadingHelper.dismiss();
 
       if (error != null) {
         Get.showSnackbar(GetSnackBar(
           message: error.toString(),
+          duration: const Duration(seconds: 3),
         ));
         LoadingHelper.dismiss();
       }
@@ -41,6 +41,15 @@ class SignUpController extends GetxController {
       showErrors();
       LoadingHelper.dismiss();
     }
+  }
+
+  clear() {
+    email.clear();
+    password.clear();
+    confirmPassword.clear();
+    phone.clear();
+    name.clear();
+    update();
   }
 
   void showErrors() {

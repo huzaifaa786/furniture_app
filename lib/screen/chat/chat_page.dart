@@ -6,12 +6,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:furniture/chat/constants.dart';
-import 'package:furniture/chat/full_photo_page.dart';
+import 'package:furniture/screen/chat/constants.dart';
+import 'package:furniture/screen/chat/full_photo_page.dart';
 import 'package:furniture/constants/constants.dart';
-import 'package:furniture/helper/loading.dart';
 import 'package:furniture/model/models.dart';
-import 'package:furniture/chat/controller.dart';
+import 'package:furniture/screen/chat/controller.dart';
 import 'package:furniture/screen/login/login_screen.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/values/Validator.dart';
@@ -82,6 +81,7 @@ class ChatPageState extends State<ChatPage> {
   }
 
   void readLocal() {
+    print(auth.currentUser!.uid);
     if (auth.currentUser!.uid.isNotEmpty == true) {
       currentUserId = auth.currentUser!.uid;
     } else {
@@ -93,11 +93,22 @@ class ChatPageState extends State<ChatPage> {
     } else {
       groupChatId = '$peerId-$currentUserId';
     }
-    FirebaseFirestore.instance
+    final docRef = FirebaseFirestore.instance
         .collection(FirestoreConstants.pathMessageCollection)
-        .doc(groupChatId)
-        .update({
-      'userSeen': true,
+        .doc(groupChatId);
+
+    docRef.get().then((docSnapshot) {
+      if (docSnapshot.exists) {
+        docRef.update({'userSeen': true}).then((_) {
+          print('Update successful');
+        }).catchError((error) {
+          print('Error updating document: $error');
+        });
+      } else {
+        print('Document does not exist');
+      }
+    }).catchError((error) {
+      print('Error fetching document: $error');
     });
   }
 
@@ -681,19 +692,54 @@ class ChatPageState extends State<ChatPage> {
                                         child: LargeButton(
                                           title: 'Checkout',
                                           onPressed: () async {
-                                            String description = messageChat.content.split("~~")[0].split(":")[1].trim();
-                                            int amount = int.parse(messageChat.content.split("~~")[1].split(":")[1].trim());
-                                            String date= messageChat.content.split("~~")[2].split(":")[1].trim();
-                                            String time =messageChat.content.split("~~")[3].split(":")[1].trim();
-                                            String orderId = DateTime.now().millisecondsSinceEpoch.toString();
-                                            bool i = await chatProvider.orderPlacement(description,amount,date,time, currentUserId, widget.arguments.peerId,orderId);
-                                            if(i == true){
-                                              String content = 'Order has been created with Order Id # ' + orderId;
-                                              onSendMessage(content, TypeMessage.text);
-                                              String noti = 'Your order has been confirmed.';
-                                              String notiId = DateTime.now().millisecondsSinceEpoch.toString();
+                                            String description = messageChat
+                                                .content
+                                                .split("~~")[0]
+                                                .split(":")[1]
+                                                .trim();
+                                            int amount = int.parse(messageChat
+                                                .content
+                                                .split("~~")[1]
+                                                .split(":")[1]
+                                                .trim());
+                                            String date = messageChat.content
+                                                .split("~~")[2]
+                                                .split(":")[1]
+                                                .trim();
+                                            String time = messageChat.content
+                                                .split("~~")[3]
+                                                .split(":")[1]
+                                                .trim();
+                                            String orderId = DateTime.now()
+                                                .millisecondsSinceEpoch
+                                                .toString();
+                                            bool i = await chatProvider
+                                                .orderPlacement(
+                                                    description,
+                                                    amount,
+                                                    date,
+                                                    time,
+                                                    currentUserId,
+                                                    widget.arguments.peerId,
+                                                    orderId);
+                                            if (i == true) {
+                                              String content =
+                                                  'Order has been created with Order Id # ' +
+                                                      orderId;
+                                              onSendMessage(
+                                                  content, TypeMessage.text);
+                                              String noti =
+                                                  'Your order has been confirmed.';
+                                              String notiId = DateTime.now()
+                                                  .millisecondsSinceEpoch
+                                                  .toString();
                                               print(noti + notiId);
-                                              chatProvider.notificationCreated(noti, currentUserId, widget.arguments.peerId,notiId,orderId);
+                                              chatProvider.notificationCreated(
+                                                  noti,
+                                                  currentUserId,
+                                                  widget.arguments.peerId,
+                                                  notiId,
+                                                  orderId);
                                             }
                                           },
                                           buttonHeight: 45.0,

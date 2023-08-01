@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:furniture/chat/chat_page.dart';
+import 'package:furniture/screen/chat/chat_page.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/static/topbar.dart';
 import 'package:furniture/values/colors.dart';

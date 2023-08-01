@@ -6,7 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:furniture/chat/chat_page.dart';
+import 'package:furniture/screen/chat/chat_page.dart';
 import 'package:furniture/helper/general.dart';
 import 'package:furniture/model/company.dart';
 import 'package:furniture/screen/company_profile/company_controller.dart';
@@ -117,7 +117,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                     BorderRadius.circular(10), // Image border
                                 child: CachedNetworkImage(
                                   imageUrl:
-                                      companyController.company.companyImage,
+                                      widget.company.companyImage,
                                   fit: BoxFit.cover,
                                   height: 70,
                                   width: 70,
@@ -164,7 +164,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0, bottom: 18),
                         child: Text(
-                          companyController.company.englishBio,
+                          widget.company.englishBio,
                           style: TextStyle(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w400,
@@ -190,10 +190,10 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                               child: Text(
                                 'From ' +
                                     formattedTime(
-                                        companyController.company.startTime) +
+                                        widget.company.startTime) +
                                     ' To ' +
                                     formattedTime(
-                                        companyController.company.endTime),
+                                        widget.company.endTime),
                                 style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w400,

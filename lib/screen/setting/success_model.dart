@@ -7,8 +7,8 @@ import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
 
 class SucessModel extends StatefulWidget {
-  const SucessModel({super.key});
-
+  const SucessModel({super.key, required this.text});
+  final String? text;
   @override
   State<SucessModel> createState() => _SucessModelState();
 }
@@ -30,7 +30,7 @@ class _SucessModelState extends State<SucessModel> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Issue Reported\nSuccessfully',
+                      widget.text.toString(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,

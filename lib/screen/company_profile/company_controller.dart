@@ -3,23 +3,29 @@ import 'package:get/get.dart';
 
 class CompanyController extends GetxController {
   static CompanyController get instance => Get.find();
-  final Company company;
+  // final Company company;
 
-  CompanyController({required this.company});
+  // CompanyController({required this.company});
   List<String> imgList = <String>[].obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    updateImgList();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   // updateImgList(Company company),
+  // }
 
   // Method to update the company
-  void updateImgList() {
+  void updateImgList(Company companys) {
     imgList = [
-      company.companyImage,
-      company.companyImage,
-      company.companyImage,
+      companys.companyImage,
+      companys.companyImage1,
+      companys.companyImage2,
     ];
+    update();
+  }
+
+  clear(){
+    imgList = <String>[].obs;
+    update();
   }
 }

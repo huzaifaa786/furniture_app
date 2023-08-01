@@ -59,12 +59,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               topRight: Radius.circular(30),
                               topLeft: Radius.circular(30))),
                       child: SingleChildScrollView(
-                        reverse: true,
                         child: Padding(
                           padding: MediaQuery.of(context).viewInsets,
                           child: Column(children: [
                             Padding(
-                              padding: const EdgeInsets.only(top: 5, bottom: 60),
+                              padding: const EdgeInsets.only(top: 30, bottom: 30),
                               child: Text(
                                 'Register',
                                 style: TextStyle(

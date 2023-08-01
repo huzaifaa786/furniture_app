@@ -95,11 +95,11 @@ class _BugReportModalState extends State<BugReportModal> {
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
                     onPressed: () {
-                      // settingController.reportBug((success) {
-                      //   if (success) {
+                      settingController.reportBug((success) {
+                        if (success) {
                           successModel(context);
-                        // }
-                      // });
+                        }
+                      });
                     },
                     child: Text('Submit'),
                     style: ButtonStyle(
@@ -120,9 +120,14 @@ class _BugReportModalState extends State<BugReportModal> {
   }
 
   successModel(context) {
-    Alert(context: context, content: SucessModel(), buttons: [
-      DialogButton(
-          height: 0, color: white, onPressed: () async {}, child: Text(''))
-    ]).show();
+    Alert(
+        context: context,
+        content: SucessModel(
+          text: 'Issue Reported\nSuccessfully',
+        ),
+        buttons: [
+          DialogButton(
+              height: 0, color: white, onPressed: () async {}, child: Text(''))
+        ]).show();
   }
 }

@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/helper/loading.dart';
+import 'package:furniture/model/user_model.dart';
+import 'package:furniture/screen/login/login_screen.dart';
 import 'package:furniture/values/Validator.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
@@ -13,6 +16,14 @@ import 'package:image_picker/image_picker.dart';
 class SettingController extends GetxController {
   static SettingController get instance => Get.find();
 
+/////////////////////////////////// Variable of Edit Profile Screen ///////////////////////////////
+
+  RxBool validateEditProfileForm = false.obs;
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  Rx<UserModel> userModel = UserModel().obs;
+
 /////////////////////////////////// Variable of Change password Screen ///////////////////////////////
 
   RxBool validatePasswordForm = false.obs;
@@ -20,7 +31,15 @@ class SettingController extends GetxController {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
 
+/////////////////////////////////// Variable of Bug Report Screen ///////////////////////////////////
+
+  XFile? bugImage = XFile('');
+  TextEditingController bugcontroller = TextEditingController();
+  String imageUrl = "";
+
+///////
 /////////////////////////////////// Function to update the password ///////////////////////////////////
+//////
 
   Future<void> updatePassword() async {
     try {
@@ -66,30 +85,13 @@ class SettingController extends GetxController {
     }
   }
 
-/////////////////////////////////// Function to Clear the password Varaible ///////////////////////////////////
-
-  clearPasswordVariable() {
-    password.clear();
-    newpassword.clear();
-    confirmPassword.clear();
-    validatePasswordForm = false.obs;
-    update();
-  }
-
-/////////////////////////////////// Function to Show the password screen error ///////////////////////////////////
-
-  void showErrors() {
-    validatePasswordForm = true.obs;
-    update();
-  }
-
-  XFile? bugImage = XFile('');
-  TextEditingController bugcontroller = TextEditingController();
-  String imageUrl = "";
+///////
+/////////////////////////////////// Function to Report a Bug To Admin ///////////////////////////////////
+//////
 
   Future<void> selectbugImage() async {
-    final ImagePicker _picker = ImagePicker();
-    var image = await _picker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       bugImage = image;
       update();
@@ -149,6 +151,75 @@ class SettingController extends GetxController {
           backgroundColor: Colors.red);
     }
   }
+///////
+/////////////////////// Function to get and update User by intializing varaible //////////////////////////////
+//////
+
+  initializeUserModel(String userID) async {
+    try {
+      final data = auth.currentUser!.uid;
+      userModel.value = await firebaseFirestore
+          .collection('users')
+          .doc(userID)
+          .get()
+          .then((value) => UserModel.fromJson(value.data()!));
+      update();
+      if (data == userID) {
+        email.text = userModel.value.email!;
+        phone.text =
+            userModel.value.phone != null ? userModel.value.phone! : '';
+        name.text = userModel.value.name!;
+      }
+    } on FirebaseException catch (e) {
+      Get.snackbar('', e.message!,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: white);
+    }
+  }
+
+  void updateProfile(void Function(bool) callback) async {
+    LoadingHelper.show();
+    final bool isFormValid =
+        Validators.emptyStringValidator(name.text, '') == null;
+    if (isFormValid) {
+      var collection = FirebaseFirestore.instance.collection('users');
+      collection.doc(auth.currentUser!.uid).update({
+        'name': name.text,
+      }).then((_) {
+        LoadingHelper.dismiss();
+        return callback(true);
+      }).catchError((error) {
+        LoadingHelper.dismiss();
+        return callback(false);
+      });
+    } else {
+      LoadingHelper.dismiss();
+      showErrors();
+    }
+  }
+
+/////////////////////////////////// Function to Clear the password Varaible ///////////////////////////////////
+
+  clearPasswordVariable() {
+    password.clear();
+    newpassword.clear();
+    confirmPassword.clear();
+    validatePasswordForm = false.obs;
+    update();
+  }
+
+/////////////////////////////////// Function to Clear the Edit Profile Varaible ///////////////////////////////////
+
+  clearProfileVariable() {
+    name.clear();
+    phone.clear();
+    email.clear();
+    validateEditProfileForm = false.obs;
+    update();
+  }
+
+/////////////////////////////////// Function to Clear the Bug Report Varaible ///////////////////////////////////
 
   clearbugVariables() {
     bugcontroller.clear();
@@ -157,11 +228,34 @@ class SettingController extends GetxController {
     update();
   }
 
+/////////////////////////////////// Function to Show the password screen error ///////////////////////////////////
+
+  void showErrors() {
+    validatePasswordForm = true.obs;
+    update();
+  }
+
+/////////////////////////////////// Function to Show the Edit Profile error ///////////////////////////////////
+
+  void showProfileErrors() {
+    validatePasswordForm = true.obs;
+    update();
+  }
+
+/////////////////////////////////// Function To Logout Current user ///////////////////////////////////
+
+  void signOut() {
+    FirebaseAuth.instance.signOut();
+    Get.offAll(() => LoginScreen());
+  }
+
   @override
   void onClose() {
     password.dispose();
     newpassword.dispose();
     confirmPassword.dispose();
+    email.dispose();
+    name.dispose();
     super.onClose();
   }
 }

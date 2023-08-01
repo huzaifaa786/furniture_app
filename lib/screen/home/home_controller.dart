@@ -13,9 +13,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
-    fetchLoggedInUserName();
-    fetchCompanies();
+    super.onInit(); 
   }
 
   Future<void> fetchLoggedInUserName() async {
