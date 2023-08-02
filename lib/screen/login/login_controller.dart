@@ -29,6 +29,8 @@ class LoginController extends GetxController {
           message: error.toString(),
           duration: const Duration(seconds: 3),
         ));
+      }else{
+        clear();
       }
     }
     LoadingHelper.dismiss();

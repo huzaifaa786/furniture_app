@@ -36,6 +36,9 @@ class SignUpController extends GetxController {
           duration: const Duration(seconds: 3),
         ));
         LoadingHelper.dismiss();
+      } else {
+        LoadingHelper.dismiss();
+        clear();
       }
     } else {
       showErrors();

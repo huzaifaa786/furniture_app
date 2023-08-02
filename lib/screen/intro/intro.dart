@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:furniture/screen/intro/fragments/fragment_1.dart';
 import 'package:furniture/screen/intro/fragments/fragment_2.dart';
 import 'package:furniture/screen/intro/fragments/fragment_3.dart';
+import 'package:furniture/services/auth_service.dart';
 import 'package:furniture/static/large_button.dart';
+import 'package:get/get.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -94,8 +96,11 @@ class _IntroScreenState extends State<IntroScreen> {
                         : LargeButton(
                             buttonWidth: 0.75,
                             title: "GET STARTED",
-                            onPressed: () {
-                              Navigator.popAndPushNamed(context, 'login');
+                            onPressed: ()async {
+                               print('0');
+                               Get.put(AuthService());
+                               print('1');
+                              // Navigator.popAndPushNamed(context, 'login');
                             },
                           ),
               ],

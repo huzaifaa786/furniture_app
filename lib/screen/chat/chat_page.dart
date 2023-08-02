@@ -642,10 +642,7 @@ class ChatPageState extends State<ChatPage> {
                                               ),
                                             ),
                                             Text(
-                                              messageChat.content
-                                                  .split("~~")[3]
-                                                  .split(":")[1]
-                                                  .trim(),
+                                              messageChat.content.split("~~")[3].split("-")[1].trim(),
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
@@ -706,10 +703,7 @@ class ChatPageState extends State<ChatPage> {
                                                 .split("~~")[2]
                                                 .split(":")[1]
                                                 .trim();
-                                            String time = messageChat.content
-                                                .split("~~")[3]
-                                                .split(":")[1]
-                                                .trim();
+                                            String time = messageChat.content.split("~~")[3].split("-")[1].trim();
                                             String orderId = DateTime.now()
                                                 .millisecondsSinceEpoch
                                                 .toString();
