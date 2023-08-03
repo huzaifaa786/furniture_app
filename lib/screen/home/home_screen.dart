@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     homeController.fetchLoggedInUserName();
     homeController.fetchCompanies();
+    homeController.getItemsStream();
     super.initState();
   }
 
