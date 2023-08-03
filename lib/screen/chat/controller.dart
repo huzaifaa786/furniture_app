@@ -77,6 +77,7 @@ class ChatProvider {
         'amount': amount,
         'status': 0,
         'description': description,
+        'isRating': false,
       });
       LoadingHelper.dismiss();
       return true;

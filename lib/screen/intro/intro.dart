@@ -100,7 +100,6 @@ class _IntroScreenState extends State<IntroScreen> {
                                print('0');
                                Get.put(AuthService());
                                print('1');
-                              // Navigator.popAndPushNamed(context, 'login');
                             },
                           ),
               ],

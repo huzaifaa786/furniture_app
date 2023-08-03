@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/login/login_controller.dart';
 import 'package:furniture/screen/register/sign_up.dart';
+import 'package:furniture/services/auth_service.dart';
 import 'package:furniture/static/input_field1.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/values/Validator.dart';
@@ -30,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
-      builder: (companyController) => Scaffold(
+      builder: (controller) => Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -184,6 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           title: 'Login',
                                           sreenRatio: 0.9,
                                           onPressed: () {
+                                            Get.put(AuthService());
                                             loginController.loginUser();
                                           },
                                           textcolor: Colors.white,

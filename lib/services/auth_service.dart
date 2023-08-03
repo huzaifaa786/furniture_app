@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/helper/loading.dart';
@@ -17,6 +19,7 @@ class AuthService extends GetxController {
   //Will be load when app launches this func will be called and set the firebaseUser state
   @override
   void onReady() {
+    print('object*************************');
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, _setInitialScreen);
