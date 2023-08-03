@@ -3,6 +3,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:furniture/screen/intro/intro.dart';
+import 'package:furniture/services/auth_service.dart';
+import 'package:get/get.dart';
+import 'package:is_first_run/is_first_run.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -15,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    startTime();
+    goto();
   }
 
   @override
@@ -25,17 +28,10 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  startTime() async {
-    var duration = const Duration(seconds: 3);
-    return Timer(duration, route);
-  }
-
-  route() {
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const IntroScreen(),
-        ));
+  void goto() async {
+    await Future.delayed(const Duration(seconds: 1));
+    bool firstRun = await IsFirstRun.isFirstRun();
+    firstRun == true ? Get.off(IntroScreen()) : Get.put(AuthService());
   }
 }
 

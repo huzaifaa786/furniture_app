@@ -20,12 +20,8 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LoadingHelper.init();
-  await Firebase.initializeApp();
-  Get.put(LoginController());
-
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
       .then((value) {
-    Get.put(AuthService());
     // Get.put(NotificationService());
     Get.put(SignUpController());
     Get.put(LoginController());
@@ -80,7 +76,7 @@ class _MyAppState extends State<MyApp> {
         builder: EasyLoading.init(),
         theme: Styles.lightTheme,
         title: "furniture",
-        initialRoute: 'login',
+        initialRoute: 'splash',
         routes: {
           'splash': (_) => const SplashScreen(),
           'login': (_) => const LoginScreen(),
