@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     chatCount();
     homeController.fetchLoggedInUserName();
     homeController.fetchCompanies();
+    homeController.getItemsStream();
     super.initState();
   }
 

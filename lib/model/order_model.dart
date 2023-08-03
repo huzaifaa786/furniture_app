@@ -9,6 +9,7 @@ class OrderModel {
   String? time;
   int? status;
   String? description;
+  bool? isRating;
 
   OrderModel({
     this.id,
@@ -19,6 +20,7 @@ class OrderModel {
     this.time,
     this.status,
     this.description,
+    this.isRating,
   });
 
   OrderModel.fromSnapshot(DocumentSnapshot snapshot) {
@@ -32,5 +34,6 @@ class OrderModel {
     time = data['time'] ?? '';
     status = data['status'] ?? '';
     description = data['description'] ?? '';
+    isRating = data['isRating'] ?? '';
   }
 }
