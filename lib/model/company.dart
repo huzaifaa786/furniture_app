@@ -8,6 +8,7 @@ class Company {
   final String englishBio;
   final String arabicBio;
   final String name;
+  final double rating;
 
   Company({
     required this.id,
@@ -19,5 +20,6 @@ class Company {
     required this.englishBio,
     required this.arabicBio,
     required this.name,
+    required this.rating,
   });
 }

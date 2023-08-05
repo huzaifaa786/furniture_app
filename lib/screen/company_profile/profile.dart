@@ -116,8 +116,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                 borderRadius:
                                     BorderRadius.circular(10), // Image border
                                 child: CachedNetworkImage(
-                                  imageUrl:
-                                      widget.company.companyImage,
+                                  imageUrl: widget.company.companyImage,
                                   fit: BoxFit.cover,
                                   height: 70,
                                   width: 70,
@@ -138,7 +137,9 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                     ),
                                   ),
                                   RatingBar.builder(
-                                    initialRating: 3,
+                                    initialRating: widget.company.rating == 0.0
+                                        ? 5
+                                        : widget.company.rating,
                                     minRating: 0,
                                     direction: Axis.horizontal,
                                     allowHalfRating: true,
@@ -189,11 +190,9 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Text(
                                 'From ' +
-                                    formattedTime(
-                                        widget.company.startTime) +
+                                    formattedTime(widget.company.startTime) +
                                     ' To ' +
-                                    formattedTime(
-                                        widget.company.endTime),
+                                    formattedTime(widget.company.endTime),
                                 style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w400,
@@ -213,7 +212,8 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                   child: MIconButton(
                       title: "Inquire",
                       onPressed: () {
-                        Get.to(() => ChatPage(
+                        Get.to(
+                          () => ChatPage(
                             arguments: ChatPageArguments(
                               peerId: widget.company.id,
                               peerAvatar: widget.company.companyImage,

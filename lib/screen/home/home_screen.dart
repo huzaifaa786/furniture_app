@@ -179,14 +179,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontWeight: FontWeight.w600),
                               ),
                               subtitle: Row(
-                                children: const [
+                                children: [
                                   Icon(
                                     Icons.star,
                                     size: 16,
                                     color: ratingColor,
                                   ),
                                   SizedBox(width: 4),
-                                  Text('3'),
+                                  company.rating != 0.0
+                                      ? Text(company.rating.toString())
+                                      : Text('5'),
                                 ],
                               ),
                               trailing: Icon(

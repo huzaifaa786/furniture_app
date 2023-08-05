@@ -11,7 +11,6 @@ import 'package:furniture/screen/order/order_controller.dart';
 import 'package:furniture/screen/register/signup_controller.dart';
 import 'package:furniture/screen/setting/setting_controller.dart';
 import 'package:furniture/screen/splash_screen/splash_screen.dart';
-
 import 'package:furniture/values/styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
@@ -29,7 +28,6 @@ void main() async {
     Get.put(OrderController());
     Get.put(NotificationController());
     Get.put(SettingController());
-    
   });
   runApp(const MyApp());
 }
@@ -44,32 +42,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // @override
-  // void initState() async {
-  //   final userDoc = await FirebaseFirestore.instance
-  //       .collection("users")
-  //       .doc(auth.currentUser!.uid)
-  //       .get();
-  //   final userData = userDoc.data()! as Map<String, dynamic>;
-  //   // var user = User.fromJson(userData);
-  //   print(userData['token']);
-  //   notificationService.sendNotification(
-  //       userData['token'],
-  //       "Master Access Card Scanned",
-  //       "This microchip id scanned # ");
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        Provider<ChatProvider>(
-          create: (_) => ChatProvider(
-              // firebaseStorage: firebaseStorage,
-              ),
-        ),
-      ],
+      providers: [Provider<ChatProvider>(create: (_) => ChatProvider())],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,

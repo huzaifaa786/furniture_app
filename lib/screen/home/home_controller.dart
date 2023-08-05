@@ -30,9 +30,12 @@ class HomeController extends GetxController {
       QuerySnapshot querySnapshot =
           await firestore.collection('companies').get();
 
-      List<Company> fetchedCompanies = querySnapshot.docs.map((doc) {
+      List<Company> fetchedCompanies =
+          await Future.wait(querySnapshot.docs.map((doc) async {
+        String companyId = doc.id;
+        double ratingSum = await fetchCompanyRatingSum(companyId);
         return Company(
-          id: doc.id,
+          id: companyId,
           companyImage: doc['companyImage1'],
           companyImage1: doc['companyImage2'],
           companyImage2: doc['companyImage3'],
@@ -41,8 +44,9 @@ class HomeController extends GetxController {
           englishBio: doc['englishBio'],
           arabicBio: doc['arabicBio'],
           name: doc['name'],
+          rating: ratingSum,
         );
-      }).toList();
+      }));
 
       companies = fetchedCompanies;
       update();
@@ -51,6 +55,21 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<double> fetchCompanyRatingSum(String companyId) async {
+    double sum = 0.0;
+    try {
+      QuerySnapshot querySnapshot = await firestore
+          .collection('ratings')
+          .where('companyId', isEqualTo: companyId)
+          .get();
+
+      sum = querySnapshot.docs.fold(
+          0.0, (previousValue, doc) => previousValue + (doc['rating'] ?? 0.0));
+    } catch (e) {
+      print('Error fetching rating sum for company $companyId: $e');
+    }
+    return sum;
+  }
 
 ///////////////////////////////// unread chat count function and variable //////////////////////////////////
 

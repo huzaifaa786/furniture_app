@@ -130,11 +130,6 @@ class _RaatingState extends State<Raating> {
                                   widget.orderModel.companyId,
                                   ratings,
                                   widget.orderModel.id);
-                              // notificationController.addrating(
-                              //     notificationController.rating,
-                              //     order!.id!,
-                              //     order!.vendor!.id!);
-                              //     Get.back();
                             },
                       color: mainColor,
                       textcolor: Colors.white,
