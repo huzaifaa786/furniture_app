@@ -11,7 +11,7 @@ import 'package:furniture/screen/order/order_controller.dart';
 import 'package:furniture/screen/register/signup_controller.dart';
 import 'package:furniture/screen/setting/setting_controller.dart';
 import 'package:furniture/screen/splash_screen/splash_screen.dart';
-import 'package:furniture/services/auth_service.dart';
+
 import 'package:furniture/values/styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';

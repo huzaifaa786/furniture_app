@@ -1,13 +1,9 @@
-// ignore_for_file: deprecated_member_use, prefer_const_constructors
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:furniture/helper/loading.dart';
 import 'package:furniture/screen/chat/chat_view.dart';
 import 'package:furniture/constants/constants.dart';
-import 'package:furniture/screen/chat/loading_view.dart';
 import 'package:furniture/screen/company_profile/company_controller.dart';
 import 'package:furniture/screen/company_profile/profile.dart';
 import 'package:furniture/screen/home/home_controller.dart';
