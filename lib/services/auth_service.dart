@@ -18,11 +18,12 @@ class AuthService extends GetxController {
 
   //Will be load when app launches this func will be called and set the firebaseUser state
   @override
-  void onReady() {
+  void onInit() {
     print('object*************************');
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, _setInitialScreen);
+    super.onInit();
   }
 
   /// If we are setting initial screen from here
