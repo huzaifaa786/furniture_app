@@ -15,6 +15,8 @@ import 'package:furniture/services/notification_service.dart';
 import 'package:furniture/values/styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -30,6 +32,11 @@ void main() async {
     Get.put(SettingController());
     Get.put(NotificationService());
   });
+    //Assign publishable key to flutter_stripe
+  Stripe.publishableKey = "pk_test_24PsRoB2O46Bxxxxxxxxxxxxxxxxxxxxxxxx";
+
+  //Load our .env file that contains our Stripe Secret key
+  await dotenv.load(fileName: "assets/.env");
   runApp(const MyApp());
 }
 
