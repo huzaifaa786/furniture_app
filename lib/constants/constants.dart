@@ -8,6 +8,7 @@ import 'package:furniture/screen/order/order_controller.dart';
 import 'package:furniture/screen/register/signup_controller.dart';
 import 'package:furniture/screen/setting/setting_controller.dart';
 import 'package:furniture/services/auth_service.dart';
+import 'package:furniture/services/notification_service.dart';
 
 SignUpController signUpController = SignUpController.instance;
 LoginController loginController = LoginController.instance;
@@ -19,3 +20,4 @@ FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 OrderController orderController = OrderController.instance;
 NotificationController notificationController = NotificationController.instance;
 SettingController settingController = SettingController.instance;
+NotificationService notificationService = NotificationService.instance;

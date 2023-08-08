@@ -67,6 +67,7 @@ dependencies:
   rflutter_alert: ^2.0.7
   is_first_run: ^1.0.0
   google_sign_in: ^6.1.4
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:

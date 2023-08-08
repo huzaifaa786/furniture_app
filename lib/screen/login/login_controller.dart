@@ -135,14 +135,14 @@ class LoginController extends GetxController {
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.green,
               colorText: mainColor);
-          if (phone == userController.phone) {
+          // if (phone == userController.phone) {
         
-            Get.to(() => const PhoneVerifyScreen());
-          } else {
-            Get.to(() => VerifyScreen(
-                  idToken: '',
-                ));
-          }
+          //   Get.to(() => const PhoneVerifyScreen());
+          // } else {
+          //   Get.to(() => VerifyScreen(
+          //         idToken: '',
+          //       ));
+          // }
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           verificationid = verificationId;

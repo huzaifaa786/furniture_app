@@ -51,12 +51,34 @@ class ChatPageState extends State<ChatPage> {
 
   late final ChatProvider chatProvider = context.read<ChatProvider>();
 
+  String adminToken = '';
+
   @override
   void initState() {
     super.initState();
     focusNode.addListener(onFocusChange);
     listScrollController.addListener(_scrollListener);
     readLocal();
+    fetchadminToken();
+  }
+
+  void fetchadminToken() async {
+    try {
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc('B4kLpQh1IvdQYm0275l8VOUQfj62')
+          .get();
+
+      if (snapshot.exists) {
+        setState(() {
+          adminToken = snapshot['token'];
+        });
+      } else {
+        print('User not found');
+      }
+    } catch (error) {
+      print('Error fetching user token: $error');
+    }
   }
 
   _scrollListener() {
@@ -642,7 +664,10 @@ class ChatPageState extends State<ChatPage> {
                                               ),
                                             ),
                                             Text(
-                                              messageChat.content.split("~~")[3].split("-")[1].trim(),
+                                              messageChat.content
+                                                  .split("~~")[3]
+                                                  .split("-")[1]
+                                                  .trim(),
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
@@ -703,7 +728,10 @@ class ChatPageState extends State<ChatPage> {
                                                 .split("~~")[2]
                                                 .split(":")[1]
                                                 .trim();
-                                            String time = messageChat.content.split("~~")[3].split("-")[1].trim();
+                                            String time = messageChat.content
+                                                .split("~~")[3]
+                                                .split("-")[1]
+                                                .trim();
                                             String orderId = DateTime.now()
                                                 .millisecondsSinceEpoch
                                                 .toString();
@@ -717,17 +745,11 @@ class ChatPageState extends State<ChatPage> {
                                                     widget.arguments.peerId,
                                                     orderId);
                                             if (i == true) {
-                                              String content =
-                                                  'Order has been created with Order Id # ' +
-                                                      orderId;
-                                              onSendMessage(
-                                                  content, TypeMessage.text);
-                                              String noti =
-                                                  'Your order has been confirmed.';
-                                              String notiId = DateTime.now()
-                                                  .millisecondsSinceEpoch
-                                                  .toString();
-                                              print(noti + notiId);
+                                              notificationService.postNotification(title: 'New order placed',body: 'Order placed with an Order Id #$orderId',receiverToken: adminToken);
+                                              String content = 'Order has been created with Order Id # ' + orderId;
+                                              onSendMessage(content, TypeMessage.text);
+                                              String noti = 'Your order has been confirmed.';
+                                              String notiId = DateTime.now().millisecondsSinceEpoch.toString();
                                               chatProvider.notificationCreated(
                                                   noti,
                                                   currentUserId,
