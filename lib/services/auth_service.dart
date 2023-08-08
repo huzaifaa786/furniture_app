@@ -72,6 +72,23 @@ class AuthService extends GetxController {
       String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+      if (firebaseUser.value != null) {
+        String userID = firebaseUser.value!.uid;
+        final token = await FirebaseMessaging.instance.getToken();
+        try {
+          await firebaseFirestore
+              .collection(usersCollection)
+              .doc(userID)
+              .update({
+            'token': token,
+          });
+        } catch (e) {
+          // Handle the error here
+          print('Error occurred while setting data: $e');
+          // You can also show an error message to the user or perform other actions as needed.
+        }
+        LoadingHelper.dismiss();
+      } else {}
     } on FirebaseAuthException catch (e) {
       return e.message;
     } catch (_) {

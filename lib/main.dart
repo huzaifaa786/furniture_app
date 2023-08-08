@@ -11,6 +11,7 @@ import 'package:furniture/screen/order/order_controller.dart';
 import 'package:furniture/screen/register/signup_controller.dart';
 import 'package:furniture/screen/setting/setting_controller.dart';
 import 'package:furniture/screen/splash_screen/splash_screen.dart';
+import 'package:furniture/services/notification_service.dart';
 import 'package:furniture/values/styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
@@ -21,13 +22,13 @@ void main() async {
   await LoadingHelper.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
       .then((value) {
-    // Get.put(NotificationService());
     Get.put(SignUpController());
     Get.put(LoginController());
     Get.put(HomeController());
     Get.put(OrderController());
     Get.put(NotificationController());
     Get.put(SettingController());
+    Get.put(NotificationService());
   });
   runApp(const MyApp());
 }
