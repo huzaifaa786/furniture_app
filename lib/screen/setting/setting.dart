@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/setting/change_password/change_password_screen.dart';
@@ -21,6 +22,22 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  check() async {
+    var methods = await FirebaseAuth.instance
+        .fetchSignInMethodsForEmail(homeController.email!);
+    if (methods.contains('google.com')) {
+      setState(() {
+        settingController.isgoogle = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    check();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,14 +64,16 @@ class _SettingScreenState extends State<SettingScreen> {
                         },
                       ),
                     ),
-                    SettingTile(
-                      image: 'assets/images/password.svg',
-                      text: 'Change password',
-                      ontap: () {
-                        settingController.clearPasswordVariable();
-                        Get.to(() => ChangePasswordscreen());
-                      },
-                    ),
+                    settingController.isgoogle == false
+                        ? SettingTile(
+                            image: 'assets/images/password.svg',
+                            text: 'Change password',
+                            ontap: () {
+                              settingController.clearPasswordVariable();
+                              Get.to(() => ChangePasswordscreen());
+                            },
+                          )
+                        : Container(),
                     SettingTile(
                       image: 'assets/images/language.svg',
                       text: 'Language',

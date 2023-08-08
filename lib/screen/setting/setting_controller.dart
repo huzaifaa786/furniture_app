@@ -15,6 +15,7 @@ import 'package:image_picker/image_picker.dart';
 
 class SettingController extends GetxController {
   static SettingController get instance => Get.find();
+  bool isgoogle = false;
 
 /////////////////////////////////// Variable of Edit Profile Screen ///////////////////////////////
 

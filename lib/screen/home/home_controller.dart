@@ -13,7 +13,7 @@ class HomeController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   List<Company> companies = <Company>[].obs;
   RxString loggedInUserName = ''.obs;
-
+  String? email;
   Future<void> fetchLoggedInUserName() async {
     User? user = auth.currentUser;
     if (user != null) {
@@ -21,6 +21,8 @@ class HomeController extends GetxController {
           await firestore.collection('users').doc(user.uid).get();
 
       String name = userSnapshot['name'] ?? '';
+      email = userSnapshot['email'] ?? '';
+      print(email);
       loggedInUserName.value = name;
     }
   }
