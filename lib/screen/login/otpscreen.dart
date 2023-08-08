@@ -55,8 +55,8 @@ class _LoginOtpVerifyScreenState extends State<LoginOtpVerifyScreen> {
                   margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   padding: EdgeInsets.all(4),
                   child: Text(
-                    'Entered the 6 digit code received on your entered number ended with *********' +
-                        otpServices.last2.toString() +
+                    // 'Entered the 6 digit code received on your entered number ended with *********' +
+                    //     otpServices.last2.toString() +
                         '.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -73,8 +73,8 @@ class _LoginOtpVerifyScreenState extends State<LoginOtpVerifyScreen> {
                   showFieldAsBox: true,
                   onCodeChanged: (String code) {},
                   onSubmit: (String verificationCode) {
-                    otpServices.otp = verificationCode;
-                    otpServices.verifyPhone();
+                    // otpServices.otp = verificationCode;
+                    // otpServices.verifyPhone();
                   },
                 ),
                 const SizedBox(
@@ -128,7 +128,7 @@ class _LoginOtpVerifyScreenState extends State<LoginOtpVerifyScreen> {
                   title: 'Submit',
                   sreenRatio: 0.85,
                   onPressed: () {
-                    otpServices.verifyPhone();
+                    // otpServices.verifyPhone();
                   },
                   color: greenish,
                   textcolor: Colors.white,

@@ -7,6 +7,7 @@ import 'package:furniture/screen/bottomNavBar/bottomNaviBar.dart';
 import 'package:furniture/screen/login/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService extends GetxController {
   static AuthService get instance => Get.find();
@@ -65,8 +66,6 @@ class AuthService extends GetxController {
     }
     return null;
   }
-
-  // _addUserToFirestore(String userID) async {}
 
   Future<String?> loginWithEmailAndPassword(
       String email, String password) async {

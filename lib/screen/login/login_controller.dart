@@ -63,40 +63,56 @@ class LoginController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  Future<String?> signInwithGoogle() async {
+  signInwithGoogle() async {
     try {
       LoadingHelper.show();
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
       var email = googleSignInAccount!.email;
-      var name =googleSignInAccount.displayName;
+      var name = googleSignInAccount.displayName;
       var methods =
           await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-      print(methods);
-      // if (methods.contains('google.com')) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
-      await _auth.signInWithCredential(credential);
-      final token = await FirebaseMessaging.instance.getToken();
-      var collection = FirebaseFirestore.instance.collection('users');
-      collection.doc(auth.currentUser!.uid).set({
-        "id": auth.currentUser!.uid,
-        'token': token,
-        "email": email,
-        "name": name,
-      });
-      LoadingHelper.dismiss();
-      // } else {
-      //   LoadingHelper.dismiss();
-      //   Get.snackbar('This google account is not linked with any account', '',
-      //       snackPosition: SnackPosition.BOTTOM,
-      //       backgroundColor: Colors.red,
-      //       colorText: mainColor);
-      // }
+      if (methods.contains('password')) {
+        LoadingHelper.dismiss();
+        Get.snackbar(
+            'Email is already associated with password. So, try that method for login with this email.',
+            '',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: white);
+      } else if (methods.contains('google.com')) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+        await _auth.signInWithCredential(credential);
+        final token = await FirebaseMessaging.instance.getToken();
+        var collection = FirebaseFirestore.instance.collection('users');
+        collection.doc(auth.currentUser!.uid).update({
+          'token': token,
+        });
+        LoadingHelper.dismiss();
+      } else {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+        await _auth.signInWithCredential(credential);
+        final token = await FirebaseMessaging.instance.getToken();
+        var collection = FirebaseFirestore.instance.collection('users');
+        collection.doc(auth.currentUser!.uid).set({
+          "id": auth.currentUser!.uid,
+          'token': token,
+          "email": email,
+          "name": name,
+          "phone": ''
+        });
+        LoadingHelper.dismiss();
+      }
     } on FirebaseAuthException catch (e) {
       LoadingHelper.dismiss();
       Get.snackbar('Google SignIn Failed', e.message!,
@@ -105,14 +121,19 @@ class LoginController extends GetxController {
           colorText: mainColor);
     }
   }
+
   int? resendtoken;
   RxString? last2;
   String verificationid = "";
-   void sendToken() async {
+  void sendToken() async {
     LoadingHelper.show();
-   
-  
-
+// final QuerySnapshot result = await FirebaseFirestore.instance
+//                 .collection('users')
+//                 .where('phone', isEqualTo: phone.text)
+//                 .limit(1)
+//                 .get();
+//             final List<DocumentSnapshot> number = result.docs;
+//             if (number.length == 0) {return;}
     try {
       await auth.verifyPhoneNumber(
         timeout: const Duration(minutes: 2),
@@ -136,7 +157,7 @@ class LoginController extends GetxController {
               backgroundColor: Colors.green,
               colorText: mainColor);
           // if (phone == userController.phone) {
-        
+
           //   Get.to(() => const PhoneVerifyScreen());
           // } else {
           //   Get.to(() => VerifyScreen(
