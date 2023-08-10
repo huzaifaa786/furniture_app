@@ -1,14 +1,14 @@
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:furniture/model/user_model.dart';
+import 'package:furniture/constants/constants.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/values/colors.dart';
 
 class LoginOtpVerifyScreen extends StatefulWidget {
-  const LoginOtpVerifyScreen({super.key, required this.user});
-  final UserModel? user;
-
+  const LoginOtpVerifyScreen({super.key});
   @override
   State<LoginOtpVerifyScreen> createState() => _LoginOtpVerifyScreenState();
 }
@@ -55,9 +55,9 @@ class _LoginOtpVerifyScreenState extends State<LoginOtpVerifyScreen> {
                   margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   padding: EdgeInsets.all(4),
                   child: Text(
-                    // 'Entered the 6 digit code received on your entered number ended with *********' +
-                    //     otpServices.last2.toString() +
-                        '.',
+                    'Entered the 6 digit code received on your entered number ending with *********' +
+                        loginController.last2.toString() +
+                    '.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 17,
@@ -73,8 +73,8 @@ class _LoginOtpVerifyScreenState extends State<LoginOtpVerifyScreen> {
                   showFieldAsBox: true,
                   onCodeChanged: (String code) {},
                   onSubmit: (String verificationCode) {
-                    // otpServices.otp = verificationCode;
-                    // otpServices.verifyPhone();
+                    authService.otp = verificationCode;
+                    authService.verifyPhone();
                   },
                 ),
                 const SizedBox(
@@ -128,9 +128,9 @@ class _LoginOtpVerifyScreenState extends State<LoginOtpVerifyScreen> {
                   title: 'Submit',
                   sreenRatio: 0.85,
                   onPressed: () {
-                    // otpServices.verifyPhone();
+                    authService.verifyPhone();
                   },
-                  color: greenish,
+                  color: mainColor,
                   textcolor: Colors.white,
                 )),
               ],

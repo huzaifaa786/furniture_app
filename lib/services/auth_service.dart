@@ -1,13 +1,15 @@
 // ignore_for_file: avoid_print
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/helper/loading.dart';
 import 'package:furniture/screen/bottomNavBar/bottomNaviBar.dart';
 import 'package:furniture/screen/login/login_screen.dart';
+import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService extends GetxController {
   static AuthService get instance => Get.find();
@@ -16,7 +18,7 @@ class AuthService extends GetxController {
   final _auth = FirebaseAuth.instance;
   late final Rx<User?> firebaseUser;
   String usersCollection = "users";
-
+  List<String>? providerNames;
   //Will be load when app launches this func will be called and set the firebaseUser state
   @override
   void onInit() {
@@ -33,6 +35,15 @@ class AuthService extends GetxController {
     user == null
         ? Get.offAll(() => const LoginScreen())
         : Get.offAll(() => const BottomNavScreen());
+
+    if (user == null) {
+      print("Authentication providers used: null");
+    } else {
+      providerNames = user.providerData.map((provider) {
+        return provider.providerId;
+      }).toList();
+      print("Authentication providers used: $providerNames");
+    }
   }
 
   //FUNC
@@ -97,4 +108,53 @@ class AuthService extends GetxController {
   }
 
   Future<void> logout() async => await _auth.signOut();
+
+  String? otp = '';
+  void verifyPhone() async {
+    try {
+      if (otp!.length == 6) {
+        LoadingHelper.show();
+        // final QuerySnapshot result = await FirebaseFirestore.instance
+        //     .collection('users')
+        //     .where('phone', isEqualTo: loginController.completePhone)
+        //     .limit(1)
+        //     .get();
+        // final List<DocumentSnapshot> number = result.docs;
+        // if (number.isEmpty) {
+        //   print(number.length);
+        //   return;
+        // }
+        await _auth
+            .signInWithCredential(PhoneAuthProvider.credential(
+          verificationId: loginController.verificationid,
+          smsCode: otp!,
+        ))
+            .then((value) async {
+          String userID = value.user!.uid;
+          final token = await FirebaseMessaging.instance.getToken();
+          await firebaseFirestore.collection(usersCollection).doc(userID).set({
+            "id": userID,
+            'token': token,
+            "email": '',
+            "name": loginController.phone.text,
+            "phone": loginController.completePhone,
+          });
+        });
+        otp = '';
+        LoadingHelper.dismiss();
+      } else {
+        Get.snackbar('Error!', 'Plese Enter Complete Code',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: white);
+        LoadingHelper.dismiss();
+      }
+    } on FirebaseAuthException catch (e) {
+      LoadingHelper.dismiss();
+      Get.snackbar('Error!', e.message!,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: white);
+    }
+  }
 }

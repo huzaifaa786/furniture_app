@@ -10,7 +10,9 @@ import 'package:furniture/static/large_button.dart';
 import 'package:furniture/values/Validator.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   getindex(id) async {
     setState(() {
       index = id;
+      loginController.clear();
     });
   }
 
@@ -96,12 +99,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 minHeight: 45,
                                 cornerRadius: 40,
                                 changeOnTap: true,
-                                inactiveFgColor:
-                                    const Color.fromARGB(255, 9, 9, 9),
+                                inactiveFgColor: Color.fromARGB(255, 9, 9, 9),
                                 activeFgColor:
-                                    const Color.fromARGB(255, 255, 255, 255),
+                                    Color.fromARGB(255, 255, 255, 255),
                                 inactiveBgColor:
-                                    const Color.fromARGB(255, 255, 255, 255),
+                                    Color.fromARGB(255, 255, 255, 255),
                                 activeBgColor: const [mainColor],
                                 activeBorders: [
                                   Border.all(
@@ -213,6 +215,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   ),
                                                   InkWell(
                                                     onTap: () {
+                                                      signUpController.clear();
+                                                      signUpController
+                                                              .validateSignUpForm =
+                                                          false.obs;
                                                       Get.to(() =>
                                                           RegisterScreen());
                                                     },
@@ -304,27 +310,69 @@ class _LoginScreenState extends State<LoginScreen> {
                                             'Back to Account',
                                             style: TextStyle(
                                                 fontSize: 24,
-                                                fontWeight: FontWeight.w600,
-                                                color: greenish),
+                                                fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                         Padding(
                                           padding:
-                                              const EdgeInsets.only(bottom: 24),
-                                          child: InputField1(
-                                            icon: 'assets/images/phone.svg',
-                                            hint: 'Phone Number',
+                                              const EdgeInsets.only(top: 12),
+                                          child: Container(
+                                            height: 75,
+                                            child: IntlPhoneField(
+                                              style: TextStyle(fontSize: 14),
+                                              controller: loginController.phone,
+                                              decoration: const InputDecoration(
+                                                contentPadding: EdgeInsets.only(
+                                                    bottom: 0.5),
+                                                hintStyle:
+                                                    TextStyle(fontSize: 12),
+                                                filled: true,
+                                                fillColor: white,
+                                                border: OutlineInputBorder(
+                                                  borderSide: BorderSide(),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.grey),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.grey),
+                                                ),
+                                              ),
+                                              initialCountryCode: 'AE',
+                                              onChanged: (phone) {
+                                                if (countries
+                                                        .firstWhere((element) =>
+                                                            element.code ==
+                                                            phone
+                                                                .countryISOCode)
+                                                        .maxLength ==
+                                                    phone.number.length) {
+                                                  loginController
+                                                          .completePhone =
+                                                      phone.completeNumber;
+                                                } else {
+                                                  loginController
+                                                      .completePhone = null;
+                                                }
+                                              },
+                                              keyboardType: TextInputType.phone,
+                                            ),
                                           ),
                                         ),
                                         LargeButton(
                                           title: 'Request OTP',
                                           sreenRatio: 0.9,
                                           onPressed: () {
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //       builder: (context) => VerifyPhone(),
-                                            //     ));
+                                            if (loginController.completePhone ==
+                                                null) {
+                                            } else {
+                                              loginController
+                                                  .sendTokenforSignUP();
+                                            }
                                           },
                                           textcolor: Colors.white,
                                           buttonWidth: 0.95,
