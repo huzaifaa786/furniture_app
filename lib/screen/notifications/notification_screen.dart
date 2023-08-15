@@ -4,6 +4,7 @@ import 'package:furniture/constants/constants.dart';
 import 'package:furniture/model/notification_model.dart';
 import 'package:furniture/static/topbar.dart';
 import 'package:furniture/values/colors.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -25,7 +26,9 @@ class _MyWidgetState extends State<NotificationScreen> {
           children: [
             TopBar(
               text: 'Notification',
-              ontap: () {},
+              ontap: () {
+                Get.back();
+              },
             ),
             Flexible(
               child: Container(

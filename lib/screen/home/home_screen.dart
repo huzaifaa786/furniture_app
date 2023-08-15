@@ -1,7 +1,11 @@
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:furniture/helper/loading.dart';
 import 'package:furniture/screen/chat/chat_view.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/company_profile/company_controller.dart';
@@ -24,11 +28,19 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {});
   }
 
+  Future<void> startDelayedFunction() async {
+    Future.delayed(Duration(seconds: 3));
+    print('object');
+  }
+
   @override
   void initState() {
+    LoadingHelper.show();
+    startDelayedFunction();
     homeController.fetchLoggedInUserName();
     homeController.fetchCompanies();
     homeController.getItemsStream();
+    LoadingHelper.dismiss();
     super.initState();
   }
 
@@ -109,23 +121,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      const Padding(
-                          padding: EdgeInsets.only(left: 15, top: 25),
-                          child: Text('Hello,',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold))),
-                      const SizedBox(
-                        height: 10,
-                      ),
                       Padding(
-                          padding: EdgeInsets.only(left: 15, top: 15),
-                          child: Text(homeController.loggedInUserName.value,
+                          padding: EdgeInsets.only(left: 15, top: 25),
+                          child: Text(
+                              'Hello, ' + homeController.loggedInUserName.value,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold))),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Padding(
+                      //     padding: EdgeInsets.only(left: 15, top: 15),
+                      //     child: Text(homeController.loggedInUserName.value,
+                      //         style: TextStyle(
+                      //             color: Colors.white,
+                      //             fontSize: 24,
+                      //             fontWeight: FontWeight.bold))),
                     ],
                   ),
                 ),
@@ -160,15 +173,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ],
                                 ),
-                                child: CircleAvatar(
-                                  radius: 10,
-                                  backgroundColor: Colors.white,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: CachedNetworkImage(
-                                      imageUrl: company.companyImage,
-                                      fit: BoxFit.fitHeight,
-                                    ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(30),
+                                  child: CachedNetworkImage(
+                                    imageUrl: company.companyImage,
+                                    fit: BoxFit.cover,
+                                    width: 60,
+                                    height: 60,
                                   ),
                                 ),
                               ),
@@ -178,18 +189,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w600),
                               ),
-                              subtitle: Row(
-                                children: [
-                                  Icon(
+                              subtitle: Padding(
+                                padding: const EdgeInsets.only(top: 4.0),
+                                child: RatingBar.builder(
+                                  initialRating: company.rating == 0.0
+                                      ? 5
+                                      : company.rating,
+                                  minRating: 0,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  itemSize: 18,
+                                  ignoreGestures: true,
+                                  // itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                                  itemBuilder: (context, _) => Icon(
                                     Icons.star,
-                                    size: 16,
                                     color: ratingColor,
                                   ),
-                                  SizedBox(width: 4),
-                                  company.rating != 0.0
-                                      ? Text(company.rating.toString())
-                                      : Text('5'),
-                                ],
+                                  onRatingUpdate: (rating) {
+                                    // print(rating);
+                                  },
+                                ),
                               ),
                               trailing: Icon(
                                 Icons.arrow_circle_right_outlined,

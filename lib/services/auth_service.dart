@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/helper/loading.dart';
 import 'package:furniture/screen/bottomNavBar/bottomNaviBar.dart';
+import 'package:furniture/screen/home/home_screen.dart';
 import 'package:furniture/screen/login/login_screen.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
@@ -35,7 +36,8 @@ class AuthService extends GetxController {
     user == null
         ? Get.offAll(() => const LoginScreen())
         : Get.offAll(() => const BottomNavScreen());
-
+    print('user*********************');
+    print(user);
     if (user == null) {
       print("Authentication providers used: null");
     } else {
@@ -114,31 +116,40 @@ class AuthService extends GetxController {
     try {
       if (otp!.length == 6) {
         LoadingHelper.show();
-        // final QuerySnapshot result = await FirebaseFirestore.instance
-        //     .collection('users')
-        //     .where('phone', isEqualTo: loginController.completePhone)
-        //     .limit(1)
-        //     .get();
-        // final List<DocumentSnapshot> number = result.docs;
-        // if (number.isEmpty) {
-        //   print(number.length);
-        //   return;
-        // }
-        await _auth
+        final token = await FirebaseMessaging.instance.getToken();
+        var val = await FirebaseFirestore.instance
+            .collection('users')
+            .where('phone', isEqualTo: loginController.completePhone)
+            .limit(1)
+            .get();
+        final List<DocumentSnapshot> number = val.docs;
+        await auth
             .signInWithCredential(PhoneAuthProvider.credential(
           verificationId: loginController.verificationid,
           smsCode: otp!,
         ))
             .then((value) async {
           String userID = value.user!.uid;
-          final token = await FirebaseMessaging.instance.getToken();
-          await firebaseFirestore.collection(usersCollection).doc(userID).set({
-            "id": userID,
-            'token': token,
-            "email": '',
-            "name": loginController.phone.text,
-            "phone": loginController.completePhone,
-          });
+          if (number.isEmpty) {
+            await firebaseFirestore
+                .collection(usersCollection)
+                .doc(userID)
+                .set({
+              "id": userID,
+              'token': token,
+              "email": '',
+              "name": loginController.phone.text,
+              "phone": loginController.completePhone,
+            });
+            print('object********************************');
+          } else {
+            await firebaseFirestore
+                .collection(usersCollection)
+                .doc(userID)
+                .update({
+              'token': token,
+            });
+          }
         });
         otp = '';
         LoadingHelper.dismiss();

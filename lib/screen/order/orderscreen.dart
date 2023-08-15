@@ -46,7 +46,6 @@ class _OrderScreenState extends State<OrderScreen> {
             Padding(
               padding: EdgeInsets.all(20),
               child: TextField(
-                obscureText: true,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey[300]!),

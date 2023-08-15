@@ -16,6 +16,7 @@ class HomeController extends GetxController {
   String? email;
   Future<void> fetchLoggedInUserName() async {
     User? user = auth.currentUser;
+    print(user);
     if (user != null) {
       DocumentSnapshot userSnapshot =
           await firestore.collection('users').doc(user.uid).get();
@@ -57,20 +58,41 @@ class HomeController extends GetxController {
     }
   }
 
+  // Future<double> fetchCompanyRatingSum(String companyId) async {
+  //   double sum = 0.0;
+  //   try {
+  //     QuerySnapshot querySnapshot = await firestore
+  //         .collection('ratings')
+  //         .where('companyId', isEqualTo: companyId)
+  //         .get();
+
+  //     sum = querySnapshot.docs.fold(
+  //         0.0, (previousValue, doc) => previousValue + (doc['rating'] ?? 0.0));
+  //   } catch (e) {
+  //     print('Error fetching rating sum for company $companyId: $e');
+  //   }
+  //   return sum;
+  // }
   Future<double> fetchCompanyRatingSum(String companyId) async {
     double sum = 0.0;
+    int totalRatings = 0;
+
     try {
       QuerySnapshot querySnapshot = await firestore
           .collection('ratings')
           .where('companyId', isEqualTo: companyId)
           .get();
 
+      totalRatings = querySnapshot.docs.length;
+
       sum = querySnapshot.docs.fold(
           0.0, (previousValue, doc) => previousValue + (doc['rating'] ?? 0.0));
     } catch (e) {
       print('Error fetching rating sum for company $companyId: $e');
     }
-    return sum;
+
+    double averageRating = totalRatings > 0 ? sum / totalRatings : 0.0;
+    return averageRating;
   }
 
 ///////////////////////////////// unread chat count function and variable //////////////////////////////////

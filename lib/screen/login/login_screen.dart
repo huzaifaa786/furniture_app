@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/login/login_controller.dart';
 import 'package:furniture/screen/register/sign_up.dart';
+import 'package:furniture/screen/reset_password/reset.dart';
 import 'package:furniture/services/auth_service.dart';
 import 'package:furniture/static/input_field1.dart';
 import 'package:furniture/static/large_button.dart';
@@ -175,7 +176,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   MainAxisAlignment.end,
                                               children: [
                                                 GestureDetector(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Get.to(()=> ResetScreen());
+                                                  },
                                                   child: Text(
                                                     "Forgot Password?",
                                                     style: TextStyle(

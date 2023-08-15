@@ -708,59 +708,128 @@ class ChatPageState extends State<ChatPage> {
                                           ],
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 12.0, bottom: 8),
-                                        child: LargeButton(
-                                          title: 'Checkout',
-                                          onPressed: () async {
-                                            String description = messageChat
-                                                .content
-                                                .split("~~")[0]
-                                                .split(":")[1]
-                                                .trim();
-                                            int amount = int.parse(messageChat
-                                                .content
-                                                .split("~~")[1]
-                                                .split(":")[1]
-                                                .trim());
-                                            String date = messageChat.content
-                                                .split("~~")[2]
-                                                .split(":")[1]
-                                                .trim();
-                                            String time = messageChat.content
-                                                .split("~~")[3]
-                                                .split("-")[1]
-                                                .trim();
-                                            String orderId = DateTime.now()
-                                                .millisecondsSinceEpoch
-                                                .toString();
-                                            bool i = await chatProvider
-                                                .orderPlacement(
-                                                    description,
-                                                    amount,
-                                                    date,
-                                                    time,
-                                                    currentUserId,
-                                                    widget.arguments.peerId,
-                                                    orderId);
-                                            if (i == true) {
-                                              notificationService.postNotification(title: 'New order placed',body: 'Order placed with an Order Id #$orderId',receiverToken: adminToken);
-                                              String content = 'Order has been created with Order Id # ' + orderId;
-                                              onSendMessage(content, TypeMessage.text);
-                                              String noti = 'Your order has been confirmed.';
-                                              String notiId = DateTime.now().millisecondsSinceEpoch.toString();
-                                              chatProvider.notificationCreated(
-                                                  noti,
-                                                  currentUserId,
-                                                  widget.arguments.peerId,
-                                                  notiId,
-                                                  orderId);
-                                            }
-                                          },
-                                          buttonHeight: 45.0,
-                                        ),
-                                      )
+                                      messageChat.content
+                                                  .split("~~")[4]
+                                                  .split(":")[1]
+                                                  .trim() ==
+                                              'false'
+                                          ? Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 12.0, bottom: 8),
+                                              child: LargeButton(
+                                                title: 'Checkout',
+                                                onPressed: () async {
+                                                  String description =
+                                                      messageChat.content
+                                                          .split("~~")[0]
+                                                          .split(":")[1]
+                                                          .trim();
+                                                  int amount = int.parse(
+                                                      messageChat.content
+                                                          .split("~~")[1]
+                                                          .split(":")[1]
+                                                          .trim());
+                                                  String date = messageChat
+                                                      .content
+                                                      .split("~~")[2]
+                                                      .split(":")[1]
+                                                      .trim();
+                                                  String time = messageChat
+                                                      .content
+                                                      .split("~~")[3]
+                                                      .split("-")[1]
+                                                      .trim();
+                                                  String orderId = DateTime
+                                                          .now()
+                                                      .millisecondsSinceEpoch
+                                                      .toString();
+                                                  bool i = await chatProvider
+                                                      .orderPlacement(
+                                                          description,
+                                                          amount,
+                                                          date,
+                                                          time,
+                                                          currentUserId,
+                                                          widget
+                                                              .arguments.peerId,
+                                                          orderId);
+                                                  if (i == true) {
+                                                    notificationService
+                                                        .postNotification(
+                                                            title:
+                                                                'New order placed',
+                                                            body:
+                                                                'Order placed with an Order Id #$orderId',
+                                                            receiverToken:
+                                                                adminToken);
+                                                    String content =
+                                                        'Order has been created with Order Id # ' +
+                                                            orderId;
+                                                    onSendMessage(content,
+                                                        TypeMessage.text);
+                                                    String noti =
+                                                        'Your order has been confirmed.';
+                                                    String notiId = DateTime
+                                                            .now()
+                                                        .millisecondsSinceEpoch
+                                                        .toString();
+                                                    String bill =
+                                                        'DESCRIPTION:' +
+                                                            messageChat.content
+                                                                .split("~~")[0]
+                                                                .split(":")[1]
+                                                                .trim() +
+                                                            '~~AMOUNT:' +
+                                                            messageChat.content
+                                                                .split("~~")[1]
+                                                                .split(":")[1]
+                                                                .trim() +
+                                                            '~~DATE:' +
+                                                            messageChat.content
+                                                                .split("~~")[2]
+                                                                .split(":")[1]
+                                                                .trim() +
+                                                            '~~TIME-' +
+                                                            messageChat.content
+                                                                .split("~~")[3]
+                                                                .split("-")[1]
+                                                                .trim() +
+                                                            '~~pay:' +
+                                                            'true';
+                                                    print(
+                                                        messageChat.timestamp);
+                                                    print(groupChatId);
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection('messages')
+                                                        .doc(groupChatId)
+                                                        .collection(groupChatId)
+                                                        .doc(messageChat
+                                                            .timestamp)
+                                                        .update({
+                                                      'content': bill,
+                                                    });
+                                                    chatProvider
+                                                        .notificationCreated(
+                                                            noti,
+                                                            currentUserId,
+                                                            widget.arguments
+                                                                .peerId,
+                                                            notiId,
+                                                            orderId);
+                                                  }
+                                                },
+                                                buttonHeight: 45.0,
+                                              ),
+                                            )
+                                          : Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 12.0, bottom: 8),
+                                              child: LargeButton(
+                                                title: 'Order placed',
+                                                onPressed: () async {},
+                                                buttonHeight: 45.0,
+                                              ))
                                     ],
                                   ),
                                   padding: EdgeInsets.fromLTRB(15, 10, 15, 10),

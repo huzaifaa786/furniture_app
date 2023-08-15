@@ -208,6 +208,7 @@ class LoginController extends GetxController {
         },
         forceResendingToken: resendtoken,
         codeSent: (String verificationId, int? resendToken) {
+          print(verificationId);
           last2 = completePhone!.substring(completePhone!.length - 3).obs;
           verificationid = verificationId;
           resendtoken = resendToken;
@@ -220,10 +221,10 @@ class LoginController extends GetxController {
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           verificationid = verificationId;
-          Get.snackbar('TIMEOUT', '',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.green,
-              colorText: white);
+          // Get.snackbar('TIMEOUT', '',
+          //     snackPosition: SnackPosition.BOTTOM,
+          //     backgroundColor: Colors.green,
+          //     colorText: white);
         },
       );
     } on FirebaseAuthException catch (e) {

@@ -48,14 +48,16 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                     ),
                     authService.providerNames!.contains('google.com') == false
-                        ? SettingTile(
-                            image: 'assets/images/password.svg',
-                            text: 'Change password',
-                            ontap: () {
-                              settingController.clearPasswordVariable();
-                              Get.to(() => ChangePasswordscreen());
-                            },
-                          )
+                        ? authService.providerNames!.contains('phone') == false
+                            ? SettingTile(
+                                image: 'assets/images/password.svg',
+                                text: 'Change password',
+                                ontap: () {
+                                  settingController.clearPasswordVariable();
+                                  Get.to(() => ChangePasswordscreen());
+                                },
+                              )
+                            : Container()
                         : Container(),
                     SettingTile(
                       image: 'assets/images/language.svg',

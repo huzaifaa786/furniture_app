@@ -69,27 +69,59 @@ class _EditProfileState extends State<EditProfile> {
                   validator: (field) =>
                       Validators.emptyStringValidator(field, '*username '),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 8.0, bottom: 8),
-                  child: Text(
-                    'Email Address',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      // fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 0.54,
+                authService.providerNames!.contains('phone') == false ?
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 8.0, bottom: 8),
+                      child: Text(
+                        'Email Address',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          // fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 0.54,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                InputField1(
-                  icon: 'assets/images/email.svg',
-                  hint: 'Email Address',
-                  controller: controller.email,
-                  readOnly: true,
-                  type: TextInputType.emailAddress,
-                  validate: controller.validateEditProfileForm,
-                  validator: (field) => Validators.emailValidator(field),
+                    InputField1(
+                      icon: 'assets/images/email.svg',
+                      hint: 'Email Address',
+                      controller: controller.email,
+                      readOnly: true,
+                      type: TextInputType.emailAddress,
+                      validate: controller.validateEditProfileForm,
+                      validator: (field) => Validators.emailValidator(field),
+                    ),
+                  ],
+                ):Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 8.0, bottom: 8),
+                      child: Text(
+                        'Phone Number',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          // fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 0.54,
+                        ),
+                      ),
+                    ),
+                    InputField1(
+                      icon: 'assets/images/phone.svg',
+                      hint: 'Phone Number',
+                      controller: controller.phone,
+                      readOnly: true,
+                      type: TextInputType.emailAddress,
+                      validate: controller.validateEditProfileForm,
+                      validator: (field) => Validators.emailValidator(field),
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 25),
