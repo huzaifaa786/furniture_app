@@ -44,16 +44,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 Image.asset(
                   "assets/images/loginback.png",
                   fit: BoxFit.cover,
-                  height: MediaQuery.of(context).size.height * 0.35,
+                  height: MediaQuery.of(context).size.height * 0.3,
                   width: double.infinity,
                 ),
                 Column(
                   children: [
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
                       child: Center(
                         child: Image(
-                          image: AssetImage("assets/images/splashLogo.png"),
+                          image: AssetImage("assets/images/123.png"),
                           height: 100,
                           // color: Colors.white,
                         ),
@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               children: [
                                                 GestureDetector(
                                                   onTap: () {
-                                                    Get.to(()=> ResetScreen());
+                                                    Get.to(() => ResetScreen());
                                                   },
                                                   child: Text(
                                                     "Forgot Password?",
@@ -284,12 +284,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       "assets/images/google.png",
                                                       height: 34),
                                                 ),
-                                                Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 12, right: 12)),
-                                                Image.asset(
-                                                    "assets/images/apple.png",
-                                                    height: 34),
+                                                // Padding(
+                                                //     padding: EdgeInsets.only(
+                                                //         left: 12, right: 12)),
+                                                // Image.asset(
+                                                //     "assets/images/apple.png",
+                                                //     height: 34),
                                               ],
                                             ),
                                           ),

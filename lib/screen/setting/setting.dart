@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/setting/change_password/change_password_screen.dart';
 import 'package:furniture/screen/setting/report_bug_model.dart';
@@ -36,6 +37,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     TopBar(
                       ontap: () {},
                       text: 'Settings',
+                      hide: true,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 12.0),
@@ -83,7 +85,8 @@ class _SettingScreenState extends State<SettingScreen> {
                   child: LargeButton(
                     title: "Log Out",
                     onPressed: () {
-                      settingController.signOut();
+                      logout(context);
+                      // settingController.signOut();
                     },
                   ))
             ],
@@ -98,5 +101,56 @@ class _SettingScreenState extends State<SettingScreen> {
       DialogButton(
           height: 0, color: white, onPressed: () async {}, child: Text(''))
     ]).show();
+  }
+
+  logout(context) {
+    Alert(
+      style: const AlertStyle(
+        titleStyle: TextStyle(fontSize: 21, fontWeight: FontWeight.w400),
+      ),
+      context: context,
+      image: Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: SvgPicture.asset('assets/images/logout.svg'),
+      ),
+      title: "Are you sure that you want to logout?",
+      buttons: [
+        DialogButton(
+          height: 55,
+          radius: BorderRadius.circular(13),
+          child: Text(
+            "Yes",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600),
+          ),
+          onPressed: () {
+            settingController.signOut();
+          },
+          color: mainColor,
+        ),
+        DialogButton(
+          height: 55,
+          radius: BorderRadius.circular(13),
+          border: Border.all(
+            color: Colors.black54,
+          ),
+          child: Text(
+            "No",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600),
+          ),
+          onPressed: () {
+            Get.back();
+          },
+          color: Colors.black,
+        ),
+      ],
+    ).show();
   }
 }

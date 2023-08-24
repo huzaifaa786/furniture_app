@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/helper/loading.dart';
 import 'package:furniture/services/auth_service.dart';
 import 'package:furniture/values/Validator.dart';
+import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
@@ -17,7 +19,7 @@ class SignUpController extends GetxController {
 
   //Call this Function from Design & it will do the rest
 
-  void register() {
+  void register() async {
     LoadingHelper.show();
     final bool isFormValid =
         Validators.emptyStringValidator(name.text, '') == null &&
@@ -26,19 +28,31 @@ class SignUpController extends GetxController {
             Validators.emptyStringValidator(password.text, '') == null &&
             Validators.emptyStringValidator(confirmPassword.text, '') == null;
     if (isFormValid) {
-      String? error = AuthService.instance.createUserWithEmailAndPassword(
-          name.text, email.text, phone.text, password.text) as String?;
-      LoadingHelper.dismiss();
-
-      if (error != null) {
-        Get.showSnackbar(GetSnackBar(
-          message: error.toString(),
-          duration: const Duration(seconds: 3),
-        ));
+      var methods =
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email.text);
+      if (methods.contains('google.com')) {
         LoadingHelper.dismiss();
+        Get.snackbar(
+            'Email is already associated with google. So, try that method for login with this email.',
+            '',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: white);
       } else {
+        String? error = AuthService.instance.createUserWithEmailAndPassword(
+            name.text, email.text, phone.text, password.text) as String?;
         LoadingHelper.dismiss();
-        clear();
+
+        if (error != null) {
+          Get.showSnackbar(GetSnackBar(
+            message: error.toString(),
+            duration: const Duration(seconds: 3),
+          ));
+          LoadingHelper.dismiss();
+        } else {
+          LoadingHelper.dismiss();
+          clear();
+        }
       }
     } else {
       showErrors();

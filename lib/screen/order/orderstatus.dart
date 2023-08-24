@@ -18,18 +18,21 @@ class OrderStatusScreen extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<OrderStatusScreen> {
-  getComapany(){
+  getComapany() {
     orderController.companyFetch(widget.order!.companyId);
   }
+
   @override
-void initState(){
-  getComapany();
-  super.initState();
-}
+  void initState() {
+    getComapany();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:  GetBuilder<OrderController>(
+      backgroundColor: white,
+      body: GetBuilder<OrderController>(
         builder: (controller) => SafeArea(
             child: Container(
           padding: EdgeInsets.only(left: 20, right: 20),
@@ -106,13 +109,15 @@ void initState(){
                       padding: EdgeInsets.only(bottom: 25),
                       child: Text(
                         '#' + widget.order!.id!,
-                        style:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
                       ),
                     ),
                     OrderStatusTile(
                         title: 'Company Name',
-                        discription: orderController.companyName == null ? '': orderController.companyName),
+                        discription: orderController.companyName == null
+                            ? ''
+                            : orderController.companyName),
                     OrderStatusTile(
                         title: 'Date of Service',
                         discription: widget.order!.date),

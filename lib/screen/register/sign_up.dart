@@ -35,7 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Image.asset(
                 "assets/images/loginback.png",
                 fit: BoxFit.cover,
-                height: MediaQuery.of(context).size.height * 0.35,
+                height: MediaQuery.of(context).size.height * 0.3,
                 width: double.infinity,
               ),
               Column(
@@ -44,7 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
                     child: Center(
                       child: Image(
-                        image: AssetImage("assets/images/splashLogo.png"),
+                        image: AssetImage("assets/images/123.png"),
                         height: 100,
                       ),
                     ),

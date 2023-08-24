@@ -149,7 +149,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                     // itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
                                     itemBuilder: (context, _) => Icon(
                                       Icons.star,
-                                      color: ratingColor,
+                                      color: mainColor,
                                     ),
                                     onRatingUpdate: (rating) {
                                       // print(rating);

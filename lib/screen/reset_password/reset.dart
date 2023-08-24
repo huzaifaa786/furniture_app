@@ -72,7 +72,7 @@ class _ResetScreenState extends State<ResetScreen> {
                     padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
                     child: Center(
                       child: Image(
-                        image: AssetImage("assets/images/splashLogo.png"),
+                        image: AssetImage("assets/images/123.png"),
                         height: 100,
                       ),
                     ),
