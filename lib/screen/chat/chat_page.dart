@@ -16,10 +16,11 @@ import 'package:furniture/static/large_button.dart';
 import 'package:furniture/values/Validator.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'dart:ui' as ui;
 import 'widgets.dart';
 // import 'pages.dart';
 
@@ -52,6 +53,7 @@ class ChatPageState extends State<ChatPage> {
   late final ChatProvider chatProvider = context.read<ChatProvider>();
 
   String adminToken = '';
+  bool isDeleted = false;
 
   @override
   void initState() {
@@ -132,6 +134,17 @@ class ChatPageState extends State<ChatPage> {
     }).catchError((error) {
       print('Error fetching document: $error');
     });
+
+    final docRef1 =
+        FirebaseFirestore.instance.collection('companies').doc(peerId);
+    docRef1.get().then((docSnapshot) {
+      if (docSnapshot.exists) {
+        isDeleted = docSnapshot.data()!['delete'];
+        setState(() {});
+      }
+    }).catchError((error) {
+      print('Error fetching document: $error');
+    });
   }
 
   Future getImage() async {
@@ -164,6 +177,7 @@ class ChatPageState extends State<ChatPage> {
   //     isShowSticker = !isShowSticker;
   //   });
   // }
+  GetStorage box = GetStorage();
 
   Future uploadFile() async {
     String fileName = DateTime.now().millisecondsSinceEpoch.toString();
@@ -203,154 +217,138 @@ class ChatPageState extends State<ChatPage> {
       MessageChat messageChat = MessageChat.fromDocument(document);
       if (messageChat.idFrom == currentUserId) {
         // Right (my message)
-        return Row(
-          children: <Widget>[
-            messageChat.type == TypeMessage.text
-                // Text
-                ? Container(
-                    child: Text(
-                      messageChat.content,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                    width: 200,
-                    decoration: BoxDecoration(
-                        color: mainColor,
-                        borderRadius: BorderRadius.circular(8)),
-                    margin: EdgeInsets.only(
-                        bottom: isLastMessageRight(index) ? 20 : 10, right: 10),
-                  )
-                : messageChat.type == TypeMessage.image
-                    // Image
+        return Column(
+          children: [
+            Row(
+              children: <Widget>[
+                messageChat.type == TypeMessage.text
+                    // Text
                     ? Container(
-                        child: OutlinedButton(
-                          child: Material(
-                            child: Image.network(
-                              messageChat.content,
-                              loadingBuilder: (BuildContext context,
-                                  Widget child,
-                                  ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[300],
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(8),
-                                    ),
-                                  ),
-                                  width: 200,
-                                  height: 200,
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      color: mainColor,
-                                      value:
-                                          loadingProgress.expectedTotalBytes !=
+                        child: Text(
+                          messageChat.content,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                        constraints: BoxConstraints(
+                          maxWidth: 200,
+                        ),
+                        decoration: BoxDecoration(
+                            color: mainColor,
+                            borderRadius: BorderRadius.circular(8)),
+                        margin: EdgeInsets.only(
+                            bottom: 10,
+                            right: 10),
+                      )
+                    : messageChat.type == TypeMessage.image
+                        // Image
+                        ? Container(
+                            child: OutlinedButton(
+                              child: Material(
+                                child: Image.network(
+                                  messageChat.content,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(8),
+                                        ),
+                                      ),
+                                      width: 200,
+                                      height: 200,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: mainColor,
+                                          value: loadingProgress
+                                                      .expectedTotalBytes !=
                                                   null
                                               ? loadingProgress
                                                       .cumulativeBytesLoaded /
                                                   loadingProgress
                                                       .expectedTotalBytes!
                                               : null,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (context, object, stackTrace) {
+                                    return Material(
+                                      child: Image.asset(
+                                        'images/img_not_available.jpeg',
+                                        width: 200,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8),
+                                      ),
+                                      clipBehavior: Clip.hardEdge,
+                                    );
+                                  },
+                                  width: 200,
+                                  height: 200,
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                                clipBehavior: Clip.hardEdge,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FullPhotoPage(
+                                      url: messageChat.content,
                                     ),
                                   ),
                                 );
                               },
-                              errorBuilder: (context, object, stackTrace) {
-                                return Material(
-                                  child: Image.asset(
-                                    'images/img_not_available.jpeg',
-                                    width: 200,
-                                    height: 200,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(8),
-                                  ),
-                                  clipBehavior: Clip.hardEdge,
-                                );
-                              },
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.cover,
+                              style: ButtonStyle(
+                                  padding:
+                                      MaterialStateProperty.all<EdgeInsets>(
+                                          EdgeInsets.all(0))),
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            clipBehavior: Clip.hardEdge,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => FullPhotoPage(
-                                  url: messageChat.content,
-                                ),
-                              ),
-                            );
-                          },
-                          style: ButtonStyle(
-                              padding: MaterialStateProperty.all<EdgeInsets>(
-                                  EdgeInsets.all(0))),
-                        ),
-                        margin: EdgeInsets.only(
-                            bottom: isLastMessageRight(index) ? 20 : 10,
-                            right: 10),
-                      )
-                    // Location
-                    : messageChat.type == TypeMessage.location
-                        ? Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'From: ${RegExp(r"LOCATIONFrom:(.*?)/").firstMatch(messageChat.content)?.group(1) ?? ''}',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Text(
-                                  'To: ${RegExp(r"/LOCATIONTo:(.*?)$").firstMatch(messageChat.content)?.group(1) ?? ''}',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                            width: 200,
-                            decoration: BoxDecoration(
-                                color: mainColor,
-                                borderRadius: BorderRadius.circular(8)),
                             margin: EdgeInsets.only(
-                                bottom: isLastMessageRight(index) ? 20 : 10,
+                                bottom:10,
                                 right: 10),
                           )
-                        // Bill
-                        : Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Description:',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'Mazzard',
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                Text(
-                                  messageChat.content
-                                      .split("~~")[0]
-                                      .split(":")[1]
-                                      .trim(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'Mazzard',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Row(
+                        // Location
+                        : messageChat.type == TypeMessage.location
+                            ? Container(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Date Of Send: ',
+                                      'From: ${RegExp(r"LOCATIONFrom:(.*?)/").firstMatch(messageChat.content)?.group(1) ?? ''}',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    Text(
+                                      'To: ${RegExp(r"/LOCATIONTo:(.*?)$").firstMatch(messageChat.content)?.group(1) ?? ''}',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                                padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                                width: 200,
+                                decoration: BoxDecoration(
+                                    color: mainColor,
+                                    borderRadius: BorderRadius.circular(8)),
+                                margin: EdgeInsets.only(
+                                    bottom: 10,
+                                    right: 10),
+                              )
+                            // Bill
+                            : Container(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Description:',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 14,
@@ -360,7 +358,7 @@ class ChatPageState extends State<ChatPage> {
                                     ),
                                     Text(
                                       messageChat.content
-                                          .split("~~")[2]
+                                          .split("~~")[0]
                                           .split(":")[1]
                                           .trim(),
                                       style: TextStyle(
@@ -370,72 +368,112 @@ class ChatPageState extends State<ChatPage> {
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Time: ',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'Mazzard',
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    Text(
-                                      messageChat.content
-                                          .split("~~")[3]
-                                          .split(":")[1]
-                                          .trim(),
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'Mazzard',
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Amount: ',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'Mazzard',
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    Text(
-                                      messageChat.content
-                                              .split("~~")[1]
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Date Of Service: '.tr,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontFamily: 'Mazzard',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        Text(
+                                          messageChat.content
+                                              .split("~~")[2]
                                               .split(":")[1]
-                                              .trim() +
-                                          ' AED',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'Mazzard',
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                                              .trim(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontFamily: 'Mazzard',
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Time: ',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontFamily: 'Mazzard',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        Text(
+                                          messageChat.content
+                                              .split("~~")[3]
+                                              .split(":")[1]
+                                              .trim(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontFamily: 'Mazzard',
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Amount: ',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontFamily: 'Mazzard',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        Text(
+                                          messageChat.content
+                                                  .split("~~")[1]
+                                                  .split(":")[1]
+                                                  .trim() +
+                                              ' AED',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontFamily: 'Mazzard',
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-                            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                            width: 200,
-                            decoration: BoxDecoration(
-                                color: mainColor,
-                                borderRadius: BorderRadius.circular(8)),
-                            margin: EdgeInsets.only(
-                                bottom: isLastMessageRight(index) ? 20 : 10,
-                                right: 10),
-                          ),
+                                padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                                width: 200,
+                                decoration: BoxDecoration(
+                                    color: mainColor,
+                                    borderRadius: BorderRadius.circular(8)),
+                                margin: EdgeInsets.only(
+                                    right: 10),
+                              ),
+              ],
+              mainAxisAlignment: MainAxisAlignment.end,
+            ),
+            isLastMessageRight(index)
+                ? Container(
+                    child: Text(
+                      DateFormat('dd MMM kk:mm').format(
+                          DateTime.fromMillisecondsSinceEpoch(
+                              int.parse(messageChat.timestamp))),
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          fontStyle: FontStyle.italic),
+                    ),
+                    margin: EdgeInsets.only(right: 20, bottom: 10),
+                  )
+                : SizedBox.shrink()
           ],
-          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
         );
       } else {
         // Left (peer message)
@@ -487,7 +525,9 @@ class ChatPageState extends State<ChatPage> {
                             style: TextStyle(color: Colors.black),
                           ),
                           padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                          width: 200,
+                          constraints: BoxConstraints(
+                            maxWidth: 200,
+                          ),
                           decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(8)),
@@ -589,255 +629,317 @@ class ChatPageState extends State<ChatPage> {
                                       borderRadius: BorderRadius.circular(8)),
                                   margin: EdgeInsets.only(left: 10),
                                 )
-                              : Container(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        child: Text(
-                                          'Description:',
+                              : Directionality(
+                                  textDirection: box.read('locale') != 'ar'
+                                      ? ui.TextDirection.ltr
+                                      : ui.TextDirection.rtl,
+                                  child: Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 8.0),
+                                          child: Directionality(
+                                            textDirection: ui.TextDirection.ltr,
+                                            child: Text(
+                                              'Description:'.tr,
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontFamily: 'Mazzard',
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          messageChat.content
+                                              .split("~~")[0]
+                                              .split(":")[1]
+                                              .trim(),
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 14,
                                             fontFamily: 'Mazzard',
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w400,
                                           ),
                                         ),
-                                      ),
-                                      Text(
-                                        messageChat.content
-                                            .split("~~")[0]
-                                            .split(":")[1]
-                                            .trim(),
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontFamily: 'Mazzard',
-                                          fontWeight: FontWeight.w400,
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 6.0, top: 8.0),
+                                          child: Row(
+                                            children: [
+                                              Directionality(
+                                                textDirection:
+                                                    ui.TextDirection.ltr,
+                                                child: Text(
+                                                  'Date Of Service: '.tr,
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 14,
+                                                    fontFamily: 'Mazzard',
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                messageChat.content
+                                                    .split("~~")[2]
+                                                    .split(":")[1]
+                                                    .trim(),
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14,
+                                                  fontFamily: 'Mazzard',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            bottom: 6.0, top: 8.0),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              'Date Of Send: ',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontFamily: 'Mazzard',
-                                                fontWeight: FontWeight.w700,
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 6.0),
+                                          child: Row(
+                                            children: [
+                                              Directionality(
+                                                textDirection:
+                                                    ui.TextDirection.ltr,
+                                                child: Text(
+                                                  'Time: '.tr,
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 14,
+                                                    fontFamily: 'Mazzard',
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              messageChat.content
-                                                  .split("~~")[2]
-                                                  .split(":")[1]
-                                                  .trim(),
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontFamily: 'Mazzard',
-                                                fontWeight: FontWeight.w400,
+                                              Text(
+                                                messageChat.content
+                                                    .split("~~")[3]
+                                                    .split("-")[1]
+                                                    .trim(),
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14,
+                                                  fontFamily: 'Mazzard',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 6.0),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              'Time: ',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontFamily: 'Mazzard',
-                                                fontWeight: FontWeight.w700,
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 8.0),
+                                          child: Row(
+                                            children: [
+                                              Directionality(
+                                                textDirection:
+                                                    ui.TextDirection.ltr,
+                                                child: Text(
+                                                  'Amount: '.tr,
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 14,
+                                                    fontFamily: 'Mazzard',
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              messageChat.content
-                                                  .split("~~")[3]
-                                                  .split("-")[1]
-                                                  .trim(),
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontFamily: 'Mazzard',
-                                                fontWeight: FontWeight.w400,
+                                              Text(
+                                                messageChat.content
+                                                        .split("~~")[1]
+                                                        .split(":")[1]
+                                                        .trim() +
+                                                    ' AED',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14,
+                                                  fontFamily: 'Mazzard',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              'Amount: ',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontFamily: 'Mazzard',
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                            Text(
-                                              messageChat.content
-                                                      .split("~~")[1]
-                                                      .split(":")[1]
-                                                      .trim() +
-                                                  ' AED',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontFamily: 'Mazzard',
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      messageChat.content
-                                                  .split("~~")[4]
-                                                  .split(":")[1]
-                                                  .trim() ==
-                                              'false'
-                                          ? Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 12.0, bottom: 8),
-                                              child: LargeButton(
-                                                title: 'Checkout',
-                                                onPressed: () async {
-                                                  String description =
-                                                      messageChat.content
-                                                          .split("~~")[0]
-                                                          .split(":")[1]
-                                                          .trim();
-                                                  int amount = int.parse(
-                                                      messageChat.content
-                                                          .split("~~")[1]
-                                                          .split(":")[1]
-                                                          .trim());
-                                                  String date = messageChat
-                                                      .content
-                                                      .split("~~")[2]
-                                                      .split(":")[1]
-                                                      .trim();
-                                                  String time = messageChat
-                                                      .content
-                                                      .split("~~")[3]
-                                                      .split("-")[1]
-                                                      .trim();
-                                                  String orderId = DateTime
-                                                          .now()
-                                                      .millisecondsSinceEpoch
-                                                      .toString();
-                                                  bool i = await chatProvider
-                                                      .orderPlacement(
-                                                          description,
-                                                          amount,
-                                                          date,
-                                                          time,
-                                                          currentUserId,
-                                                          widget
-                                                              .arguments.peerId,
-                                                          orderId);
-                                                  if (i == true) {
-                                                    notificationService
-                                                        .postNotification(
-                                                            title:
-                                                                'New order placed',
-                                                            body:
-                                                                'Order placed with an Order Id #$orderId',
-                                                            receiverToken:
-                                                                adminToken);
-                                                    String content =
-                                                        'Order has been created with Order Id # ' +
-                                                            orderId;
-                                                    onSendMessage(content,
-                                                        TypeMessage.text);
-                                                    String noti =
-                                                        'Your order has been confirmed.';
-                                                    String notiId = DateTime
-                                                            .now()
-                                                        .millisecondsSinceEpoch
-                                                        .toString();
-                                                    String bill =
-                                                        'DESCRIPTION:' +
-                                                            messageChat.content
-                                                                .split("~~")[0]
-                                                                .split(":")[1]
-                                                                .trim() +
-                                                            '~~AMOUNT:' +
+                                        isDeleted == false
+                                            ? messageChat.content
+                                                        .split("~~")[4]
+                                                        .split(":")[1]
+                                                        .trim() ==
+                                                    'false'
+                                                ? Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 12.0,
+                                                            bottom: 8),
+                                                    child: LargeButton(
+                                                      title: 'Checkout'.tr,
+                                                      onPressed: () async {
+                                                        int amount = int.parse(
                                                             messageChat.content
                                                                 .split("~~")[1]
                                                                 .split(":")[1]
-                                                                .trim() +
-                                                            '~~DATE:' +
-                                                            messageChat.content
-                                                                .split("~~")[2]
-                                                                .split(":")[1]
-                                                                .trim() +
-                                                            '~~TIME-' +
-                                                            messageChat.content
-                                                                .split("~~")[3]
-                                                                .split("-")[1]
-                                                                .trim() +
-                                                            '~~pay:' +
-                                                            'true';
-                                                    print(
-                                                        messageChat.timestamp);
-                                                    print(groupChatId);
-                                                    await FirebaseFirestore
-                                                        .instance
-                                                        .collection('messages')
-                                                        .doc(groupChatId)
-                                                        .collection(groupChatId)
-                                                        .doc(messageChat
-                                                            .timestamp)
-                                                        .update({
-                                                      'content': bill,
-                                                    });
-                                                    chatProvider
-                                                        .notificationCreated(
-                                                            noti,
-                                                            currentUserId,
-                                                            widget.arguments
-                                                                .peerId,
-                                                            notiId,
-                                                            orderId);
-                                                  }
-                                                },
-                                                buttonHeight: 45.0,
-                                              ),
-                                            )
-                                          : Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 12.0, bottom: 8),
-                                              child: LargeButton(
-                                                title: 'Order placed',
-                                                onPressed: () async {},
-                                                buttonHeight: 45.0,
-                                              ))
-                                    ],
+                                                                .trim());
+                                                        bool payment =
+                                                            await paymentService
+                                                                .makePayment(
+                                                                    amount);
+                                                        print(payment);
+                                                        if (payment == true) {
+                                                          String description =
+                                                              messageChat
+                                                                  .content
+                                                                  .split(
+                                                                      "~~")[0]
+                                                                  .split(":")[1]
+                                                                  .trim();
+
+                                                          String date =
+                                                              messageChat
+                                                                  .content
+                                                                  .split(
+                                                                      "~~")[2]
+                                                                  .split(":")[1]
+                                                                  .trim();
+                                                          String time =
+                                                              messageChat
+                                                                  .content
+                                                                  .split(
+                                                                      "~~")[3]
+                                                                  .split("-")[1]
+                                                                  .trim();
+                                                          String orderId = DateTime
+                                                                  .now()
+                                                              .millisecondsSinceEpoch
+                                                              .toString();
+                                                          bool i = await chatProvider
+                                                              .orderPlacement(
+                                                                  description,
+                                                                  amount,
+                                                                  date,
+                                                                  time,
+                                                                  currentUserId,
+                                                                  widget
+                                                                      .arguments
+                                                                      .peerId,
+                                                                  orderId,
+                                                                  paymentService
+                                                                      .paymentID
+                                                                      .toString());
+                                                          if (i == true) {
+                                                            notificationService.postNotification(
+                                                                title:
+                                                                    'New order placed',
+                                                                body:
+                                                                    'Order placed with an Order Id #$orderId',
+                                                                receiverToken:
+                                                                    adminToken);
+                                                            String content =
+                                                                'Order has been created with Order Id # ' +
+                                                                    orderId;
+                                                            onSendMessage(
+                                                                content,
+                                                                TypeMessage
+                                                                    .text);
+                                                            String noti =
+                                                                'Your order has been confirmed.';
+                                                            String notiId =
+                                                                DateTime.now()
+                                                                    .millisecondsSinceEpoch
+                                                                    .toString();
+                                                            String bill = 'DESCRIPTION:' +
+                                                                messageChat
+                                                                    .content
+                                                                    .split(
+                                                                        "~~")[0]
+                                                                    .split(
+                                                                        ":")[1]
+                                                                    .trim() +
+                                                                '~~AMOUNT:' +
+                                                                messageChat
+                                                                    .content
+                                                                    .split(
+                                                                        "~~")[1]
+                                                                    .split(
+                                                                        ":")[1]
+                                                                    .trim() +
+                                                                '~~DATE:' +
+                                                                messageChat
+                                                                    .content
+                                                                    .split(
+                                                                        "~~")[2]
+                                                                    .split(
+                                                                        ":")[1]
+                                                                    .trim() +
+                                                                '~~TIME-' +
+                                                                messageChat
+                                                                    .content
+                                                                    .split(
+                                                                        "~~")[3]
+                                                                    .split(
+                                                                        "-")[1]
+                                                                    .trim() +
+                                                                '~~pay:' +
+                                                                'true';
+                                                            print(messageChat
+                                                                .timestamp);
+                                                            print(groupChatId);
+                                                            await FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'messages')
+                                                                .doc(
+                                                                    groupChatId)
+                                                                .collection(
+                                                                    groupChatId)
+                                                                .doc(messageChat
+                                                                    .timestamp)
+                                                                .update({
+                                                              'content': bill,
+                                                            });
+                                                            chatProvider
+                                                                .notificationCreated(
+                                                                    noti,
+                                                                    currentUserId,
+                                                                    widget
+                                                                        .arguments
+                                                                        .peerId,
+                                                                    notiId,
+                                                                    orderId);
+                                                          }
+                                                        }
+                                                      },
+                                                      buttonHeight: 45.0,
+                                                    ),
+                                                  )
+                                                : Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 12.0,
+                                                            bottom: 8),
+                                                    child: LargeButton(
+                                                      title: 'Order placed'.tr,
+                                                      onPressed: () async {},
+                                                      buttonHeight: 45.0,
+                                                    ))
+                                            : Container()
+                                      ],
+                                    ),
+                                    padding:
+                                        EdgeInsets.fromLTRB(15, 10, 15, 10),
+                                    width: 230,
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: BorderRadius.circular(8)),
+                                    margin: EdgeInsets.only(left: 10),
                                   ),
-                                  padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                                  width: 230,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(8)),
-                                  margin: EdgeInsets.only(left: 10),
                                 ),
                 ],
               ),
@@ -903,32 +1005,44 @@ class ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.arguments.peerNickname,
-          style: TextStyle(color: white),
-        ),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: WillPopScope(
-          child: Stack(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  // List of messages
-                  buildListMessage(),
-                  // Input content
-                  buildInput(),
-                ],
-              ),
-
-              // Loading
-              buildLoading()
-            ],
+    return Directionality(
+      textDirection: ui.TextDirection.ltr,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Container(
+            constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.4),
+            child: Text(
+              widget.arguments.peerNickname,
+              style: TextStyle(color: white),
+            ),
           ),
-          onWillPop: onBackPress,
+          centerTitle: true,
+        ),
+        body: SafeArea(
+          child: WillPopScope(
+            child: Stack(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    // List of messages
+                    buildListMessage(),
+                    // Input content
+                    isDeleted == false
+                        ? buildInput()
+                        : Text(
+                            "You are not able to send message to this company",
+                            textAlign: TextAlign.center,
+                          ),
+                  ],
+                ),
+
+                // Loading
+                buildLoading()
+              ],
+            ),
+            onWillPop: onBackPress,
+          ),
         ),
       ),
     );
@@ -952,102 +1066,107 @@ class ChatPageState extends State<ChatPage> {
             contentPadding: const EdgeInsets.only(
               top: 10.0,
             ),
-            content: SizedBox(
-              height: 250,
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        controller: fromController,
-                        scrollPadding: const EdgeInsets.only(bottom: 30),
-                        obscureText: false,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: mainColor),
-                                    borderRadius: BorderRadius.circular(45)),
-                                padding: const EdgeInsets.all(4.0),
-                                child: SvgPicture.asset(
-                                    'assets/images/chatLocation.svg')),
-                          ),
-                          enabledBorder: OutlineInputBorder(
+            content: Directionality(
+              textDirection: ui.TextDirection.ltr,
+              child: SizedBox(
+                height: 250,
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: fromController,
+                          scrollPadding: const EdgeInsets.only(bottom: 30),
+                          obscureText: false,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: mainColor),
+                                      borderRadius: BorderRadius.circular(45)),
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: SvgPicture.asset(
+                                      'assets/images/chatLocation.svg')),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey[300]!),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10))),
+                            focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.grey[300]!),
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey[300]!),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
+                                  const BorderRadius.all(Radius.circular(10)),
+                            ),
+                            hintText: 'from'.tr,
                           ),
-                          hintText: 'FROM',
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        controller: tocontroller,
-                        scrollPadding: const EdgeInsets.only(bottom: 30),
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: mainColor),
-                                    borderRadius: BorderRadius.circular(45)),
-                                padding: const EdgeInsets.all(4.0),
-                                child: SvgPicture.asset(
-                                    'assets/images/chatLocation.svg')),
-                          ),
-                          enabledBorder: OutlineInputBorder(
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: tocontroller,
+                          scrollPadding: const EdgeInsets.only(bottom: 30),
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: mainColor),
+                                      borderRadius: BorderRadius.circular(45)),
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: SvgPicture.asset(
+                                      'assets/images/chatLocation.svg')),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey[300]!),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10))),
+                            focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.grey[300]!),
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey[300]!),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
+                                  const BorderRadius.all(Radius.circular(10)),
+                            ),
+                            hintText: 'to'.tr,
                           ),
-                          hintText: 'TO',
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: LargeButton(
-                        title: 'Send',
-                        onPressed: () {
-                          final bool isFormValid =
-                              Validators.emptyStringValidator(
-                                          fromController.text, '') ==
-                                      null &&
-                                  Validators.emptyStringValidator(
-                                          tocontroller.text, '') ==
-                                      null;
-                          if (isFormValid) {
-                            String location = 'LOCATIONFrom:' +
-                                fromController.text +
-                                '/LOCATIONTo:' +
-                                tocontroller.text;
-                            onSendMessage(location, TypeMessage.location);
-                            fromController.clear();
-                            tocontroller.clear();
-                            Navigator.pop(context);
-                          }
-                        },
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: LargeButton(
+                          title: 'send'.tr,
+                          onPressed: () {
+                            final bool isFormValid =
+                                Validators.emptyStringValidator(
+                                            fromController.text, '') ==
+                                        null &&
+                                    Validators.emptyStringValidator(
+                                            tocontroller.text, '') ==
+                                        null;
+                            if (isFormValid) {
+                              String location = 'LOCATIONFrom:' +
+                                  fromController.text +
+                                  '/LOCATIONTo:' +
+                                  tocontroller.text;
+                              onSendMessage(location, TypeMessage.location);
+                              fromController.clear();
+                              tocontroller.clear();
+                              Navigator.pop(context);
+                            }
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -1215,7 +1334,7 @@ class ChatPageState extends State<ChatPage> {
                 style: TextStyle(color: Colors.black, fontSize: 15),
                 controller: textEditingController,
                 decoration: InputDecoration.collapsed(
-                  hintText: 'Type your message...',
+                  hintText: 'type_your_message'.tr,
                   hintStyle: TextStyle(color: Colors.grey[300]),
                 ),
                 focusNode: focusNode,

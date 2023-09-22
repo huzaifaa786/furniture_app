@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings, prefer_const_constructors
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:furniture/constants/constants.dart';
@@ -23,11 +24,19 @@ class _RaatingState extends State<Raating> {
     homeController.companyFetch(widget.orderModel.companyId);
   }
 
+  ratingStatusUpdate() async {
+    await FirebaseFirestore.instance
+        .collection('orders')
+        .doc(widget.orderModel.id)
+        .update({'isRating': true});
+  }
+
   @override
   void initState() {
     homeController.companyImage = null;
     homeController.companyName = null;
     getComapany();
+    ratingStatusUpdate();
     super.initState();
   }
 
@@ -51,9 +60,11 @@ class _RaatingState extends State<Raating> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.85,
                       child: Text(
-                        'Your order with orderId #' +
+                        'Your order with ID#'.tr +
+                            '\n' +
                             widget.orderModel.id.toString() +
-                            ' hase been deliverd by ',
+                            '\n' +
+                            ' has been delivered by '.tr,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                             fontSize: 20,
@@ -62,7 +73,7 @@ class _RaatingState extends State<Raating> {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 12,
                     ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(45),
@@ -80,7 +91,7 @@ class _RaatingState extends State<Raating> {
                             ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 12,
                     ),
                     homeController.companyName != null
                         ? Text(
@@ -90,38 +101,41 @@ class _RaatingState extends State<Raating> {
                           )
                         : Text(''),
                     SizedBox(
-                      height: 20,
+                      height: 16,
                     ),
                     Text(
-                      "How do you rate your experience?",
+                      "How do you rate your experience?".tr,
                       style: TextStyle(
                         fontSize: 18,
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 16,
                     ),
-                    RatingBar.builder(
-                      initialRating: 0,
-                      minRating: 1,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: mainColor,
+                    Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: RatingBar.builder(
+                        initialRating: 0,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: mainColor,
+                        ),
+                        onRatingUpdate: (rating) {
+                          ratings = rating;
+                          setState(() {});
+                        },
                       ),
-                      onRatingUpdate: (rating) {
-                        ratings = rating;
-                        setState(() {});
-                      },
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 30,
                     ),
                     LargeButton(
-                      title: 'Submit',
+                      title: 'submit'.tr,
                       sreenRatio: 0.8,
                       onPressed: ratings == 0.0
                           ? () {}
@@ -133,7 +147,10 @@ class _RaatingState extends State<Raating> {
                             },
                       color: mainColor,
                       textcolor: Colors.white,
-                    )
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               )),

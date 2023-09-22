@@ -12,16 +12,20 @@ import 'package:furniture/screen/register/signup_controller.dart';
 import 'package:furniture/screen/setting/setting_controller.dart';
 import 'package:furniture/screen/splash_screen/splash_screen.dart';
 import 'package:furniture/services/notification_service.dart';
+import 'package:furniture/services/payment_service.dart';
 import 'package:furniture/values/styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:furniture/translation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LoadingHelper.init();
+  await GetStorage.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
       .then((value) {
     Get.put(SignUpController());
@@ -31,9 +35,10 @@ void main() async {
     Get.put(NotificationController());
     Get.put(SettingController());
     Get.put(NotificationService());
+    Get.put(PaymentService());
   });
-    //Assign publishable key to flutter_stripe
-  Stripe.publishableKey = "pk_test_24PsRoB2O46Bxxxxxxxxxxxxxxxxxxxxxxxx";
+  //Assign publishable key to flutter_stripe
+  Stripe.publishableKey = "pk_test_51Nps79Fv6EKl7VTQQT4ZegV627IuAbGnBkIhMZE1NdZjwMrpCNaxtE1nvx2BCHK2aTjQQO18cxZ3Y8uaIIMDL4VJ00conEEM87";
 
   //Load our .env file that contains our Stripe Secret key
   await dotenv.load(fileName: "assets/.env");
@@ -50,11 +55,28 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  GetStorage box = GetStorage();
+  String? localeStr;
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      localeStr = await box.read('locale');
+      print(localeStr);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [Provider<ChatProvider>(create: (_) => ChatProvider())],
       child: GetMaterialApp(
+        translations: LocaleString(),
+        locale: box.read('locale') != 'ar'
+            ? Locale('en', 'US')
+            : Locale('ar', 'AE'),
+        fallbackLocale: box.read('locale') != 'ar'
+            ? Locale('en', 'US')
+            : Locale('ar', 'AE'),
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         builder: EasyLoading.init(),

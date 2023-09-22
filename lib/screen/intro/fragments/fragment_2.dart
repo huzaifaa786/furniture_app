@@ -38,10 +38,9 @@ class _FragmentTwoState extends State<FragmentTwo> {
               Container(
                 padding: const EdgeInsets.only(top: 12, right: 25, left:25,bottom : 8),
                 child: const Text(
-                  'Lorem ipsum dolor sit amet consectetur. Amet arcu nisl urna tortor scelerisque commodo.',
-                  // 'كليك ووش هي منصة توفر تجربة غسيل سيارات مريحة أثناء قضاء وقتك في المركزالتجاري المفضل لديك',
+                  "عمال متدربين و ذو خبرة",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400,color: Colors.grey),
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
                 ),
               ),
             ],

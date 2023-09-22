@@ -33,7 +33,7 @@ class _FragmentOneState extends State<FragmentOne> {
               Container(
                 padding: EdgeInsets.only(top: 12, right: 25, left: 25,bottom : 10),
                 child: Text(
-                  'Connecting you with variety of companies',
+                  'Connecting you with a variety of moving companies',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
                 ),
@@ -41,10 +41,9 @@ class _FragmentOneState extends State<FragmentOne> {
               Container(
                 padding: EdgeInsets.only(top: 12, right: 25, left:25,bottom : 8),
                 child: Text(
-                  'Lorem ipsum dolor sit amet consectetur. Amet arcu nisl urna tortor scelerisque commodo.',
-                  // 'كليك ووش هي منصة توفر تجربة غسيل سيارات مريحة أثناء قضاء وقتك في المركزالتجاري المفضل لديك',
+                  "نوصلك بعدة شركات نقل",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400,color: Colors.grey),
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
                 ),
               ),
             ],

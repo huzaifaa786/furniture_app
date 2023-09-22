@@ -14,6 +14,13 @@ class HomeController extends GetxController {
   List<Company> companies = <Company>[].obs;
   RxString loggedInUserName = ''.obs;
   String? email;
+  clear() {
+    loggedInUserName = ''.obs;
+    email = null;
+    companies = <Company>[].obs;
+    chatlength = 0;
+  }
+
   Future<void> fetchLoggedInUserName() async {
     User? user = auth.currentUser;
     print(user);
@@ -30,8 +37,10 @@ class HomeController extends GetxController {
 
   Future<void> fetchCompanies() async {
     try {
-      QuerySnapshot querySnapshot =
-          await firestore.collection('companies').get();
+      QuerySnapshot querySnapshot = await firestore
+          .collection('companies')
+          .where('delete', isEqualTo: false)
+          .get();
 
       List<Company> fetchedCompanies =
           await Future.wait(querySnapshot.docs.map((doc) async {
@@ -107,6 +116,21 @@ class HomeController extends GetxController {
         .get();
     chatlength = querySnapshot.docs.length;
     print('Number of documents: $chatlength');
+    update();
+  }
+
+///////////////////////////////// unread noti count function and variable //////////////////////////////////
+
+  int notilength = 0;
+  countnoti() async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
+        .instance
+        .collection('notifications')
+        .where('userId', isEqualTo: auth.currentUser!.uid)
+        .where('seen', isEqualTo: false)
+        .get();
+    notilength = querySnapshot.docs.length;
+    print('Number of notifications: $notilength');
     update();
   }
 

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/values/colors.dart';
+import 'package:get/get.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard(
@@ -102,7 +103,7 @@ class OrderCard extends StatelessWidget {
                           color: Colors.black),
                       child: Center(
                         child: Text(
-                          'Track',
+                          'track'.tr,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,

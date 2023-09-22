@@ -9,6 +9,7 @@ import 'package:furniture/screen/register/signup_controller.dart';
 import 'package:furniture/screen/setting/setting_controller.dart';
 import 'package:furniture/services/auth_service.dart';
 import 'package:furniture/services/notification_service.dart';
+import 'package:furniture/services/payment_service.dart';
 
 SignUpController signUpController = SignUpController.instance;
 LoginController loginController = LoginController.instance;
@@ -21,3 +22,4 @@ OrderController orderController = OrderController.instance;
 NotificationController notificationController = NotificationController.instance;
 SettingController settingController = SettingController.instance;
 NotificationService notificationService = NotificationService.instance;
+PaymentService paymentService = PaymentService.instance;

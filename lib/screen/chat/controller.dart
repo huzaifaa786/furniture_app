@@ -65,7 +65,7 @@ class ChatProvider {
   }
 
   orderPlacement(String description, int amount, String date, String time,
-      String currentUserId, String peerId, String id) async {
+      String currentUserId, String peerId, String id, String intent) async {
     try {
       LoadingHelper.show();
       await FirebaseFirestore.instance.collection('orders').doc(id).set({
@@ -78,6 +78,7 @@ class ChatProvider {
         'status': 0,
         'description': description,
         'isRating': false,
+        'intentId': intent
       });
       LoadingHelper.dismiss();
       return true;
@@ -95,7 +96,8 @@ class ChatProvider {
         'userId': currentUserId,
         'companyId': peerId,
         'content': content,
-        'orderId': orderId
+        'orderId': orderId,
+        'seen': false
       });
       LoadingHelper.dismiss();
       return true;

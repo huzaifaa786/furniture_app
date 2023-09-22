@@ -11,6 +11,7 @@ import 'package:furniture/screen/login/login_screen.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AuthService extends GetxController {
   static AuthService get instance => Get.find();
@@ -33,8 +34,9 @@ class AuthService extends GetxController {
   /// If we are setting initial screen from here
   /// then in the main.dart => App() add CircularProgressIndicator()
   _setInitialScreen(User? user) {
+    homeController.refresh();
     user == null
-        ? Get.offAll(() => const LoginScreen())
+        ? Get.offAll(() => const BottomNavScreen())
         : Get.offAll(() => const BottomNavScreen());
     print('user*********************');
     print(user);
@@ -109,7 +111,15 @@ class AuthService extends GetxController {
     return null;
   }
 
-  Future<void> logout() async => await _auth.signOut();
+  Future<void> logout() async {
+    homeController.clear();
+    homeController.refresh();
+    Get.updateLocale(const Locale('en', 'US'));
+    GetStorage box = GetStorage();
+    await box.write('locale', 'en');
+    box.read('locale');
+    await _auth.signOut();
+  }
 
   String? otp = '';
   void verifyPhone() async {
@@ -151,6 +161,13 @@ class AuthService extends GetxController {
             });
           }
         });
+        // .onError((error, stackTrace) {
+        //   Get.snackbar('Error!', error.toString(),
+        //       snackPosition: SnackPosition.BOTTOM,
+        //       backgroundColor: Colors.red,
+        //       colorText: white);
+        //   LoadingHelper.dismiss();
+        // });
         otp = '';
         LoadingHelper.dismiss();
       } else {

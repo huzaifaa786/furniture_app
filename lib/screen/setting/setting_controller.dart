@@ -125,7 +125,8 @@ class SettingController extends GetxController {
             "id": id,
             'description': bugcontroller.text,
             "image": imageUrl,
-            "userId": auth.currentUser!.uid
+            "userId": auth.currentUser!.uid,
+            'seen': false
           });
           clearbugVariables();
           Get.back();
@@ -246,8 +247,9 @@ class SettingController extends GetxController {
 /////////////////////////////////// Function To Logout Current user ///////////////////////////////////
 
   void signOut() {
+
     FirebaseAuth.instance.signOut();
-    Get.offAll(() => LoginScreen());
+    // Get.offAll(() => LoginScreen());
   }
 
   @override

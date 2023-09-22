@@ -7,6 +7,7 @@ import 'package:furniture/screen/home/home_screen.dart';
 import 'package:furniture/screen/order/orderscreen.dart';
 import 'package:furniture/screen/setting/setting.dart';
 import 'package:furniture/values/colors.dart';
+import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class BottomNavScreen extends StatefulWidget {
@@ -48,58 +49,61 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
       OrderScreen(),
       const SettingScreen(),
     ];
-    return WillPopScope(
-      onWillPop: () => Future.value(false),
-      child: Scaffold(
-        body: SafeArea(
-          child: _fragments[_navigationMenuIndex],
-        ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
-            ),
-          ]),
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
-            ),
-            child: SalomonBottomBar(
-              backgroundColor: white,
-              currentIndex: _navigationMenuIndex,
-              onTap: switchFragment,
-              items: [
-                /// Home
-                SalomonBottomBarItem(
-                  icon: SvgPicture.asset('assets/images/home.svg',
-                      color:
-                          _navigationMenuIndex == 0 ? mainColor : Colors.black),
-                  title: Text("Home"),
-                  selectedColor: mainColor,
-                ),
-
-                /// Likes
-                SalomonBottomBarItem(
-                  icon: SvgPicture.asset('assets/images/clipboard.svg',
-                      color:
-                          _navigationMenuIndex == 1 ? mainColor : Colors.black),
-                  title: Text("Orders"),
-                  selectedColor: mainColor,
-                ),
-
-                /// Profile
-                SalomonBottomBarItem(
-                  icon: SvgPicture.asset('assets/images/profile.svg',
-                      color:
-                          _navigationMenuIndex == 2 ? mainColor : Colors.black),
-                  title: Text("Profile"),
-                  selectedColor: mainColor,
-                ),
-              ],
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: WillPopScope(
+        onWillPop: () => Future.value(false),
+        child: Scaffold(
+          body: SafeArea(
+            child: _fragments[_navigationMenuIndex],
+          ),
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ]),
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+              child: SalomonBottomBar(
+                backgroundColor: white,
+                currentIndex: _navigationMenuIndex,
+                onTap: switchFragment,
+                items: [
+                  /// Home
+                  SalomonBottomBarItem(
+                    icon: SvgPicture.asset('assets/images/home.svg',
+                        color:
+                            _navigationMenuIndex == 0 ? mainColor : Colors.black),
+                    title: Text("home".tr),
+                    selectedColor: mainColor,
+                  ),
+    
+                  /// Likes
+                  SalomonBottomBarItem(
+                    icon: SvgPicture.asset('assets/images/clipboard.svg',
+                        color:
+                            _navigationMenuIndex == 1 ? mainColor : Colors.black),
+                    title: Text("orders".tr),
+                    selectedColor: mainColor,
+                  ),
+    
+                  /// Profile
+                  SalomonBottomBarItem(
+                    icon: SvgPicture.asset('assets/images/profile.svg',
+                        color:
+                            _navigationMenuIndex == 2 ? mainColor : Colors.black),
+                    title: Text("profile".tr),
+                    selectedColor: mainColor,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

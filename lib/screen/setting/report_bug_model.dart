@@ -31,7 +31,7 @@ class _BugReportModalState extends State<BugReportModal> {
                 Padding(
                   padding: const EdgeInsets.only(top: 0, bottom: 12),
                   child: Text(
-                    'Report Issue',
+                    'report_issue'.tr,
                     style: TextStyle(
                       fontSize: 18,
                       fontFamily: 'Poppins',
@@ -45,7 +45,7 @@ class _BugReportModalState extends State<BugReportModal> {
                   children: [
                     BugInput(
                       controller: settingController.bugcontroller,
-                      text: 'Write issue',
+                      text: 'write_issue'.tr,
                       maxlines: true,
                     ),
                   ],
@@ -75,7 +75,7 @@ class _BugReportModalState extends State<BugReportModal> {
                                       fit: BoxFit.cover),
                                 ),
                         ),
-                        Text('Attach Photo'),
+                        Text('attach_photo'.tr),
                       ],
                     ),
                     style: ButtonStyle(
@@ -101,7 +101,7 @@ class _BugReportModalState extends State<BugReportModal> {
                         }
                       });
                     },
-                    child: Text('Submit'),
+                    child: Text('submit'.tr),
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(

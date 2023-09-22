@@ -6,6 +6,7 @@ class NotificationModel {
   String? companyId;
   String? orderId;
   String? content;
+  bool? seen;
 
   NotificationModel({
     this.id,
@@ -13,6 +14,7 @@ class NotificationModel {
     this.companyId,
     this.orderId,
     this.content,
+    this.seen,
   });
 
   NotificationModel.fromSnapshot(DocumentSnapshot snapshot) {
@@ -23,5 +25,6 @@ class NotificationModel {
     companyId = data['companyId'] ?? '';
     orderId = data['orderId'] ?? '';
     content = data['content'] ?? '';
+    seen = data['seen'];
   }
 }
