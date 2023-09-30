@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/helper/loading.dart';
+import 'package:furniture/screen/bottomNavBar/bottomNaviBar.dart';
 import 'package:furniture/screen/login/otpscreen.dart';
 
 import 'package:furniture/services/auth_service.dart';
@@ -73,50 +74,55 @@ class LoginController extends GetxController {
       LoadingHelper.show();
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
-      var email = googleSignInAccount!.email;
-      var name = googleSignInAccount.displayName;
-      var methods =
-          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-      if (methods.contains('password')) {
+      if (googleSignInAccount == null) {
         LoadingHelper.dismiss();
-        Get.snackbar(
-            'Email is already associated with password. So, try that method for login with this email.',
-            '',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: white);
-      } else if (methods.contains('google.com')) {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleSignInAuthentication.accessToken,
-          idToken: googleSignInAuthentication.idToken,
-        );
-        await _auth.signInWithCredential(credential);
-        final token = await FirebaseMessaging.instance.getToken();
-        var collection = FirebaseFirestore.instance.collection('users');
-        collection.doc(auth.currentUser!.uid).update({
-          'token': token,
-        });
-        LoadingHelper.dismiss();
+        print("Sign-in canceled by the user.");
       } else {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleSignInAuthentication.accessToken,
-          idToken: googleSignInAuthentication.idToken,
-        );
-        await _auth.signInWithCredential(credential);
-        final token = await FirebaseMessaging.instance.getToken();
-        var collection = FirebaseFirestore.instance.collection('users');
-        collection.doc(auth.currentUser!.uid).set({
-          "id": auth.currentUser!.uid,
-          'token': token,
-          "email": email,
-          "name": name,
-          "phone": ''
-        });
-        LoadingHelper.dismiss();
+        var email = googleSignInAccount.email;
+        var name = googleSignInAccount.displayName;
+        var methods =
+            await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+        if (methods.contains('password')) {
+          LoadingHelper.dismiss();
+          Get.snackbar(
+              'Email is already associated with password. So, try that method for login with this email.',
+              '',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: white);
+        } else if (methods.contains('google.com')) {
+          final GoogleSignInAuthentication googleSignInAuthentication =
+              await googleSignInAccount.authentication;
+          final AuthCredential credential = GoogleAuthProvider.credential(
+            accessToken: googleSignInAuthentication.accessToken,
+            idToken: googleSignInAuthentication.idToken,
+          );
+          await _auth.signInWithCredential(credential);
+          final token = await FirebaseMessaging.instance.getToken();
+          var collection = FirebaseFirestore.instance.collection('users');
+          collection.doc(auth.currentUser!.uid).update({
+            'token': token,
+          });
+          LoadingHelper.dismiss();
+        } else {
+          final GoogleSignInAuthentication googleSignInAuthentication =
+              await googleSignInAccount.authentication;
+          final AuthCredential credential = GoogleAuthProvider.credential(
+            accessToken: googleSignInAuthentication.accessToken,
+            idToken: googleSignInAuthentication.idToken,
+          );
+          await _auth.signInWithCredential(credential);
+          final token = await FirebaseMessaging.instance.getToken();
+          var collection = FirebaseFirestore.instance.collection('users');
+          collection.doc(auth.currentUser!.uid).set({
+            "id": auth.currentUser!.uid,
+            'token': token,
+            "email": email,
+            "name": name,
+            "phone": ''
+          });
+          LoadingHelper.dismiss();
+        }
       }
     } on FirebaseAuthException catch (e) {
       LoadingHelper.dismiss();
@@ -220,7 +226,7 @@ class LoginController extends GetxController {
           Get.to(() => LoginOtpVerifyScreen());
         },
         codeAutoRetrievalTimeout: (String verificationId) {
-          verificationid = verificationId;
+          // verificationid = verificationId;
           // Get.snackbar('TIMEOUT', '',
           //     snackPosition: SnackPosition.BOTTOM,
           //     backgroundColor: Colors.green,
@@ -232,6 +238,73 @@ class LoginController extends GetxController {
       Get.snackbar('Error', e.message.toString(),
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green,
+          colorText: white);
+    }
+  }
+
+  String usersCollection = "users";
+  void verifyPhone(String phone1) async {
+    print(phone1.length.toString() +
+        '000000000000001233456**********************************');
+
+    try {
+      if (phone1.length == 6) {
+        LoadingHelper.show();
+        final token = await FirebaseMessaging.instance.getToken();
+        var val = await FirebaseFirestore.instance
+            .collection('users')
+            .where('phone', isEqualTo: completePhone)
+            .limit(1)
+            .get();
+        final List<DocumentSnapshot> number = val.docs;
+        await auth
+            .signInWithCredential(PhoneAuthProvider.credential(
+          verificationId: verificationid,
+          smsCode: phone1,
+        ))
+            .then((value) async {
+          String userID = value.user!.uid;
+          if (number.isEmpty) {
+            await firebaseFirestore
+                .collection(usersCollection)
+                .doc(userID)
+                .set({
+              "id": userID,
+              'token': token,
+              "email": '',
+              "name": phone.text,
+              "phone": completePhone,
+            });
+            print('object********************************');
+          } else {
+            await firebaseFirestore
+                .collection(usersCollection)
+                .doc(userID)
+                .update({
+              'token': token,
+            });
+          }
+          // Get.offAll(() => const BottomNavScreen());
+        }).onError((error, stackTrace) {
+          Get.snackbar('Error!', error.toString(),
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: white);
+          LoadingHelper.dismiss();
+        });
+        LoadingHelper.dismiss();
+      } else {
+        Get.snackbar('Error!', 'Plese Enter Complete Code',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: white);
+        LoadingHelper.dismiss();
+      }
+    } on FirebaseAuthException catch (e) {
+      LoadingHelper.dismiss();
+      Get.snackbar('Error!', e.message!,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
           colorText: white);
     }
   }

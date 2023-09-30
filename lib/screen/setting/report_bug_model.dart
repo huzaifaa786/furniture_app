@@ -123,7 +123,7 @@ class _BugReportModalState extends State<BugReportModal> {
     Alert(
         context: context,
         content: SucessModel(
-          text: 'Issue Reported\nSuccessfully',
+          text: 'Issue Reported Successfully'.tr,
         ),
         buttons: [
           DialogButton(

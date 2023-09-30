@@ -44,7 +44,6 @@ class SettingController extends GetxController {
 
   Future<void> updatePassword() async {
     try {
-      LoadingHelper.show();
       final bool isFormValid =
           Validators.passwordValidator(password.text) == null &&
               Validators.passwordValidator(newpassword.text) == null &&
@@ -52,6 +51,7 @@ class SettingController extends GetxController {
                       newpassword.text, confirmPassword.text) ==
                   null;
       if (isFormValid) {
+        // LoadingHelper.show();
         User user = FirebaseAuth.instance.currentUser!;
         AuthCredential credential = EmailAuthProvider.credential(
           email: user.email!,
@@ -60,18 +60,24 @@ class SettingController extends GetxController {
 
         // Reauthenticate the user with the credential
         await user.reauthenticateWithCredential(credential).then((value) async {
-          await user.updatePassword(newpassword.text.toString()).then((value) {
-            Get.snackbar('Password Updated Successfully', '',
+          await user.updatePassword(newpassword.text.toString()).then((value) async {
+            // await LoadingHelper.dismiss();
+            print(LoadingHelper.absorbClick.toString() +
+                '***********************');
+            // update();
+            Get.snackbar('Password Updated Successfully'.tr, '',
                 snackPosition: SnackPosition.BOTTOM,
                 colorText: white,
                 backgroundColor: Colors.green);
           }).catchError((e) {
+            LoadingHelper.dismiss();
             Get.snackbar('Error updating password:', '',
                 snackPosition: SnackPosition.BOTTOM,
                 colorText: white,
                 backgroundColor: Colors.red);
           });
         });
+        update();
       } else {
         showErrors();
         LoadingHelper.dismiss();
@@ -247,7 +253,6 @@ class SettingController extends GetxController {
 /////////////////////////////////// Function To Logout Current user ///////////////////////////////////
 
   void signOut() {
-
     FirebaseAuth.instance.signOut();
     // Get.offAll(() => LoginScreen());
   }

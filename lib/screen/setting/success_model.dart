@@ -52,7 +52,7 @@ class _SucessModelState extends State<SucessModel> {
                       Get.back();
                     },
                     child: Text(
-                      'ok',
+                      'ok'.tr,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,

@@ -6,6 +6,7 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/values/colors.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class LoginOtpVerifyScreen extends StatefulWidget {
   const LoginOtpVerifyScreen({super.key});
@@ -14,6 +15,9 @@ class LoginOtpVerifyScreen extends StatefulWidget {
 }
 
 class _LoginOtpVerifyScreenState extends State<LoginOtpVerifyScreen> {
+  String? phone;
+  final TextEditingController pinController = TextEditingController();
+
   @override
   void initState() {
     // otpServices.api_Token = widget.user!.apiToken;
@@ -66,15 +70,41 @@ class _LoginOtpVerifyScreenState extends State<LoginOtpVerifyScreen> {
                   SizedBox(
                     height: 40,
                   ),
-                  OtpTextField(
-                    numberOfFields: 6,
-                    borderColor: mainColor,
-                    showFieldAsBox: true,
-                    onCodeChanged: (String code) {},
-                    onSubmit: (String verificationCode) {
-                      authService.otp = verificationCode;
-                      authService.verifyPhone();
-                    },
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0, right: 25),
+                    child: PinCodeTextField(
+                      appContext: context,
+                      pastedTextStyle: TextStyle(
+                        color: Colors.green.shade600,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      length: 6,
+                      blinkWhenObscuring: true,
+                      animationType: AnimationType.fade,
+                      pinTheme: PinTheme(
+                          shape: PinCodeFieldShape.box,
+                          borderWidth: 1.5,
+                          borderRadius: BorderRadius.circular(10),
+                          fieldHeight: 50,
+                          fieldWidth: 50,
+                          activeFillColor: Colors.white,
+                          selectedColor: mainColor,
+                          selectedFillColor: Colors.white,
+                          inactiveFillColor: Colors.white.withOpacity(0.7),
+                          inactiveColor: mainColor.withOpacity(0.3),
+                          activeColor: mainColor.withOpacity(0.2)),
+                      cursorColor: Colors.black,
+                      animationDuration: const Duration(milliseconds: 300),
+                      enableActiveFill: true,
+                      enablePinAutofill: true,
+                      controller: pinController,
+                      keyboardType: TextInputType.number,
+                      autovalidateMode: AutovalidateMode.disabled,
+                      onChanged: (String value) {
+                        phone = value;
+                        print(phone);
+                      },
+                    ),
                   ),
                   const SizedBox(
                     height: 40,
@@ -122,16 +152,33 @@ class _LoginOtpVerifyScreenState extends State<LoginOtpVerifyScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Center(
-                      child: LargeButton(
-                    title: 'Submit',
-                    sreenRatio: 0.85,
-                    onPressed: () {
-                      authService.verifyPhone();
-                    },
-                    color: mainColor,
-                    textcolor: Colors.white,
-                  )),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25, right: 25),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                10), // Border radius of 12
+                          ),
+                          primary: mainColor, // Background color
+                          minimumSize: Size(
+                            MediaQuery.of(context).size.width, // Full width
+                            55.0, // Height of 55
+                          ),
+                        ),
+                        onPressed: () {
+                          print(phone.toString());
+                          loginController.verifyPhone(phone.toString());
+                        },
+                        child: Text(
+                          'Verify',
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )),
+                  ),
                 ],
               ),
             ),
