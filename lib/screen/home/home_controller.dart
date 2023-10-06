@@ -150,6 +150,7 @@ class HomeController extends GetxController {
   }
 
   getItemsStream() async {
+    LoadingHelper.show();
     FirebaseFirestore.instance
         .collection('orders')
         .where('userId', isEqualTo: auth.currentUser!.uid)
@@ -167,6 +168,7 @@ class HomeController extends GetxController {
         }
       }
     });
+    LoadingHelper.dismiss();
   }
 
   storeRating(companyId, rating, orderId) async {

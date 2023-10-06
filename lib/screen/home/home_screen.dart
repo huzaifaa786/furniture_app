@@ -36,7 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   authCheck() {
+    print('object*******************************************qwerty');
+    print(auth.currentUser);
     if (auth.currentUser != null) {
+      print('object*******************************************');
       homeController.fetchLoggedInUserName();
       homeController.fetchCompanies();
       homeController.getItemsStream();
@@ -48,10 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    LoadingHelper.show();
+    // LoadingHelper.show();
     startDelayedFunction();
     authCheck();
-    LoadingHelper.dismiss();
     super.initState();
   }
 

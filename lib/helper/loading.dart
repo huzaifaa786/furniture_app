@@ -13,6 +13,7 @@ class LoadingHelper {
 
   static dismiss() {
     absorbClick = false;
+    print('object************dismiss');
     EasyLoading.dismiss();
   }
 

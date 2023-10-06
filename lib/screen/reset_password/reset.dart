@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/helper/loading.dart';
+import 'package:furniture/screen/bottomNavBar/bottomNaviBar.dart';
 import 'package:furniture/screen/login/login_screen.dart';
 import 'package:furniture/screen/register/signup_controller.dart';
 import 'package:furniture/static/input_field1.dart';
@@ -23,32 +24,35 @@ class _ResetScreenState extends State<ResetScreen> {
   String resetMessage = '';
 
   void resetPassword() async {
-    LoadingHelper.show();
+    
     try {
+      LoadingHelper.show();
       await auth.sendPasswordResetEmail(email: emailController.text);
+      LoadingHelper.dismiss();
       setState(() {
         Get.snackbar('Password reset email sent', '',
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.green,
             colorText: white);
-        Get.offAll(() => LoginScreen());
+
+        Get.offAll(() => BottomNavScreen());
         emailController.clear();
       });
-      LoadingHelper.dismiss();
     } catch (error) {
+      
+        LoadingHelper.dismiss();
       setState(() {
         Get.snackbar('Error:', ' $error',
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.red,
             colorText: white);
 
-        Get.showSnackbar(GetSnackBar(
-          title: 'Error: $error',
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 2),
-        ));
+        // Get.showSnackbar(GetSnackBar(
+        //   title: 'Error: $error',
+        //   backgroundColor: Colors.red,
+        //   duration: Duration(seconds: 2),
+        // ));
       });
-      LoadingHelper.dismiss();
     }
   }
 

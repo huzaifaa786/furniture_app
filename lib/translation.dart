@@ -13,7 +13,7 @@ class LocaleString extends Translations {
           "status": "Status",
           "Order_delivered_successfully": "Order delivered successfully",
           "Way_to_deliver": "On the way to deliver to your desitination",
-          "our_professional_is_on_way": "Our professional is on way",
+          "our_professional_is_on_way": "Our professional is on the way",
           "Your_order_has_been_confiremed": "Your order has been confirmed",
           "company_name": "Company Name",
           "date_of_service": "Date of service",
@@ -72,7 +72,10 @@ class LocaleString extends Translations {
           " has been delivered by ": " has been delivered by ",
           "No chats found": "No chats found",
           'Currently, you have no new notifications Please make order.':
-              'Currently, you have no new notifications Please make order.'
+              'Currently, you have no new notifications Please make order.',
+          'Issue Reported Successfully': 'Issue Reported\nSuccessfully',
+          'Password Updated Successfully': 'Password Updated Successfully',
+          'ok': 'Ok'
         },
         'ar_AE': {
           "Hello": "مرحبًا",
@@ -145,7 +148,10 @@ class LocaleString extends Translations {
           " has been delivered by ": "تم توصيله بواسطة",
           "No chats found": "لا يوجد محادثات",
           'Currently, you have no new notifications Please make order.':
-              "حالياً، ليس لديك أي إشعارات جديدة. من فضلك قم بعمل طلب"
+              "حالياً، ليس لديك أي إشعارات جديدة. من فضلك قم بعمل طلب",
+          'Issue Reported Successfully': 'تم الإبلاغ عن المشكلة بنجاح',
+          'Password Updated Successfully': "تم تحديث كلمةالسر",
+          'ok': "حسناً"
         }
       };
 }
