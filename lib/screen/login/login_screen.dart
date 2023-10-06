@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,6 +31,15 @@ class _LoginScreenState extends State<LoginScreen> {
       index = id;
       loginController.clear();
     });
+  }
+
+  _launchURLApp() async {
+    const url = 'https://terms.ezmoveportal.com/';
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: true, forceWebView: true);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -292,6 +302,41 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 //     height: 34),
                                               ],
                                             ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'By contionuing, you accept the',
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              InkWell(
+                                                onTap: _launchURLApp,
+                                                child: Text(
+                                                  ' Terms of use',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                ' and',
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              InkWell(
+                                                   onTap: _launchURLApp,
+                                                child: Text(
+                                                  ' Privcy poliy',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
                                           ),
                                         ],
                                       ),

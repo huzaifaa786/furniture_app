@@ -72,6 +72,7 @@ dependencies:
   flutter_stripe: ^9.3.0
   intl_phone_field: ^3.2.0
   get_storage: ^2.1.1
+  url_launcher: ^6.1.14
 
 dev_dependencies:
   flutter_test:
