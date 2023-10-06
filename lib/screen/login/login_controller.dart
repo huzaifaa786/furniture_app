@@ -32,8 +32,7 @@ class LoginController extends GetxController {
     final bool isFormValid = Validators.emailValidator(email.text) == null &&
         Validators.emptyStringValidator(password.text, '') == null;
     if (isFormValid) {
-      String? error = await AuthService.instance
-          .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+      String? error = await authService.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
       LoadingHelper.dismiss();
       if (error != null) {
         Get.showSnackbar(GetSnackBar(

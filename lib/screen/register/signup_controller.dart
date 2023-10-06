@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:furniture/constants/constants.dart';
 import 'package:furniture/helper/loading.dart';
-import 'package:furniture/services/auth_service.dart';
 import 'package:furniture/values/Validator.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
@@ -39,7 +39,7 @@ class SignUpController extends GetxController {
             backgroundColor: Colors.red,
             colorText: white);
       } else {
-        String? error = AuthService.instance.createUserWithEmailAndPassword(
+        String? error = authService.createUserWithEmailAndPassword(
             name.text, email.text, phone.text, password.text) as String?;
         LoadingHelper.dismiss();
 

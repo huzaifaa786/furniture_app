@@ -9,6 +9,7 @@ import 'package:furniture/screen/setting/setting.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:furniture/services/auth_service.dart';
 
 class BottomNavScreen extends StatefulWidget {
   const BottomNavScreen({Key? key}) : super(key: key);
@@ -38,12 +39,12 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
 
   @override
   void initState() {
+    // Get.put(AuthService());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // ignore: no_leading_underscores_for_local_identifiers
     var _fragments = [
       const HomeScreen(),
       OrderScreen(),

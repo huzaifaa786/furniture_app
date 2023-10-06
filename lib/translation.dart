@@ -75,7 +75,8 @@ class LocaleString extends Translations {
               'Currently, you have no new notifications Please make order.',
           'Issue Reported Successfully': 'Issue Reported\nSuccessfully',
           'Password Updated Successfully': 'Password Updated Successfully',
-          'ok': 'Ok'
+          'ok': 'Ok',
+          'Select an image To procede further':'Select an image To procede further'
         },
         'ar_AE': {
           "Hello": "مرحبًا",
@@ -151,7 +152,8 @@ class LocaleString extends Translations {
               "حالياً، ليس لديك أي إشعارات جديدة. من فضلك قم بعمل طلب",
           'Issue Reported Successfully': 'تم الإبلاغ عن المشكلة بنجاح',
           'Password Updated Successfully': "تم تحديث كلمةالسر",
-          'ok': "حسناً"
+          'ok': "حسناً",
+          'Select an image To procede further': "رجاء ادراج صورة"
         }
       };
 }

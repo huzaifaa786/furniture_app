@@ -146,7 +146,7 @@ class SettingController extends GetxController {
         }
       } else {
         LoadingHelper.dismiss();
-        Get.snackbar('Select an image To procede further.', '',
+        Get.snackbar('Select an image To procede further'.tr, '',
             snackPosition: SnackPosition.BOTTOM,
             colorText: white,
             backgroundColor: Colors.red);

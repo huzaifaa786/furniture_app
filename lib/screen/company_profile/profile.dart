@@ -32,10 +32,11 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(companyController.imgList);
     return Directionality(
       textDirection: TextDirection.ltr,
       child: GetBuilder<CompanyController>(
-        builder: (companyController) => Scaffold(
+        builder: (controller) => Scaffold(
           body: SafeArea(
             child: Container(
               height: MediaQuery.of(context).size.height,
@@ -172,58 +173,74 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                             ],
                           ),
                         ),
-                        HeadingText(text: 'bio'.tr),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0, bottom: 18),
-                          child: Directionality(
-                            textDirection: box.read('locale') != 'ar'
-                                    ? TextDirection.ltr
-                                    : TextDirection.rtl,
-                            child: Text(
-                              box.read('locale') != 'ar'
-                                      ? widget.company.englishBio: widget.company.arabicBio,
-                              style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 15,
-                                  color: Colors.black54),
-                            ),
-                          ),
-                        ),
-                        HeadingText(text: 'working_hours'.tr),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 12.0, bottom: 18),
-                          child: Row(
+                        Directionality(
+                          textDirection: box.read('locale') != 'ar'
+                              ? TextDirection.ltr
+                              : TextDirection.rtl,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                padding: EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: mainColor),
-                                    borderRadius: BorderRadius.circular(45)),
-                                child:
-                                    SvgPicture.asset('assets/images/hours.svg'),
-                              ),
-                              Directionality(
-                                textDirection: box.read('locale') != 'ar'
-                                    ? TextDirection.ltr
-                                    : TextDirection.rtl,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
+                              HeadingText(text: 'bio'.tr),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 8.0, bottom: 18),
+                                child: Directionality(
+                                  textDirection: box.read('locale') != 'ar'
+                                      ? TextDirection.ltr
+                                      : TextDirection.rtl,
                                   child: Text(
-                                    'from'.tr +
-                                        ' ' +
-                                        formattedTime(
-                                            widget.company.startTime) +
-                                        ' ' +
-                                        'to'.tr +
-                                        ' ' +
-                                        formattedTime(widget.company.endTime),
+                                    box.read('locale') != 'ar'
+                                        ? widget.company.englishBio
+                                        : widget.company.arabicBio,
                                     style: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w400,
                                         fontSize: 15,
                                         color: Colors.black54),
                                   ),
+                                ),
+                              ),
+                              HeadingText(text: 'working_hours'.tr),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 12.0, bottom: 18),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(color: mainColor),
+                                          borderRadius:
+                                              BorderRadius.circular(45)),
+                                      child: SvgPicture.asset(
+                                          'assets/images/hours.svg'),
+                                    ),
+                                    Directionality(
+                                      textDirection: box.read('locale') != 'ar'
+                                          ? TextDirection.ltr
+                                          : TextDirection.rtl,
+                                      child: Padding(
+                                        padding: box.read('locale') != 'ar'
+                                      ?EdgeInsets.only(left: 8.0):EdgeInsets.only(right: 8.0),
+                                        child: Text(
+                                          'from'.tr +
+                                              ' ' +
+                                              formattedTime(
+                                                  widget.company.startTime) +
+                                              ' ' +
+                                              'to'.tr +
+                                              ' ' +
+                                              formattedTime(
+                                                  widget.company.endTime),
+                                          style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 15,
+                                              color: Colors.black54),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],

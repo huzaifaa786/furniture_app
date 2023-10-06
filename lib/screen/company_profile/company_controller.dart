@@ -15,7 +15,7 @@ class CompanyController extends GetxController {
   // }
 
   // Method to update the company
-  void updateImgList(Company companys) {
+  updateImgList(Company companys) {
     imgList = [
       companys.companyImage,
       companys.companyImage1,

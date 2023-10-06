@@ -13,8 +13,10 @@ import 'package:furniture/screen/company_profile/profile.dart';
 import 'package:furniture/screen/home/home_controller.dart';
 import 'package:furniture/screen/login/login_screen.dart';
 import 'package:furniture/screen/notifications/notification_screen.dart';
+import 'package:furniture/services/auth_service.dart';
 import 'package:furniture/values/colors.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -56,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
     authCheck();
     super.initState();
   }
-
+ GetStorage box = GetStorage();
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -166,14 +168,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         auth.currentUser != null
                             ? Padding(
                                 padding: EdgeInsets.only(left: 15, top: 25),
-                                child: Text(
-                                    'Hello'.tr +
-                                        ', ' +
-                                        homeController.loggedInUserName.value,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold)))
+                                child: Directionality(
+                                  textDirection: box.read('locale') != 'ar'
+                                          ? TextDirection.ltr
+                                          : TextDirection.rtl,
+                                  child: Text(
+                                      'Hello'.tr +
+                                          ', ' +
+                                          homeController.loggedInUserName.value,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold)),
+                                ))
                             : Padding(
                                 padding: EdgeInsets.only(left: 15, top: 25),
                                 child: Text('Hello'.tr,
@@ -274,6 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Get.to(() => CompanyProfileScreen(
                                           company: company))!
                                       .then((value) {
+                                        
                                     if (auth.currentUser != null) {
                                       homeController.count();
                                       homeController.countnoti();
