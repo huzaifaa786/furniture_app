@@ -6,6 +6,7 @@ import 'package:furniture/static/input_field1.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/values/Validator.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -24,10 +25,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   @override
+  _launchURLApp() async {
+    const url = 'https://terms.ezmoveportal.com/';
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: true, forceWebView: true);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   Widget build(BuildContext context) {
     final controller = Get.put(SignUpController());
     return Scaffold(
-      resizeToAvoidBottomInset: false, 
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Stack(
@@ -63,7 +73,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           padding: MediaQuery.of(context).viewInsets,
                           child: Column(children: [
                             Padding(
-                              padding: const EdgeInsets.only(top: 30, bottom: 30),
+                              padding:
+                                  const EdgeInsets.only(top: 30, bottom: 30),
                               child: Text(
                                 'Register',
                                 style: TextStyle(
@@ -114,7 +125,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   Validators.passwordValidator(field),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 4, bottom: 20),
+                              padding:
+                                  const EdgeInsets.only(top: 4, bottom: 20),
                               child: InputField1(
                                 hint: 'Confirm Password',
                                 icon: 'assets/images/lock.svg',
@@ -126,6 +138,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         controller.password.text, field),
                               ),
                             ),
+                             Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  'By contionuing, you accept the',
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                ),
+                                                InkWell(
+                                                  onTap: _launchURLApp,
+                                                  child: Text(
+                                                    ' Terms of use and Privcy poliy',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                    ),
+                                                  ),
+                                                ),
+                                                // Text(
+                                                //   ' and',
+                                                //   style:
+                                                //       TextStyle(fontSize: 12),
+                                                // ),
+                                                // InkWell(
+                                                //   onTap: _launchURLApp,
+                                                //   child: Text(
+                                                //     ' Privcy poliy',
+                                                //     style: TextStyle(
+                                                //       fontWeight:
+                                                //           FontWeight.w600,
+                                                //       decoration: TextDecoration
+                                                //           .underline,
+                                                //     ),
+                                                //   ),
+                                                // )
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(height: 24,),
                             LargeButton(
                               title: 'Sign Up',
                               sreenRatio: 0.9,

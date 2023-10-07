@@ -303,40 +303,49 @@ class _LoginScreenState extends State<LoginScreen> {
                                               ],
                                             ),
                                           ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                'By contionuing, you accept the',
-                                                style: TextStyle(fontSize: 12),
-                                              ),
-                                              InkWell(
-                                                onTap: _launchURLApp,
-                                                child: Text(
-                                                  ' Terms of use',
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                    decoration: TextDecoration
-                                                        .underline,
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  'By contionuing, you accept the',
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                ),
+                                                InkWell(
+                                                  onTap: _launchURLApp,
+                                                  child: Text(
+                                                    ' Terms of use and Privcy poliy',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Text(
-                                                ' and',
-                                                style: TextStyle(fontSize: 12),
-                                              ),
-                                              InkWell(
-                                                   onTap: _launchURLApp,
-                                                child: Text(
-                                                  ' Privcy poliy',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    decoration: TextDecoration
-                                                        .underline,
-                                                  ),
+                                                Text(
+                                                  ' and',
+                                                  style:
+                                                      TextStyle(fontSize: 12),
                                                 ),
-                                              )
-                                            ],
+                                                InkWell(
+                                                  onTap: _launchURLApp,
+                                                  child: Text(
+                                                    ' Privcy poliy',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
