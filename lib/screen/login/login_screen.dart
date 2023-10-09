@@ -317,7 +317,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 InkWell(
                                                   onTap: _launchURLApp,
                                                   child: Text(
-                                                    ' Terms of use and Privcy poliy',
+                                                    ' Terms of use and Privcy policy',
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       fontWeight:
