@@ -33,7 +33,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TopBar(
-                text: 'Notifications'.tr,
+                text: 'Notification'.tr,
                 ontap: () {
                   Get.back();
                 },

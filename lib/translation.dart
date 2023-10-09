@@ -20,7 +20,7 @@ class LocaleString extends Translations {
           "order_details": "Order details",
           "Amount": "Amount",
           "time_of_service": "Time of service",
-          "Notification": "Notification",
+          "Notification": "Notifications",
           "Chatting": "Chatting",
           "type_your_message": "Type your message",
           "from": "From",
