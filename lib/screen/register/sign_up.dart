@@ -141,7 +141,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                              Container(
                                             width: MediaQuery.of(context)
                                                 .size
-                                                .width,
+                                                .width*0.9,
                                             child: Row(
                                               children: [
                                                 Text(
@@ -152,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 InkWell(
                                                   onTap: _launchURLApp,
                                                   child: Text(
-                                                    ' Terms of use and Privcy policy',
+                                                    ' Terms of use and Privcay policy',
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       fontWeight:
