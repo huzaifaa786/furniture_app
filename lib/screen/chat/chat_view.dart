@@ -144,6 +144,8 @@ class ChatLsitScreen extends StatelessWidget {
                                                   ),
                                                   subtitle: Text(
                                                     companyData['englishBio'],
+                                                    maxLines: 4,
+                                                    overflow: TextOverflow.ellipsis,
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 11,
