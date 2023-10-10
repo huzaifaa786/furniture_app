@@ -310,7 +310,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  'By contionuing, you accept the',
+                                                  'By continuing, you accept the',
                                                   style:
                                                       TextStyle(fontSize: 12),
                                                 ),

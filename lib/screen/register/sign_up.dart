@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, deprecated_member_use, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
 import 'package:furniture/screen/register/signup_controller.dart';
@@ -138,51 +138,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         controller.password.text, field),
                               ),
                             ),
-                             Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width*0.9,
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  'By contionuing, you accept the',
-                                                  style:
-                                                      TextStyle(fontSize: 12),
-                                                ),
-                                                InkWell(
-                                                  onTap: _launchURLApp,
-                                                  child: Text(
-                                                    ' Terms of use and Privcay policy',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                    ),
-                                                  ),
-                                                ),
-                                                // Text(
-                                                //   ' and',
-                                                //   style:
-                                                //       TextStyle(fontSize: 12),
-                                                // ),
-                                                // InkWell(
-                                                //   onTap: _launchURLApp,
-                                                //   child: Text(
-                                                //     ' Privcy poliy',
-                                                //     style: TextStyle(
-                                                //       fontWeight:
-                                                //           FontWeight.w600,
-                                                //       decoration: TextDecoration
-                                                //           .underline,
-                                                //     ),
-                                                //   ),
-                                                // )
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(height: 24,),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'By continuing, you accept the',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  InkWell(
+                                    onTap: _launchURLApp,
+                                    child: Text(
+                                      ' Terms of use and Privcay policy',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                  // Text(
+                                  //   ' and',
+                                  //   style:
+                                  //       TextStyle(fontSize: 12),
+                                  // ),
+                                  // InkWell(
+                                  //   onTap: _launchURLApp,
+                                  //   child: Text(
+                                  //     ' Privcy poliy',
+                                  //     style: TextStyle(
+                                  //       fontWeight:
+                                  //           FontWeight.w600,
+                                  //       decoration: TextDecoration
+                                  //           .underline,
+                                  //     ),
+                                  //   ),
+                                  // )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 24,
+                            ),
                             LargeButton(
                               title: 'Sign Up',
                               sreenRatio: 0.9,
