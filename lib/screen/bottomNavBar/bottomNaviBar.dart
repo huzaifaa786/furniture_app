@@ -20,15 +20,7 @@ class BottomNavScreen extends StatefulWidget {
 
 class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
   int _navigationMenuIndex = 0;
-  bool _isScanning = false;
-
-  void _scanQR() {
-    setState(() {
-      _isScanning = true;
-    });
-  }
 
   switchFragment(int index) {
     setState(() {
@@ -39,7 +31,6 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
 
   @override
   void initState() {
-    // Get.put(AuthService());
     super.initState();
   }
 
@@ -77,30 +68,33 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
                 currentIndex: _navigationMenuIndex,
                 onTap: switchFragment,
                 items: [
-                  /// Home
+                  /// Home Screen
                   SalomonBottomBarItem(
                     icon: SvgPicture.asset('assets/images/home.svg',
-                        color:
-                            _navigationMenuIndex == 0 ? mainColor : Colors.black),
-                    title: Text("home".tr),
+                        color: _navigationMenuIndex == 0
+                            ? mainColor
+                            : Colors.black),
+                    title: Text("home".tr, style: TextStyle(fontSize: 12)),
                     selectedColor: mainColor,
                   ),
-    
-                  /// Likes
+
+                  /// Orders Screen
                   SalomonBottomBarItem(
                     icon: SvgPicture.asset('assets/images/clipboard.svg',
-                        color:
-                            _navigationMenuIndex == 1 ? mainColor : Colors.black),
-                    title: Text("orders".tr),
+                        color: _navigationMenuIndex == 1
+                            ? mainColor
+                            : Colors.black),
+                    title: Text("orders".tr, style: TextStyle(fontSize: 12)),
                     selectedColor: mainColor,
                   ),
-    
-                  /// Profile
+
+                  /// Profile Screen
                   SalomonBottomBarItem(
                     icon: SvgPicture.asset('assets/images/profile.svg',
-                        color:
-                            _navigationMenuIndex == 2 ? mainColor : Colors.black),
-                    title: Text("profile".tr),
+                        color: _navigationMenuIndex == 2
+                            ? mainColor
+                            : Colors.black),
+                    title: Text("profile".tr, style: TextStyle(fontSize: 12)),
                     selectedColor: mainColor,
                   ),
                 ],

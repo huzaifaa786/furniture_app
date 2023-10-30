@@ -53,11 +53,12 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                             children: [
                               SizedBox(
                                 height: 200,
+                                width: MediaQuery.of(context).size.width,
                                 child: CarouselSlider(
                                   options: CarouselOptions(
                                     autoPlay: true,
                                     viewportFraction: 1,
-                                    enlargeCenterPage: false,
+                                    enlargeCenterPage: true,
                                     onPageChanged: (index, reason) {
                                       setState(() {
                                         _current = index;
@@ -221,7 +222,8 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                           : TextDirection.rtl,
                                       child: Padding(
                                         padding: box.read('locale') != 'ar'
-                                      ?EdgeInsets.only(left: 8.0):EdgeInsets.only(right: 8.0),
+                                            ? EdgeInsets.only(left: 8.0)
+                                            : EdgeInsets.only(right: 8.0),
                                         child: Text(
                                           'from'.tr +
                                               ' ' +

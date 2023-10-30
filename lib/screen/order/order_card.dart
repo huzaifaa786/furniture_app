@@ -91,7 +91,8 @@ class OrderCard extends StatelessWidget {
                   InkWell(
                     onTap: ontap,
                     child: Container(
-                      height: 25,
+                      padding: EdgeInsets.only(top: 4,bottom: 4),
+                      // height: 25,
                       width: 60,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
