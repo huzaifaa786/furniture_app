@@ -74,7 +74,14 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
                         color: _navigationMenuIndex == 0
                             ? mainColor
                             : Colors.black),
-                    title: Text("home".tr, style: TextStyle(fontSize: 12)),
+                    title: LayoutBuilder(
+                      builder: (context, constraints) {
+                        double fontSize = constraints.maxHeight *
+                            0.6; // Adjust the factor as needed
+                        return Text("home".tr,
+                            style: TextStyle(fontSize: fontSize));
+                      },
+                    ),
                     selectedColor: mainColor,
                   ),
 
@@ -84,7 +91,14 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
                         color: _navigationMenuIndex == 1
                             ? mainColor
                             : Colors.black),
-                    title: Text("orders".tr, style: TextStyle(fontSize: 12)),
+                    title: LayoutBuilder(
+                      builder: (context, constraints) {
+                        double fontSize = constraints.maxHeight *
+                            0.6; // Adjust the factor as needed
+                        return Text("orders".tr,
+                            style: TextStyle(fontSize: fontSize));
+                      },
+                    ),
                     selectedColor: mainColor,
                   ),
 
@@ -94,7 +108,14 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
                         color: _navigationMenuIndex == 2
                             ? mainColor
                             : Colors.black),
-                    title: Text("profile".tr, style: TextStyle(fontSize: 12)),
+                    title: LayoutBuilder(
+                      builder: (context, constraints) {
+                        double fontSize = constraints.maxHeight *
+                            0.6; // Adjust the factor as needed
+                        return Text("profile".tr,
+                            style: TextStyle(fontSize: fontSize));
+                      },
+                    ),
                     selectedColor: mainColor,
                   ),
                 ],

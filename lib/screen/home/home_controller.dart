@@ -23,14 +23,13 @@ class HomeController extends GetxController {
 
   Future<void> fetchLoggedInUserName() async {
     User? user = auth.currentUser;
-    print(user);
     if (user != null) {
       DocumentSnapshot userSnapshot =
           await firestore.collection('users').doc(user.uid).get();
 
       String name = userSnapshot['name'] ?? '';
       email = userSnapshot['email'] ?? '';
-      print(email);
+
       loggedInUserName.value = name;
     }
   }

@@ -32,7 +32,6 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(companyController.imgList);
     return Directionality(
       textDirection: TextDirection.ltr,
       child: GetBuilder<CompanyController>(
@@ -165,7 +164,6 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                         color: mainColor,
                                       ),
                                       onRatingUpdate: (rating) {
-                                        // print(rating);
                                       },
                                     ),
                                   ],
