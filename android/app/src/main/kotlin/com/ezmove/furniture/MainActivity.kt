@@ -1,4 +1,4 @@
-package com.example.furniture
+package com.ezmove.furniture
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 
