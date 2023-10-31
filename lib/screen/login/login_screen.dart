@@ -208,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             title: 'Login',
                                             sreenRatio: 0.9,
                                             onPressed: () {
-                                              Get.put(AuthService());
+                                              // Get.put(AuthService());
                                               loginController.loginUser();
                                             },
                                             textcolor: Colors.white,
