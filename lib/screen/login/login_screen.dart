@@ -305,7 +305,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                 left: 12,
                                                                 right: 12),
                                                         child: InkWell(
-                                                          onTap: () {},
+                                                           onTap: () {
+                                                            loginController
+                                                                .signInWithApple();
+                                                          },
                                                           child: Image.asset(
                                                               "assets/images/apple.png",
                                                               height: 34),

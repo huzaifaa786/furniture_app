@@ -71,7 +71,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 },
                               ),
                             ),
-                            authService.providerNames!.contains('google.com') ==
+                            authService.providerNames!.contains('google.com') || authService.providerNames!.contains('apple.com') ==
                                     false
                                 ? authService.providerNames!
                                             .contains('phone') ==
