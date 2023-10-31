@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "826383560726-80rrh83464imgvci6tt2crg58eofi0ei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.furniture",
+            "certificate_hash": "7fcdb3799ecf46658f131ed7ebe19a2735101b61"
+          }
+        },
+        {
           "client_id": "826383560726-guclsfbkd6o4baulkt0qomq1hcv2l9rc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -57,6 +65,58 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "826383560726-e1kf6fia0lqcvvhaguikaliggk57214m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJxelLmqlnz_gW9zjAFBtofmMOBU-SYC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "826383560726-e1kf6fia0lqcvvhaguikaliggk57214m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "826383560726-5d2lt6qseffj8vdu1tn92qrrsm0v6bc0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.furniture"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826383560726:android:4a84e38a50339677b98537",
+        "android_client_info": {
+          "package_name": "com.ezmove.furniture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "826383560726-04pp0np87ok154gv7u7f8nhn881j6q6d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ezmove.furniture",
+            "certificate_hash": "7fcdb3799ecf46658f131ed7ebe19a2735101b61"
+          }
+        },
+        {
+          "client_id": "826383560726-bpkeusv0r7utm7sa04n8suajd1tvqn85.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ezmove.furniture",
+            "certificate_hash": "7a85c3f89a329f8768c6dcd0586d489204b85dbd"
+          }
+        },
         {
           "client_id": "826383560726-e1kf6fia0lqcvvhaguikaliggk57214m.apps.googleusercontent.com",
           "client_type": 3

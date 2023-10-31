@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAJxelLmqlnz_gW9zjAFBtofmMOBU-SYC8',
-    appId: '1:826383560726:android:0d216fca14336c27b98537',
+    appId: '1:826383560726:android:4a84e38a50339677b98537',
     messagingSenderId: '826383560726',
     projectId: 'furniture-6aebb',
     storageBucket: 'furniture-6aebb.appspot.com',
@@ -63,12 +63,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAdFtKD_MK21OnoWnpSOdvGi2TPgMxV_IE',
-    appId: '1:826383560726:ios:405255812f5e100db98537',
+    appId: '1:826383560726:ios:c213efd94431133ab98537',
     messagingSenderId: '826383560726',
     projectId: 'furniture-6aebb',
     storageBucket: 'furniture-6aebb.appspot.com',
-    iosClientId: '826383560726-5d2lt6qseffj8vdu1tn92qrrsm0v6bc0.apps.googleusercontent.com',
-    iosBundleId: 'com.example.furniture',
+    androidClientId: '826383560726-80rrh83464imgvci6tt2crg58eofi0ei.apps.googleusercontent.com',
+    iosClientId: '826383560726-tu5ej68o4dgnc3d63se4j1uvp8uepao3.apps.googleusercontent.com',
+    iosBundleId: 'com.example.furniture.RunnerTests',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -77,6 +78,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '826383560726',
     projectId: 'furniture-6aebb',
     storageBucket: 'furniture-6aebb.appspot.com',
+    androidClientId: '826383560726-80rrh83464imgvci6tt2crg58eofi0ei.apps.googleusercontent.com',
     iosClientId: '826383560726-tu5ej68o4dgnc3d63se4j1uvp8uepao3.apps.googleusercontent.com',
     iosBundleId: 'com.example.furniture.RunnerTests',
   );
