@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture/screen/bottomNavBar/bottomNaviBar.dart';
 import 'package:furniture/screen/intro/fragments/fragment_1.dart';
 import 'package:furniture/screen/intro/fragments/fragment_2.dart';
 import 'package:furniture/screen/intro/fragments/fragment_3.dart';
@@ -34,18 +35,18 @@ class _IntroScreenState extends State<IntroScreen> {
             child: Column(
               children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    // child: StepProgressIndicator(
-                    //   currentStep: slideIndex + 1,
-                    //   totalSteps: 3,
-                    //   selectedColor: mainColor,
-                    //   unselectedColor: grey,
-                    //   selectedSize: 3,
-                    //   unselectedSize: 3,
-                    //   roundedEdges: Radius.circular(45),
-                    // )
-                    ),
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  // child: StepProgressIndicator(
+                  //   currentStep: slideIndex + 1,
+                  //   totalSteps: 3,
+                  //   selectedColor: mainColor,
+                  //   unselectedColor: grey,
+                  //   selectedSize: 3,
+                  //   unselectedSize: 3,
+                  //   roundedEdges: Radius.circular(45),
+                  // )
+                ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.72,
                   child: PageView(
@@ -96,10 +97,8 @@ class _IntroScreenState extends State<IntroScreen> {
                         : LargeButton(
                             buttonWidth: 0.75,
                             title: "GET STARTED",
-                            onPressed: ()async {
-                               print('0');
-                               Get.put(AuthService());
-                               print('1');
+                            onPressed: () {
+                              Get.put(AuthService(), permanent: true);
                             },
                           ),
               ],

@@ -38,10 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   authCheck() {
-    print('object*******************************************qwerty');
-    print(auth.currentUser);
     if (auth.currentUser != null) {
-      print('object*******************************************');
       homeController.fetchLoggedInUserName();
       homeController.fetchCompanies();
       homeController.getItemsStream();
@@ -53,12 +50,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // LoadingHelper.show();
+    print('Get.isRegistered<AuthService>()');
     startDelayedFunction();
     authCheck();
     super.initState();
   }
- GetStorage box = GetStorage();
+
+  GetStorage box = GetStorage();
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -170,8 +168,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: EdgeInsets.only(left: 15, top: 25),
                                 child: Directionality(
                                   textDirection: box.read('locale') != 'ar'
-                                          ? TextDirection.ltr
-                                          : TextDirection.rtl,
+                                      ? TextDirection.ltr
+                                      : TextDirection.rtl,
                                   child: Text(
                                       'Hello'.tr +
                                           ', ' +
@@ -266,7 +264,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: mainColor,
                                     ),
                                     onRatingUpdate: (rating) {
-                                      // print(rating);
                                     },
                                   ),
                                 ),
@@ -281,7 +278,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Get.to(() => CompanyProfileScreen(
                                           company: company))!
                                       .then((value) {
-                                        
                                     if (auth.currentUser != null) {
                                       homeController.count();
                                       homeController.countnoti();

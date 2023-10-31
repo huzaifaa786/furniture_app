@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void goto() async {
     await Future.delayed(const Duration(seconds: 5));
     bool firstRun = await IsFirstRun.isFirstRun();
-    firstRun == true ? Get.off(IntroScreen()) : Get.put(AuthService());
+    firstRun == true ? Get.off(() => IntroScreen()) : Get.put(AuthService());
   }
 }
 
