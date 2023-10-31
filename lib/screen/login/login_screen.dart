@@ -5,7 +5,7 @@ import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/login/login_controller.dart';
 import 'package:furniture/screen/register/sign_up.dart';
 import 'package:furniture/screen/reset_password/reset.dart';
-import 'package:furniture/services/auth_service.dart';
+import 'dart:io';
 import 'package:furniture/static/input_field1.dart';
 import 'package:furniture/static/input_field_pass.dart';
 import 'package:furniture/static/large_button.dart';
@@ -297,12 +297,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       "assets/images/google.png",
                                                       height: 34),
                                                 ),
-                                                // Padding(
-                                                //     padding: EdgeInsets.only(
-                                                //         left: 12, right: 12)),
-                                                // Image.asset(
-                                                //     "assets/images/apple.png",
-                                                //     height: 34),
+                                                Platform.isIOS
+                                                    ? Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 12,
+                                                                right: 12),
+                                                        child: InkWell(
+                                                          onTap: (){},
+                                                          child: Image.asset(
+                                                              "assets/images/apple.png",
+                                                              height: 34),
+                                                        ))
+                                                    : Container(),
                                               ],
                                             ),
                                           ),
