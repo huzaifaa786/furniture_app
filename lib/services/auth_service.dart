@@ -96,19 +96,21 @@ class AuthService extends GetxController {
               .update({
             'token': token,
           });
+        LoadingHelper.dismiss();
+
+          return null;
         } catch (e) {
           // Handle the error here
           print('Error occurred while setting data: $e');
+        LoadingHelper.dismiss();
+        return e.toString();
           // You can also show an error message to the user or perform other actions as needed.
         }
-        LoadingHelper.dismiss();
       } else {}
     } on FirebaseAuthException catch (e) {
+      LoadingHelper.dismiss();
       return e.message;
-    } catch (_) {
-      return 'login failed';
     }
-    return null;
   }
 
   Future<void> logout() async {

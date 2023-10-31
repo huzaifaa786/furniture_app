@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture/screen/chat/controller.dart';
 import 'package:furniture/firebase_options.dart';
@@ -67,26 +68,29 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [Provider<ChatProvider>(create: (_) => ChatProvider())],
-      child: GetMaterialApp(
-        translations: LocaleString(),
-        locale: box.read('locale') != 'ar'
-            ? Locale('en', 'US')
-            : Locale('ar', 'AE'),
-        fallbackLocale: box.read('locale') != 'ar'
-            ? Locale('en', 'US')
-            : Locale('ar', 'AE'),
-        debugShowCheckedModeBanner: false,
-        navigatorKey: navigatorKey,
-        builder: EasyLoading.init(),
-        theme: Styles.lightTheme,
-        title: "furniture",
-        initialRoute: 'splash',
-        routes: {
-          'splash': (_) => const SplashScreen(),
-          'login': (_) => const LoginScreen(),
-        },
+    return  AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,    
+      child: MultiProvider(
+        providers: [Provider<ChatProvider>(create: (_) => ChatProvider())],
+        child: GetMaterialApp(
+          translations: LocaleString(),
+          locale: box.read('locale') != 'ar'
+              ? Locale('en', 'US')
+              : Locale('ar', 'AE'),
+          fallbackLocale: box.read('locale') != 'ar'
+              ? Locale('en', 'US')
+              : Locale('ar', 'AE'),
+          debugShowCheckedModeBanner: false,
+          navigatorKey: navigatorKey,
+          builder: EasyLoading.init(),
+          theme: Styles.lightTheme,
+          title: "furniture",
+          initialRoute: 'splash',
+          routes: {
+            'splash': (_) => const SplashScreen(),
+            'login': (_) => const LoginScreen(),
+          },
+        ),
       ),
     );
   }
