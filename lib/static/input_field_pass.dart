@@ -1,77 +1,139 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_typing_uninitialized_variables
 
-class InputFieldPassword extends StatelessWidget {
-  const InputFieldPassword(
+import 'package:flutter/material.dart';
+import 'package:furniture/values/colors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+
+class PasswordInputField1 extends StatelessWidget {
+  const PasswordInputField1(
       {Key? key,
       this.controller,
       this.hint,
       this.text,
-      this.icon,
-      this.imageIcon,
-      this.color = Colors.blue,
+      this.color = Colors.white,
       this.obscure = false,
-      this.toggle,
+      this.maxlines = false,
+      this.enabled = true,
+      this.readOnly = false,
       this.onChange,
+      this.imageIcon,
       this.validator,
-      // this.validate,
+      this.validate,
       this.autovalidateMode,
+      this.toggle,
+      this.icon,
       this.type = TextInputType.text,
+      this.fontSize = 17.0,
       this.onpressed})
       : super(key: key);
 
   final controller;
   final validator;
-  // final RxBool? validate;
-  final autovalidateMode;
+  final validate;
+  final toggle;
   final obscure;
   final hint;
   final type;
-  final text;
-  final icon;
   final imageIcon;
+  final icon;
+  final text;
+  final autovalidateMode;
   final color;
-  final toggle;
+  final maxlines;
   final onChange;
   final onpressed;
-
+  final fontSize;
+  final enabled;
+  final readOnly;
   @override
   Widget build(BuildContext context) {
-    // bool isDark = Provider.of<DarkThemeProvider>(context).darkTheme;
-
-    return TextFormField(
-      style: const TextStyle(fontSize: 17),
-      controller: controller,
-      decoration: InputDecoration(
-          fillColor: color,
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: color, width: 1.0),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: color, width: 1.7),
-          ),
-          suffixIcon: IconButton(
-            padding: const EdgeInsets.only(bottom: 17),
-            icon: Icon(
-              // Based on passwordVisible state choose the icon
-              obscure ? Icons.visibility : Icons.visibility_off,
-              color: Colors.white,
+    return SizedBox(
+      height: 70,
+      width: MediaQuery.of(context).size.width,
+      child: Card(
+        color: const Color.fromRGBO(255, 255, 255, 1),
+        shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey[400]!,
+            )),
+        child: Row(
+          children: [
+            const SizedBox(
+              width: 10,
             ),
-            onPressed: () {
-              toggle();
-            },
-          ),
-          hintText: hint,
-          hintStyle: const TextStyle(color: Colors.grey),
-          contentPadding: const EdgeInsets.only(left: 3.0)),
-      keyboardType: type,
-      cursorColor: const Color.fromARGB(255, 0, 0, 0),
-      obscureText: obscure,
-      maxLines: 1,
-      validator: validator,
-      // autovalidateMode: autovalidateMode ??
-      //     (validate == true.obs
-      //         ? AutovalidateMode.always
-      //         : AutovalidateMode.onUserInteraction),
+            Container(
+              height: 35,
+              width: 35,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: mainColor,
+                  width: 1,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: SvgPicture.asset(
+                      icon,
+                      height: 18,
+                      width: 18,
+                      color: mainColor,
+                    )),
+              ),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            SizedBox(
+                width: MediaQuery.of(context).size.width * 0.72,
+                child: TextFormField(
+                  readOnly: readOnly,
+                  enabled: enabled,
+                  controller: controller,
+                  style: TextStyle(fontSize: fontSize),
+                  obscureText: obscure,
+                  autovalidateMode: autovalidateMode ??
+                      (validate == true.obs
+                          ? AutovalidateMode.always
+                          : AutovalidateMode.onUserInteraction),
+                  keyboardType: type,
+                  validator: validator,
+                  decoration: InputDecoration(
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        toggle();
+                      },
+                      child: Icon(
+                        obscure
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: Colors.black,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.only(left: 4, top: 15),
+                    hintText: hint,
+                    hintStyle: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400),
+                    fillColor: color,
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: color, width: 1.0),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: color, width: 1.0),
+                    ),
+                  ),
+                  cursorColor: Colors.black,
+                  maxLines: maxlines == true ? null : 1,
+                )),
+          ],
+        ),
+      ),
     );
   }
 }

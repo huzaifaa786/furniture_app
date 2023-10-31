@@ -7,6 +7,7 @@ import 'package:furniture/screen/register/sign_up.dart';
 import 'package:furniture/screen/reset_password/reset.dart';
 import 'package:furniture/services/auth_service.dart';
 import 'package:furniture/static/input_field1.dart';
+import 'package:furniture/static/input_field_pass.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/values/Validator.dart';
 import 'package:furniture/values/colors.dart';
@@ -166,10 +167,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       field),
                                             ),
                                           ),
-                                          InputField1(
+                                          PasswordInputField1(
                                             icon: 'assets/images/lock.svg',
                                             hint: 'Password',
-                                            obscure: true,
+                                            obscure:
+                                                loginController.obscureText,
+                                            toggle: loginController.toggle,
                                             controller:
                                                 loginController.password,
                                             validate: loginController
@@ -305,8 +308,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           ),
                                           Container(
                                             width: MediaQuery.of(context)
-                                                .size
-                                                .width*0.9,
+                                                    .size
+                                                    .width *
+                                                0.9,
                                             child: Row(
                                               children: [
                                                 Text(

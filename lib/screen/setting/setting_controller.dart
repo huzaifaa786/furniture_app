@@ -16,6 +16,24 @@ import 'package:image_picker/image_picker.dart';
 class SettingController extends GetxController {
   static SettingController get instance => Get.find();
   bool isgoogle = false;
+  bool obscureText = true;
+  bool obscureText1 = true;
+  bool obscureText2 = true;
+
+  void toggle() {
+    obscureText = !obscureText;
+    update();
+  }
+
+  void toggle1() {
+    obscureText1 = !obscureText1;
+    update();
+  }
+
+  void toggle2() {
+    obscureText2 = !obscureText2;
+    update();
+  }
 
 /////////////////////////////////// Variable of Edit Profile Screen ///////////////////////////////
 
@@ -60,7 +78,9 @@ class SettingController extends GetxController {
 
         // Reauthenticate the user with the credential
         await user.reauthenticateWithCredential(credential).then((value) async {
-          await user.updatePassword(newpassword.text.toString()).then((value) async {
+          await user
+              .updatePassword(newpassword.text.toString())
+              .then((value) async {
             // await LoadingHelper.dismiss();
             print(LoadingHelper.absorbClick.toString() +
                 '***********************');
@@ -214,6 +234,9 @@ class SettingController extends GetxController {
     newpassword.clear();
     confirmPassword.clear();
     validatePasswordForm = false.obs;
+    obscureText = true;
+    obscureText1 = true;
+    obscureText2 = true;
     update();
   }
 

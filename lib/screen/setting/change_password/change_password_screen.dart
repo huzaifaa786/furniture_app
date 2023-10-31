@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/setting/setting_controller.dart';
 import 'package:furniture/static/input_field1.dart';
+import 'package:furniture/static/input_field_pass.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/static/topbar.dart';
 import 'package:furniture/values/Validator.dart';
@@ -35,20 +36,22 @@ class _ChangePasswordscreenState extends State<ChangePasswordscreen> {
                 SizedBox(
                   height: 20,
                 ),
-                InputField1(
+                PasswordInputField1(
                   hint: 'Old Password',
                   icon: 'assets/images/lock.svg',
-                  obscure: true,
+                  obscure: settingController.obscureText,
+                  toggle: settingController.toggle,
                   controller: settingController.password,
                   validate: settingController.validatePasswordForm,
                   validator: (field) => Validators.passwordValidator(field),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 4),
-                  child: InputField1(
+                  child: PasswordInputField1(
                     hint: 'New Password',
                     icon: 'assets/images/lock.svg',
-                    obscure: true,
+                    obscure: settingController.obscureText1,
+                    toggle: settingController.toggle1,
                     controller: settingController.newpassword,
                     validate: settingController.validatePasswordForm,
                     validator: (field) => Validators.passwordValidator(field),
@@ -56,10 +59,11 @@ class _ChangePasswordscreenState extends State<ChangePasswordscreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 4, bottom: 40),
-                  child: InputField1(
+                  child: PasswordInputField1(
                     hint: 'Repeat Password',
                     icon: 'assets/images/lock.svg',
-                    obscure: true,
+                    obscure: settingController.obscureText2,
+                    toggle: settingController.toggle2,
                     controller: settingController.confirmPassword,
                     validate: settingController.validatePasswordForm,
                     validator: (field) => Validators.confirmPasswordValidator(

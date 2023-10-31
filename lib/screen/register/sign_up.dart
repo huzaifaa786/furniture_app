@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, deprecated_member_use, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
+import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/register/signup_controller.dart';
 import 'package:furniture/static/input_field1.dart';
+import 'package:furniture/static/input_field_pass.dart';
 import 'package:furniture/static/large_button.dart';
 import 'package:furniture/values/Validator.dart';
 import 'package:get/get.dart';
@@ -115,27 +117,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         field, '*phone'),
                               ),
                             ),
-                            InputField1(
-                              hint: 'Password',
+                            PasswordInputField1(
                               icon: 'assets/images/lock.svg',
-                              obscure: true,
-                              controller: controller.password,
+                              hint: 'Password',
+                              obscure: signUpController.obscureText,
+                              toggle: signUpController.toggle,
+                              controller: signUpController.password,
                               validate: controller.validateSignUpForm,
                               validator: (field) =>
-                                  Validators.passwordValidator(field),
+                                  Validators.emptyStringValidator(
+                                      field, '*password'),
                             ),
                             Padding(
                               padding:
                                   const EdgeInsets.only(top: 4, bottom: 20),
-                              child: InputField1(
+                              child: PasswordInputField1(
                                 hint: 'Confirm Password',
                                 icon: 'assets/images/lock.svg',
-                                obscure: true,
-                                controller: controller.confirmPassword,
-                                validate: controller.validateSignUpForm,
+                                obscure: signUpController.obscureText1,
+                                toggle: signUpController.toggle1,
+                                controller: signUpController.confirmPassword,
+                                validate: signUpController.validateSignUpForm,
                                 validator: (field) =>
                                     Validators.confirmPasswordValidator(
-                                        controller.password.text, field),
+                                        signUpController.password.text, field),
                               ),
                             ),
                             Container(

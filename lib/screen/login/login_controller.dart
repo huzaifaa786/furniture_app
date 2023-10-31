@@ -19,6 +19,11 @@ class LoginController extends GetxController {
   static LoginController get instance => Get.find();
 
   RxBool validateSignInForm = false.obs;
+  bool obscureText = true;
+  void toggle() {
+    obscureText = !obscureText;
+    update();
+  }
 
   /// TextField Controllers to get data from TextFields
   final email = TextEditingController();
@@ -33,7 +38,8 @@ class LoginController extends GetxController {
     final bool isFormValid = Validators.emailValidator(email.text) == null &&
         Validators.emptyStringValidator(password.text, '') == null;
     if (isFormValid) {
-      String? error = await authService.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+      String? error = await authService.loginWithEmailAndPassword(
+          email.text.trim(), password.text.trim());
       LoadingHelper.dismiss();
       if (error != null) {
         Get.showSnackbar(GetSnackBar(
@@ -52,6 +58,7 @@ class LoginController extends GetxController {
     password.clear();
     phone.clear();
     completePhone = null;
+    obscureText = true;
     update();
   }
 
@@ -309,7 +316,6 @@ class LoginController extends GetxController {
           colorText: white);
     }
   }
-
 
   String generateNonce([int length = 32]) {
     final charset =

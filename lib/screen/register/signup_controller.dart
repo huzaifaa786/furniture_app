@@ -16,6 +16,17 @@ class SignUpController extends GetxController {
   TextEditingController phone = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
+  bool obscureText1 = true;
+  bool obscureText = true;
+  void toggle() {
+    obscureText = !obscureText;
+    update();
+  }
+
+  void toggle1() {
+    obscureText1 = !obscureText1;
+    update();
+  }
 
   //Call this Function from Design & it will do the rest
 
@@ -66,6 +77,8 @@ class SignUpController extends GetxController {
     confirmPassword.clear();
     phone.clear();
     name.clear();
+    obscureText = true;
+    obscureText1 = true;
     update();
   }
 
