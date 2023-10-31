@@ -51,7 +51,7 @@ class AuthService extends GetxController {
   }
 
   //FUNC
-  Future<String?> createUserWithEmailAndPassword(
+  Future<String?> createuserwithemailAndpassword(
       String name, String email, String phone, String password) async {
     try {
       await _auth.createUserWithEmailAndPassword(

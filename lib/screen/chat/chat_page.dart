@@ -201,6 +201,10 @@ class ChatPageState extends State<ChatPage> {
   void onSendMessage(String content, int type) {
     if (content.trim().isNotEmpty) {
       textEditingController.clear();
+      notificationService.postNotification(
+          title: 'Messages',
+          body: 'New Message Received',
+          receiverToken: adminToken);
       chatProvider.sendMessage(
           content, type, groupChatId, currentUserId, widget.arguments.peerId);
       if (listScrollController.hasClients) {
@@ -235,9 +239,7 @@ class ChatPageState extends State<ChatPage> {
                         decoration: BoxDecoration(
                             color: mainColor,
                             borderRadius: BorderRadius.circular(8)),
-                        margin: EdgeInsets.only(
-                            bottom: 10,
-                            right: 10),
+                        margin: EdgeInsets.only(bottom: 10, right: 10),
                       )
                     : messageChat.type == TypeMessage.image
                         // Image
@@ -311,9 +313,7 @@ class ChatPageState extends State<ChatPage> {
                                       MaterialStateProperty.all<EdgeInsets>(
                                           EdgeInsets.all(0))),
                             ),
-                            margin: EdgeInsets.only(
-                                bottom:10,
-                                right: 10),
+                            margin: EdgeInsets.only(bottom: 10, right: 10),
                           )
                         // Location
                         : messageChat.type == TypeMessage.location
@@ -337,9 +337,7 @@ class ChatPageState extends State<ChatPage> {
                                 decoration: BoxDecoration(
                                     color: mainColor,
                                     borderRadius: BorderRadius.circular(8)),
-                                margin: EdgeInsets.only(
-                                    bottom: 10,
-                                    right: 10),
+                                margin: EdgeInsets.only(bottom: 10, right: 10),
                               )
                             // Bill
                             : Container(
@@ -451,8 +449,7 @@ class ChatPageState extends State<ChatPage> {
                                 decoration: BoxDecoration(
                                     color: mainColor,
                                     borderRadius: BorderRadius.circular(8)),
-                                margin: EdgeInsets.only(
-                                    right: 10),
+                                margin: EdgeInsets.only(right: 10),
                               ),
               ],
               mainAxisAlignment: MainAxisAlignment.end,

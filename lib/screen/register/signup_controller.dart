@@ -39,8 +39,8 @@ class SignUpController extends GetxController {
             backgroundColor: Colors.red,
             colorText: white);
       } else {
-        String? error = authService.createUserWithEmailAndPassword(
-            name.text, email.text, phone.text, password.text) as String?;
+        String? error = await authService.createuserwithemailAndpassword(
+            name.text, email.text, phone.text, password.text);
         LoadingHelper.dismiss();
 
         if (error != null) {
