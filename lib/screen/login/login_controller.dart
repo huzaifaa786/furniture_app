@@ -207,6 +207,7 @@ class LoginController extends GetxController {
         verificationCompleted: (PhoneAuthCredential credential) async {},
         verificationFailed: (FirebaseAuthException e) {
           LoadingHelper.dismiss();
+          print(e.message);
           Get.snackbar('Verification failed', e.message!,
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.red,
