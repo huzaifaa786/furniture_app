@@ -74,7 +74,7 @@ class NotificationService extends GetxController {
       android: androidPlatformChannelSpecifics,
       iOS: iOSPlatformChannelSpecifics
     );
-    if (notification != null && android != null && !kIsWeb) {
+    if (notification != null && !kIsWeb) {
       flutterLocalNotificationsPlugin.show(
           0, notification.title, notification.body, platformChannelSpecifics,
           payload: message.data.toString());
