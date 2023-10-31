@@ -77,9 +77,9 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
                     title: LayoutBuilder(
                       builder: (context, constraints) {
                         double fontSize = constraints.maxHeight *
-                            0.6; // Adjust the factor as needed
+                            0.485; // Adjust the factor as needed
                         return Text("home".tr,
-                            style: TextStyle(fontSize: fontSize));
+                            style: TextStyle(fontSize: fontSize,fontWeight: FontWeight.bold));
                       },
                     ),
                     selectedColor: mainColor,
@@ -94,9 +94,9 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
                     title: LayoutBuilder(
                       builder: (context, constraints) {
                         double fontSize = constraints.maxHeight *
-                            0.6; // Adjust the factor as needed
+                            0.485; // Adjust the factor as needed
                         return Text("orders".tr,
-                            style: TextStyle(fontSize: fontSize));
+                            style: TextStyle(fontSize: fontSize,fontWeight: FontWeight.bold));
                       },
                     ),
                     selectedColor: mainColor,
@@ -111,9 +111,9 @@ class _BottomNavScreenState extends State<BottomNavScreen> with RouteAware {
                     title: LayoutBuilder(
                       builder: (context, constraints) {
                         double fontSize = constraints.maxHeight *
-                            0.6; // Adjust the factor as needed
+                            0.485; // Adjust the factor as needed
                         return Text("profile".tr,
-                            style: TextStyle(fontSize: fontSize));
+                            style: TextStyle(fontSize: fontSize,fontWeight: FontWeight.bold));
                       },
                     ),
                     selectedColor: mainColor,

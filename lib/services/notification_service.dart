@@ -42,21 +42,13 @@ class NotificationService extends GetxController {
       const AndroidInitializationSettings initializationSettingsAndroid =
           AndroidInitializationSettings('@drawable/ic_stat_download');
 
-      // final IOSInitializationSettings initializationSettingsIOS =
-      //     IOSInitializationSettings(
-      //         requestAlertPermission: true,
-      //         requestBadgePermission: true,
-      //         requestSoundPermission: true,
-      //         onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-
-      // final MacOSInitializationSettings initializationSettingsMacOS =
-      //     const MacOSInitializationSettings();
+      final DarwinInitializationSettings initializationSettingsIOS =
+          DarwinInitializationSettings();
 
       final InitializationSettings initializationSettings =
           InitializationSettings(
         android: initializationSettingsAndroid,
-        // iOS: initializationSettingsIOS,
-        // macOS: initializationSettingsMacOS
+        iOS: initializationSettingsIOS,
       );
 
       await flutterLocalNotificationsPlugin.initialize(initializationSettings);
@@ -68,6 +60,7 @@ class NotificationService extends GetxController {
   }
 
   void showFlutterNotification(RemoteMessage message) {
+    print('hehehe');
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
@@ -75,12 +68,11 @@ class NotificationService extends GetxController {
             importance: Importance.max,
             priority: Priority.high,
             showWhen: false);
-    // const IOSNotificationDetails iOSPlatformChannelSpecifics =
-    //     IOSNotificationDetails(
-    //         presentAlert: true, presentBadge: true, presentSound: true);
+    const DarwinNotificationDetails iOSPlatformChannelSpecifics =
+        DarwinNotificationDetails();
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
-      // iOS: iOSPlatformChannelSpecifics
+      iOS: iOSPlatformChannelSpecifics
     );
     if (notification != null && android != null && !kIsWeb) {
       flutterLocalNotificationsPlugin.show(
