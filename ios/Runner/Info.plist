@@ -22,25 +22,6 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-		<string>remote-notification</string>
-	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>EZmove requires access to your photo library in order to allow you to select images you want to upload</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>EZmove requires access to your photo library in order to allow you to select images you want to upload</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>EZmove requires access to your photo library in order to allow you to select images you want to upload</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>EZmove requires microphone access</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -51,6 +32,33 @@
 				<string>com.googleusercontent.apps.826383560726-5d2lt6qseffj8vdu1tn92qrrsm0v6bc0</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>app-1-826383560726-ios-405255812f5e100db98537</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>EZmove requires access to your photo library in order to allow you to select images you want to upload</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>EZmove requires microphone access</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>EZmove requires access to your photo library in order to allow you to select images you want to upload</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>EZmove requires access to your photo library in order to allow you to select images you want to upload</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
