@@ -145,7 +145,8 @@ class ChatLsitScreen extends StatelessWidget {
                                                   subtitle: Text(
                                                     companyData['englishBio'],
                                                     maxLines: 4,
-                                                    overflow: TextOverflow.ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 11,
@@ -173,7 +174,19 @@ class ChatLsitScreen extends StatelessWidget {
                                                                   'name'],
                                                         ),
                                                       ),
-                                                    );
+                                                    )!
+                                                        .then((value) {
+                                                      FocusScopeNode
+                                                          currentFocus =
+                                                          FocusScope.of(
+                                                              context);
+                                                      print(currentFocus
+                                                          .hasPrimaryFocus);
+                                                      if (!currentFocus
+                                                          .hasPrimaryFocus) {
+                                                        currentFocus.unfocus();
+                                                      }
+                                                    });
                                                   },
                                                 ),
                                               ),

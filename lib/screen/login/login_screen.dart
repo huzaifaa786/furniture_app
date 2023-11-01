@@ -227,6 +227,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                             title: 'Login',
                                             sreenRatio: 0.9,
                                             onPressed: () {
+                                              FocusScopeNode currentFocus =
+                                                  FocusScope.of(context);
+                                              print(
+                                                  currentFocus.hasPrimaryFocus);
+                                              if (!currentFocus
+                                                  .hasPrimaryFocus) {
+                                                currentFocus.unfocus();
+                                              }
                                               // Get.put(AuthService());
                                               loginController.loginUser();
                                             },
@@ -323,7 +331,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                 left: 12,
                                                                 right: 12),
                                                         child: InkWell(
-                                                           onTap: () {
+                                                          onTap: () {
                                                             loginController
                                                                 .signInWithApple();
                                                           },
