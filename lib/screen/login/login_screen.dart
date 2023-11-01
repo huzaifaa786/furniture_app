@@ -62,13 +62,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
-                      child: Center(
-                        child: Image(
-                          image: AssetImage("assets/images/123.png"),
-                          height: 100,
-                          // color: Colors.white,
-                        ),
+                      padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Icon(Icons.arrow_back_ios_new),
+                            ),
+                          ),
+                          Image(
+                            image: AssetImage("assets/images/123.png"),
+                            height: 100,
+                            // color: Colors.white,
+                          ),
+                          Container(width: 40),
+                        ],
                       ),
                     ),
                     Container(

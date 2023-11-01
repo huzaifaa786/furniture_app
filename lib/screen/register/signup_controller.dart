@@ -38,35 +38,39 @@ class SignUpController extends GetxController {
             Validators.emptyStringValidator(phone.text, '') == null &&
             Validators.emptyStringValidator(password.text, '') == null &&
             Validators.emptyStringValidator(confirmPassword.text, '') == null;
-    if (isFormValid) {
-      var methods =
-          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email.text);
-      if (methods.contains('google.com')) {
-        LoadingHelper.dismiss();
-        Get.snackbar(
-            'Email is already associated with google. So, try that method for login with this email.',
-            '',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: white);
-      } else {
-        String? error = await authService.createuserwithemailAndpassword(
-            name.text, email.text, phone.text, password.text);
-        LoadingHelper.dismiss();
-
-        if (error != null) {
-          Get.showSnackbar(GetSnackBar(
-            message: error.toString(),
-            duration: const Duration(seconds: 3),
-          ));
+    if (password.text == confirmPassword.text) {
+      if (isFormValid) {
+        var methods =
+            await FirebaseAuth.instance.fetchSignInMethodsForEmail(email.text);
+        if (methods.contains('google.com')) {
           LoadingHelper.dismiss();
+          Get.snackbar(
+              'Email is already associated with google. So, try that method for login with this email.',
+              '',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              colorText: white);
         } else {
+          String? error = await authService.createuserwithemailAndpassword(
+              name.text, email.text, phone.text, password.text);
           LoadingHelper.dismiss();
-          clear();
+
+          if (error != null) {
+            Get.showSnackbar(GetSnackBar(
+              message: error.toString(),
+              duration: const Duration(seconds: 3),
+            ));
+            LoadingHelper.dismiss();
+          } else {
+            LoadingHelper.dismiss();
+            clear();
+          }
         }
+      } else {
+        showErrors();
+        LoadingHelper.dismiss();
       }
     } else {
-      showErrors();
       LoadingHelper.dismiss();
     }
   }

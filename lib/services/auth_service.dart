@@ -54,9 +54,9 @@ class AuthService extends GetxController {
   Future<String?> createuserwithemailAndpassword(
       String name, String email, String phone, String password) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      if (firebaseUser.value != null) {
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) async {
         String userID = firebaseUser.value!.uid;
         final token = await FirebaseMessaging.instance.getToken();
         try {
@@ -73,10 +73,12 @@ class AuthService extends GetxController {
           // You can also show an error message to the user or perform other actions as needed.
         }
         LoadingHelper.dismiss();
-      } else {}
+      });
     } on FirebaseAuthException catch (e) {
+      print('************************************Firebase Exception');
       return e.message;
     } catch (_) {
+      print('************************************Exception');
       return 'Signup Failed';
     }
     return null;
@@ -96,14 +98,14 @@ class AuthService extends GetxController {
               .update({
             'token': token,
           });
-        LoadingHelper.dismiss();
+          LoadingHelper.dismiss();
 
           return null;
         } catch (e) {
           // Handle the error here
           print('Error occurred while setting data: $e');
-        LoadingHelper.dismiss();
-        return e.toString();
+          LoadingHelper.dismiss();
+          return e.toString();
           // You can also show an error message to the user or perform other actions as needed.
         }
       } else {}
@@ -124,5 +126,4 @@ class AuthService extends GetxController {
   }
 
   // String? otp = '';
-
 }
