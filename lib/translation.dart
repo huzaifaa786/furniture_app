@@ -71,7 +71,7 @@ class LocaleString extends Translations {
           'Your order with ID#': 'Your order with ID#',
           " has been delivered by ": " has been delivered by ",
           "No chats found": "No chats found",
-          'Currently, you have no new notifications Please make order.':
+          'Currently, you have no new notifications. Please make an order.':
               'Currently, you have no new notifications Please make order.',
           'Issue Reported Successfully': 'Issue Reported\nSuccessfully',
           'Password Updated Successfully': 'Password Updated Successfully',

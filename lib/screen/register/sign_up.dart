@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, deprecated_member_use, override_on_non_overriding_member
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture/constants/constants.dart';
 import 'package:furniture/screen/register/signup_controller.dart';
@@ -167,41 +168,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.9,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'By continuing, you accept the',
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    InkWell(
-                                      onTap: _launchURLApp,
-                                      child: Text(
-                                        ' Terms of use and Privacy policy',
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'By continuing, you accept the ',
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                      TextSpan(
+                                        text: 'Terms of use and Privacy policy',
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                           decoration: TextDecoration.underline,
                                         ),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = _launchURLApp,
                                       ),
-                                    ),
-                                    // Text(
-                                    //   ' and',
-                                    //   style:
-                                    //       TextStyle(fontSize: 12),
-                                    // ),
-                                    // InkWell(
-                                    //   onTap: _launchURLApp,
-                                    //   child: Text(
-                                    //     ' Privcy poliy',
-                                    //     style: TextStyle(
-                                    //       fontWeight:
-                                    //           FontWeight.w600,
-                                    //       decoration: TextDecoration
-                                    //           .underline,
-                                    //     ),
-                                    //   ),
-                                    // )
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                               SizedBox(
