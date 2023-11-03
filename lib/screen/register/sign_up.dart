@@ -173,14 +173,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     children: [
                                       TextSpan(
                                         text: 'By continuing, you accept the ',
-                                        style: TextStyle(fontSize: 12),
+                                        style: TextStyle(fontSize: 12,color: Colors.black),
                                       ),
                                       TextSpan(
-                                        text: 'Terms of use and Privacy policy',
+                                        text: 'Terms of use',
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                           decoration: TextDecoration.underline,
+                                          color: Colors.black
+                                        ),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = _launchURLApp,
+                                      ),
+                                      TextSpan(
+                                        text: ' and ',
+                                        style: TextStyle(fontSize: 12,color: Colors.black),
+                                      ),
+                                      TextSpan(
+                                        text: 'Privacy policy',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          decoration: TextDecoration.underline,
+                                          color: Colors.black
                                         ),
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = _launchURLApp,

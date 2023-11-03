@@ -71,20 +71,25 @@ class _SettingScreenState extends State<SettingScreen> {
                                 },
                               ),
                             ),
-                            authService.providerNames!.contains('google.com') || authService.providerNames!.contains('apple.com') ==
+                            authService.providerNames!.contains('apple.com') ==
                                     false
                                 ? authService.providerNames!
-                                            .contains('phone') ==
+                                            .contains('google.com') ==
                                         false
-                                    ? SettingTile(
-                                        image: 'assets/images/password.svg',
-                                        text: 'change_password'.tr,
-                                        ontap: () {
-                                          settingController
-                                              .clearPasswordVariable();
-                                          Get.to(() => ChangePasswordscreen());
-                                        },
-                                      )
+                                    ? authService.providerNames!
+                                                .contains('phone') ==
+                                            false
+                                        ? SettingTile(
+                                            image: 'assets/images/password.svg',
+                                            text: 'change_password'.tr,
+                                            ontap: () {
+                                              settingController
+                                                  .clearPasswordVariable();
+                                              Get.to(
+                                                  () => ChangePasswordscreen());
+                                            },
+                                          )
+                                        : Container()
                                     : Container()
                                 : Container(),
                             SettingTile(
