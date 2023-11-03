@@ -63,7 +63,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   child: Padding(
                                     padding: EdgeInsets.only(top: 20),
                                     child: Text(
-                                      'Currently, you have no new notifications Please make order.'
+                                      'Currently, you have no new notifications. Please make an order.'
                                           .tr,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -94,7 +94,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                           child: Padding(
                                             padding: EdgeInsets.only(top: 20),
                                             child: Text(
-                                              'Currently, you have no new notifications Please make order.'
+                                              'Currently, you have no new notifications. Please make an order.'
                                                   .tr,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(

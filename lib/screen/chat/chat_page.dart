@@ -779,6 +779,7 @@ class ChatPageState extends State<ChatPage> {
                                                     child: LargeButton(
                                                       title: 'Checkout'.tr,
                                                       onPressed: () async {
+                                                        FocusScope.of(context).unfocus();
                                                         int amount = int.parse(
                                                             messageChat.content
                                                                 .split("~~")[1]
@@ -990,11 +991,13 @@ class ChatPageState extends State<ChatPage> {
   }
 
   Future<bool> onBackPress() {
+    FocusScope.of(context).unfocus();
     if (isShowSticker) {
       setState(() {
         isShowSticker = false;
       });
     } else {
+      
       Navigator.pop(context);
     }
     return Future.value(false);

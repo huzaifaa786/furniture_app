@@ -72,7 +72,7 @@ class LocaleString extends Translations {
           " has been delivered by ": " has been delivered by ",
           "No chats found": "No chats found",
           'Currently, you have no new notifications. Please make an order.':
-              'Currently, you have no new notifications Please make order.',
+              'Currently, you have no new notifications. Please make an order.',
           'Issue Reported Successfully': 'Issue Reported\nSuccessfully',
           'Password Updated Successfully': 'Password Updated Successfully',
           'ok': 'Ok',
@@ -148,7 +148,7 @@ class LocaleString extends Translations {
           'Your order with ID#': "طلبك برقم الطلب#",
           " has been delivered by ": "تم توصيله بواسطة",
           "No chats found": "لا يوجد محادثات",
-          'Currently, you have no new notifications Please make order.':
+          'Currently, you have no new notifications. Please make an order.':
               "حالياً، ليس لديك أي إشعارات جديدة. من فضلك قم بعمل طلب",
           'Issue Reported Successfully': 'تم الإبلاغ عن المشكلة بنجاح',
           'Password Updated Successfully': "تم تحديث كلمةالسر",
