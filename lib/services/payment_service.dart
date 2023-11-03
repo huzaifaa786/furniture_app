@@ -27,7 +27,7 @@ class PaymentService extends GetxController {
             paymentSheetParameters: SetupPaymentSheetParameters(
                 paymentIntentClientSecret: paymentIntent!['client_secret'],
                 style: ThemeMode.light,
-                // applePay: PaymentSheetApplePay(merchantCountryCode: 'UAE'),
+                applePay: PaymentSheetApplePay(merchantCountryCode: 'UAE'),
                 googlePay: PaymentSheetGooglePay(
                   merchantCountryCode: 'UAE',
                   currencyCode: 'AED',

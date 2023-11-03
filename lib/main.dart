@@ -39,6 +39,7 @@ void main() async {
     Get.put(PaymentService());
   });
   //Assign publishable key to flutter_stripe
+  Stripe.merchantIdentifier = 'merchant.com.ezmove';
   Stripe.publishableKey = "pk_live_51Nps79Fv6EKl7VTQ13FVBQ8Y6SQHs5o471n7BiUibZwVcyfYqV8YOL5tSI70S5CzbF51apGfu5ZQIqPzC1OGtqPW00SVlPYaU0";
 
   //Load our .env file that contains our Stripe Secret key
