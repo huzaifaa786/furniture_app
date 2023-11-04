@@ -30,7 +30,6 @@ class PaymentService extends GetxController {
                 applePay: PaymentSheetApplePay(merchantCountryCode: 'AE'),
                 googlePay: PaymentSheetGooglePay(
                   merchantCountryCode: 'AE',
-                  currencyCode: 'AED',
                   testEnv: false,
                 ),
                 merchantDisplayName: 'Ezmove'),
