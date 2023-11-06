@@ -102,11 +102,9 @@ class AuthService extends GetxController {
 
           return null;
         } catch (e) {
-          // Handle the error here
           print('Error occurred while setting data: $e');
           LoadingHelper.dismiss();
           return e.toString();
-          // You can also show an error message to the user or perform other actions as needed.
         }
       } else {}
     } on FirebaseAuthException catch (e) {
@@ -190,7 +188,6 @@ class AuthService extends GetxController {
             snackPosition: SnackPosition.BOTTOM,
             colorText: white,
             backgroundColor: Colors.red);
-        // await _reauthenticateAndDelete();
         return e.code;
       } else {
         Get.snackbar('Error!.', e.code,
