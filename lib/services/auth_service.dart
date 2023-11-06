@@ -115,6 +115,97 @@ class AuthService extends GetxController {
     }
   }
 
+  Future<String?> deleteUserAccount() async {
+    String id = auth.currentUser!.uid;
+    try {
+      await FirebaseAuth.instance.currentUser!.delete().then((value) async {
+        LoadingHelper.show();
+        // Delete user document
+        await FirebaseFirestore.instance.collection('users').doc(id).delete();
+
+        // Delete user's notifications
+        QuerySnapshot notificationsQuerySnapshot = await FirebaseFirestore
+            .instance
+            .collection('notifications')
+            .where('userId', isEqualTo: id)
+            .get();
+
+        List<QueryDocumentSnapshot> notificationDocuments =
+            notificationsQuerySnapshot.docs;
+
+        for (QueryDocumentSnapshot doc in notificationDocuments) {
+          await doc.reference.delete();
+        }
+
+        // Delete user's messages
+        QuerySnapshot messagesQuerySnapshot = await FirebaseFirestore.instance
+            .collection('messages')
+            .where('userId', isEqualTo: id)
+            .get();
+
+        List<QueryDocumentSnapshot> messageDocuments =
+            messagesQuerySnapshot.docs;
+
+        for (QueryDocumentSnapshot doc in messageDocuments) {
+          await doc.reference.delete();
+        }
+
+        // Delete user's orders
+        QuerySnapshot ordersQuerySnapshot = await FirebaseFirestore.instance
+            .collection('orders')
+            .where('userId', isEqualTo: id)
+            .orderBy('orderId', descending: true)
+            .get();
+
+        List<QueryDocumentSnapshot> orderDocuments = ordersQuerySnapshot.docs;
+
+        for (QueryDocumentSnapshot doc in orderDocuments) {
+          await doc.reference.delete();
+        }
+
+        // Delete user's reports
+        QuerySnapshot reportsQuerySnapshot = await FirebaseFirestore.instance
+            .collection('reports')
+            .where('userId', isEqualTo: id)
+            .get();
+
+        List<QueryDocumentSnapshot> reportDocuments = reportsQuerySnapshot.docs;
+
+        for (QueryDocumentSnapshot doc in reportDocuments) {
+          await doc.reference.delete();
+        }
+        LoadingHelper.dismiss();
+        print("User and associated data have been deleted.");
+        Get.snackbar('User and associated data have been deleted.', '',
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: white,
+            backgroundColor: Colors.green);
+      });
+    } on FirebaseAuthException catch (e) {
+      print(e.code);
+
+      if (e.code == "requires-recent-login") {
+        Get.snackbar('To delete user profile WE require recent login.',
+            'Please logout your account and login again to perform this operation.',
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: white,
+            backgroundColor: Colors.red);
+        // await _reauthenticateAndDelete();
+        return e.code;
+      } else {
+        Get.snackbar('Error!.', e.code,
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: white,
+            backgroundColor: Colors.red);
+        return e.code;
+      }
+    } catch (e) {
+      print(e);
+      return e.toString();
+    }
+    return null;
+  }
+
   Future<void> logout() async {
     homeController.clear();
     homeController.refresh();

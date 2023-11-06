@@ -71,6 +71,13 @@ class _SettingScreenState extends State<SettingScreen> {
                                 },
                               ),
                             ),
+                            SettingTile(
+                              image: 'assets/images/delAcc.svg',
+                              text: 'Delete Account'.tr,
+                              ontap: () {
+                                deleteProfile(context);
+                              },
+                            ),
                             authService.providerNames!.contains('apple.com') ==
                                     false
                                 ? authService.providerNames!
@@ -190,6 +197,57 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
           onPressed: () {
             authService.logout();
+          },
+          color: mainColor,
+        ),
+        DialogButton(
+          height: 55,
+          radius: BorderRadius.circular(13),
+          border: Border.all(
+            color: Colors.black54,
+          ),
+          child: Text(
+            "no".tr,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600),
+          ),
+          onPressed: () {
+            Get.back();
+          },
+          color: Colors.black,
+        ),
+      ],
+    ).show();
+  }
+
+  deleteProfile(context) {
+    Alert(
+      style: const AlertStyle(
+        titleStyle: TextStyle(fontSize: 21, fontWeight: FontWeight.w400),
+      ),
+      context: context,
+      image: Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: SvgPicture.asset('assets/images/logout.svg'),
+      ),
+      title: "Are you sure that you want to delete user?".tr,
+      buttons: [
+        DialogButton(
+          height: 55,
+          radius: BorderRadius.circular(13),
+          child: Text(
+            "yes".tr,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600),
+          ),
+          onPressed: () {
+            authService.deleteUserAccount();
           },
           color: mainColor,
         ),

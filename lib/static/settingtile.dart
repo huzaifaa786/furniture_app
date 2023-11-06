@@ -30,6 +30,7 @@ class SettingTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(45)),
                   child: SvgPicture.asset(
                     image,
+                    color: mainColor,
                     height: 16,
                   ),
                 ),

@@ -76,7 +76,9 @@ class LocaleString extends Translations {
           'Issue Reported Successfully': 'Issue Reported\nSuccessfully',
           'Password Updated Successfully': 'Password Updated Successfully',
           'ok': 'Ok',
-          'Select an image To procede further':'Select an image To procede further'
+          'Select an image To procede further':'Select an image To procede further',
+          'Are you sure that you want to delete user?': 'Are you sure that you want to delete user?',
+          'Delete Account': 'Delete Account'
         },
         'ar_AE': {
           "Hello": "مرحبًا",
@@ -153,7 +155,9 @@ class LocaleString extends Translations {
           'Issue Reported Successfully': 'تم الإبلاغ عن المشكلة بنجاح',
           'Password Updated Successfully': "تم تحديث كلمةالسر",
           'ok': "حسناً",
-          'Select an image To procede further': "رجاء ادراج صورة"
+          'Select an image To procede further': "رجاء ادراج صورة",
+          'Are you sure that you want to delete user?': 'هل أنت متأكد أنك تريد حذف المستخدم؟',
+          'Delete Account': "حذف الحساب"
         }
       };
 }
