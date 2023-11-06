@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
           navigatorKey: navigatorKey,
           builder: EasyLoading.init(),
           theme: Styles.lightTheme,
-          title: "furniture",
+          title: "Ezmove",
           initialRoute: 'splash',
           routes: {
             'splash': (_) => const SplashScreen(),
